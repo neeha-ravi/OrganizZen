@@ -1,0 +1,14 @@
+html {
+    background-color: lightcoral;
+}
+
+#test-div {
+    text-align: center;
+    border: solid white 10px;
+    background-color: white;
+    border-radius: 50px;
+}
+
+#test-div > h1 {
+    color: orangered;
+}
