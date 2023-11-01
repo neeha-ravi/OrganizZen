@@ -1,5 +1,4 @@
-import React, {useRef, useState} from 'react';
-import DatePicker from "react-datepicker";
+import React, {useState} from 'react';
 import './NewTask.css';
 
 function NewTask() {
@@ -7,12 +6,6 @@ function NewTask() {
   const togglePopup = () => {
     popupState(!popup);
   }
-
-  const [date, setDate] = useState('');
-  const dateInputRef = useRef(null);
-  const handleChange = (e) => {
-    setDate(e.target.value);
-  };
 
   return (
     <>
@@ -56,8 +49,6 @@ function NewTask() {
           <input
             id='taskDate'
             type="date"
-            onChange={handleChange}
-            ref={dateInputRef}
           />
 
           <br></br> <br></br>
