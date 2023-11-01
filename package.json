@@ -1,0 +1,11 @@
+{
+  "name": "organizzen",
+  "version": "1.0.0",
+  "description": "OrganizZen App - 307",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
