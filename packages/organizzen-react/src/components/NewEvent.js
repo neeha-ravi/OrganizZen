@@ -1,16 +1,21 @@
 import React, {useState} from 'react';
-import './NewTask.css';
+import './NewEvent.css';
 
-function NewTask() {
+function NewEvent() {
   const [popup, popupState] = useState(false);
   const togglePopup = () => {
     popupState(!popup);
   }
 
+  const [checked, setChecked] = React.useState(false);
+  const handleChange = () => {
+    setChecked(!checked);
+  }
+
   return (
     <>
     <button className="popupButton" onClick={togglePopup}>
-      New Task
+      New Event
     </button>
 
     {popup && (
@@ -18,7 +23,7 @@ function NewTask() {
       <div className='overlay'></div>
       <div className='popupContent'>
         <button id='popupClose' onClick={togglePopup}>CLOSE</button>
-        <h1>New Task</h1>
+        <h1>New Event</h1>
         <form className='popupForm'>
 
           <label htmlFor='taskName'>Name: </label>
@@ -41,23 +46,28 @@ function NewTask() {
           />
 
           <br></br> <br></br>
-          <label htmlFor='taskDate'>Deadline: </label>
+          <label htmlFor='taskDate'>Event Date: </label>
           <br></br>
           <input
             id='taskDate'
             type="date"
           />
+          
+          {!checked && (
+            <input
+              id='taskDate'
+              type="date"
+            />
+          )}
 
-          <br></br> <br></br>
-          <label>
-          Event:
           <br></br>
-            <select>
-              <option value="event1">event1</option>
-              <option value="event2">event2</option>
-              <option value="event3">event3</option>
-              <option value="event4">event4</option>
-            </select>
+          <label>
+            One Day Only?
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={handleChange}
+            />
           </label>
 
           <br></br> <br></br>
@@ -70,4 +80,4 @@ function NewTask() {
   );
 }
 
-export default NewTask;
+export default NewEvent;
