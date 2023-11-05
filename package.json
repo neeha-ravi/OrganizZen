@@ -1,5 +1,8 @@
 {
   "name": "organizzen",
+  "workspaces": [
+    "packages/*"
+  ],
   "version": "1.0.0",
   "description": "OrganizZen App - 307",
   "main": "index.js",
