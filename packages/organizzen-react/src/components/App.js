@@ -1,4 +1,6 @@
 import logo from "./logo.svg";
+import "./NewEvent";
+import "./NewTask";
 import "./App.css";
 
 function App() {
