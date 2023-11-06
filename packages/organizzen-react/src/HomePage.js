@@ -1,14 +1,12 @@
-import logo from './logo.svg';
+//import logo from "./logo.svg";
 import styles from "./Styles/index.module.css";
 
 function HomePage() {
-  return ( 
+  return (
     <div>
-      <div className={styles.Header}>
-        O R G A N I Z Z E N
-      </div>
+      <div className={styles.Header}>O R G A N I Z Z E N</div>
       <div className={styles.CalendarContainer}>
-        <div className={styles.CalendarDashboard}/>
+        <div className={styles.CalendarDashboard} />
       </div>
       <div className={styles.AddContainer}>
         <div className={styles.AddTaskLabel}>
