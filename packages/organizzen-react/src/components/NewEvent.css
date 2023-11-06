@@ -19,5 +19,11 @@
 
 #popupClose {
   position: absolute;
-  transform: translate(210%, -150%);
+  background-color: #d7bbbb;
+  color:white;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  transform: translate(475%, -60%);
 }
+
