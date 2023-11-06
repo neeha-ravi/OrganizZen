@@ -33,6 +33,9 @@ const events = {
   ],
 };
 
+const findEventByName = (name) =>
+  events["events_list"].filter((event) => event["name"] === name);
+
 app.use(express.json()); //set up express to process incoming dats in JSON format
 
 app.get("/", (req, res) => {
@@ -41,6 +44,16 @@ app.get("/", (req, res) => {
 
 app.get("/events", (req, res) => {
   res.send(events);
+});
+
+app.get("/events/:name", (req, res) => {
+  const name = req.params["name"];
+  let result = findEventByName(name);
+  if (result === undefined) {
+    res.status(404).send("Resource not found.");
+  } else {
+    res.send(result);
+  }
 });
 
 app.listen(port, () => {

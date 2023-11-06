@@ -8,6 +8,7 @@ function HomePage() {
       <div className={styles.CalendarContainer}>
         <div className={styles.CalendarDashboard} />
       </div>
+      {/*
       <div className={styles.AddContainer}>
         <div className={styles.AddTaskLabel}>
           <b>ADD TASK</b>
@@ -17,6 +18,7 @@ function HomePage() {
         </div>
       </div>
       <div className={styles.Divider}></div>
+      */}
       <div className={styles.ToDoListContainer}>
         {/* just testing will fix logic later*/}
         <div className={styles.DateContainer}></div>
