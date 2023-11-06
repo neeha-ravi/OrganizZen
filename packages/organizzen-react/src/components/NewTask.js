@@ -68,9 +68,6 @@ function NewTask() {
           </div>
         </div>
       )}
-      <button className="popupButton" onClick={togglePopup}>
-        New Task
-      </button>
     </>
   );
 }
