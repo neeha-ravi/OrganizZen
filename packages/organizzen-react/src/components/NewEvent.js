@@ -23,7 +23,7 @@ function NewEvent() {
           <div className="overlay"></div>
           <div className="popupContent">
             <button id="popupClose" onClick={togglePopup}>
-              CLOSE
+              X
             </button>
             <h1>New Event</h1>
             <form className="popupForm">

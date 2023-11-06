@@ -36,6 +36,9 @@ const events = {
   ],
 };
 
+const findEventByName = (name) =>
+  events["events_list"].filter((event) => event["name"] === name);
+
 app.use(express.json()); //set up express to process incoming dats in JSON format
 
 app.get("/", (req, res) => {
@@ -46,29 +49,13 @@ app.get("/events", (req, res) => {
   res.send(events);
 });
 
-// Create a new event with tasks
-app.post('/events', (req, res) => {
-  const { name, description, link, date, oneDayOnly, tasks } = req.body;
-  const newEvent = { name, description, link, date, oneDayOnly, tasks: [] };
-  events.push(newEvent);
-  res.status(201).json(newEvent);
-});
-
-
-// Create a new task for an event
-//eventid??
-app.post('/events/:eventId/tasks', (req, res) => {
-  const eventId = req.params.eventId;
-  const { name, description, link, date, color } = req.body;
-  const newTask = { name, description, link, date, color };
-  
-  // Find the event by eventId
-  const event = events.find(event => event.name === eventId);
-  if (event) {
-    event.tasks.push(newTask);
-    res.status(201).json(newTask);
+app.get("/events/:name", (req, res) => {
+  const name = req.params["name"];
+  let result = findEventByName(name);
+  if (result === undefined) {
+    res.status(404).send("Resource not found.");
   } else {
-    res.status(404).json({ error: 'Event not found' });
+    res.send(result);
   }
 });
 

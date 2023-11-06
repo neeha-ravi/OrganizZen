@@ -20,7 +20,7 @@ function NewTask() {
           <div className="overlay"></div>
           <div className="popupContent">
             <button id="popupClose" onClick={togglePopup}>
-              CLOSE
+              X
             </button>
             <h1>New Task</h1>
             <form className="popupForm">
@@ -70,9 +70,6 @@ function NewTask() {
           </div>
         </div>
       )}
-      <button className="popupButton" onClick={togglePopup}>
-        New Task
-      </button>
     </>
   );
 }

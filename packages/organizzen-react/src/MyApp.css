@@ -1,0 +1,20 @@
+.newButtons {
+    background-color: #d7bbbb;
+    width: 100%;
+    height: 90px;
+    display: flex;
+    column-gap: 50px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px
+}
+
+.newButtons button {
+    background-color: #f8f0e9;
+    color: #9d8e8e;
+    border: 0;
+    border-radius: 11px;
+    padding: 20px 50px;
+    font-size: 24px;
+    font-weight: bold;
+}
