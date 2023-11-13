@@ -1,0 +1,23 @@
+html {
+    background-color: #d7bbbb;
+    font-family: "Be Vietnam Pro", sans-serif;
+}
+
+.loginBox {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    line-height: 1.4;
+    color: #9d8e8e;
+    background: #f9f4ef;
+    padding: 50px 75px;
+    border-radius: 70px;
+    max-width: 800px;
+    min-width: 500px;
+    text-align: center;
+}
+
+.loginBox h1 {
+    font-size: 48px;
+}
