@@ -9,7 +9,7 @@ Style:
 - Braces should go on the same line
 
 Scripts (Run from root!):
--  npm run format (run prettier)   ->    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
--  npm run lint (run eslint)       ->    "lint": "npx eslint .",
+-  npm run format (run prettier)   ->    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
+-  npm run lint (run eslint)       ->    "lint": "npx eslint . && npx prettier --check ."
 
 NOTE: This project user Prettier and ESLint, and the project files contain the configuration for these tools. If using VSCode, please go to the "Extensions" tab and install "Prettier - Code formatter" by Prettier and "ESLint" from Microsoft. Trust the tools :)
