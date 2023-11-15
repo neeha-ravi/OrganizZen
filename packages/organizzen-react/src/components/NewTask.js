@@ -50,7 +50,8 @@ function NewTask() {
               </label>
               <br></br> <br></br>
               <label for="color">
-                Choose a color:
+                Label Color:
+                <br></br>
                 <select name="color" id="color">
                   <option value="red">Red</option>
                   <option value="orange">Orange</option>
@@ -63,7 +64,7 @@ function NewTask() {
                 </select>
               </label>
               <br></br> <br></br>
-              <input type="submit" value="Submit" />
+              <input type="submit" value="Submit" id="submitform" />
             </form>
           </div>
         </div>

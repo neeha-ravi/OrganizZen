@@ -27,3 +27,13 @@
   transform: translate(475%, -60%);
 }
 
+#submitform { 
+  background-color: #9d8e8e;
+  color: #f8f0e9;
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 10px;
+}

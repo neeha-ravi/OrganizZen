@@ -53,7 +53,7 @@ function NewEvent() {
                 />
               </label>
               <br></br> <br></br>
-              <input type="submit" value="Submit" />
+              <input type="submit" value="Submit" id="submitform" />
             </form>
           </div>
         </div>
