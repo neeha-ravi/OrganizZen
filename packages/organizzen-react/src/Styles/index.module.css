@@ -71,21 +71,3 @@ body {
     display: flex;
     align-items: center;
 }
-
-.Divider {
-    height: 25px;
-    width: 100%;
-}
-
-.DateContainer {
-    height: 30px;
-    width: 100%;
-    background-color: #f8f0e9;
-    border-radius: 8px;
-}
-
-.ToDoListContainer {
-    height: 350px;
-    width: 100%;
-    overflow: scroll;
-}
