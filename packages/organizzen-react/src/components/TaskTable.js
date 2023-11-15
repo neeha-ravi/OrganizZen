@@ -25,22 +25,6 @@ function TaskTable() {
             <div className="Divider"></div>
             <div className="DateContainer"></div>
             <div className="Divider"></div>
-            <div className="DateContainer"></div>
-            <div className="Divider"></div>
-            <div className="DateContainer"></div>
-            <div className="Divider"></div>
-            <div className="DateContainer"></div>
-            <div className="Divider"></div>
-            <div className="DateContainer"></div>
-            <div className="Divider"></div>
-            <div className="DateContainer"></div>
-            <div className="Divider"></div>
-            <div className="DateContainer"></div>
-            <div className="Divider"></div>
-            <div className="DateContainer"></div>
-            <div className="Divider"></div>
-            <div className="DateContainer"></div>
-            <div className="Divider"></div>
         </div>
     )
 }

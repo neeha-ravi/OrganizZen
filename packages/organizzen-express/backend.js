@@ -1,8 +1,15 @@
+//backend.js
+
 import express from 'express'
+import cors from 'cors'
 
 const app = express()
 const port = 8000
 
+app.use(cors())
+app.use(express.json()) //set up express to process incoming dats in JSON format
+
+// Store events with associated tasks
 const events = {
     events_list: [
         {
@@ -33,10 +40,24 @@ const events = {
     ],
 }
 
-const findEventByName = (name) =>
-    events['events_list'].filter((event) => event['name'] === name)
+const findEventById = (eventId) => {
+    return events['events_list'].find((event) => event.id === eventId)
+}
 
-app.use(express.json()) //set up express to process incoming dats in JSON format
+const usedEventIds = new Set()
+usedEventIds.add(1).add(2)
+const usedTaskIds = new Set()
+usedTaskIds.add(1).add(2)
+
+// Generate a unique ID between 1 and infinity
+const generateUniqueId = (usedIds) => {
+    let id = 1
+    while (usedIds.has(id)) {
+        id++
+    }
+    usedIds.add(id)
+    return id.toString()
+}
 
 app.get('/', (req, res) => {
     res.send('Hello World!') //sets the endpoint to accept http GET requests
@@ -57,5 +78,5 @@ app.get('/events/:name', (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
+    console.log(`Example app listening at http://localhost:${port}/events`)
 })
