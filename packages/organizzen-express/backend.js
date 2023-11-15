@@ -13,30 +13,46 @@ app.use(express.json()) //set up express to process incoming dats in JSON format
 const events = {
     events_list: [
         {
-            name: 'Event1',
-            desc: 'Description of event 1',
-            date: '2012-04-23',
+            id: '1',
+            name: 'Event 1',
+            description: 'Description for Event 1',
+            link: 'https://example.com/event1',
+            date: '2023-12-01',
+            oneDayOnly: true,
+            tasks: [
+                {
+                    id: '1',
+                    name: 'Task 1',
+                    description: 'Description for Task 1',
+                    link: 'https://example.com/task1',
+                    date: '2023-12-01',
+                    color: 'red',
+                    event: '1',
+                },
+                // Add more tasks for Event 1 if needed
+            ],
         },
         {
-            name: 'Event2',
-            desc: 'Description of event 2',
-            date: '2012-04-12',
+            id: '2',
+            name: 'Event 2',
+            description: 'Description for Event 2',
+            link: 'https://example.com/event2',
+            date: '2023-12-15',
+            oneDayOnly: false,
+            tasks: [
+                {
+                    id: '2',
+                    name: 'Task 2',
+                    description: 'Description for Task 2',
+                    link: 'https://example.com/task2',
+                    date: '2023-12-15',
+                    color: 'blue',
+                    event: '2',
+                },
+                // Add more tasks for Event 2 if needed
+            ],
         },
-        {
-            name: 'Event3',
-            desc: 'Description of event 3',
-            date: '2012-05-01',
-        },
-        {
-            name: 'Event4',
-            desc: 'Description of event 4',
-            date: '2012-04-28',
-        },
-        {
-            name: 'Event5',
-            desc: 'Description of event 5',
-            date: '2012-03-30',
-        },
+        // Add more pre-made events if needed
     ],
 }
 
@@ -63,17 +79,72 @@ app.get('/', (req, res) => {
     res.send('Hello World!') //sets the endpoint to accept http GET requests
 })
 
+// Retrieve events
 app.get('/events', (req, res) => {
     res.send(events)
 })
 
-app.get('/events/:name', (req, res) => {
-    const name = req.params['name']
-    let result = findEventByName(name)
+app.get('/events/:eventId', (req, res) => {
+    const id = req.params.Id
+    let result = findEventById(id)
     if (result === undefined) {
         res.status(404).send('Resource not found.')
     } else {
         res.send(result)
+    }
+})
+
+//EVENT
+const addEvent = (e) => {
+    e.id = generateUniqueId(usedEventIds)
+    e.tasks = []
+    events['events_list'].push(e)
+    return e
+}
+app.post('/events', (req, res) => {
+    const eventToAdd = req.body
+    const addedEvent = addEvent(eventToAdd)
+    if (addedEvent) {
+        res.status(201).json(addedEvent)
+    } else {
+        res.status(500).json({ error: 'Failed to add event' })
+    }
+})
+
+// TASK
+
+const addTask = (task, eventId) => {
+    task.id = generateUniqueId(usedTaskIds)
+    task.eventId = eventId // Set the event id for the task
+    const event = events['events_list'].find((event) => event.id === eventId)
+    if (event) {
+        event.tasks.push(task)
+        usedTaskIds.add(task.id) // Add task id to usedTaskIds
+        return task // Return the added task
+    }
+    return null // Return null if event is not found
+}
+
+app.get('/events/:eventId/tasks', (req, res) => {
+    const id = req.params.eventId
+    let result = findEventById(id)
+    if (result === undefined) {
+        res.status(404).send('Resource not found.')
+    } else {
+        res.send(result.tasks)
+    }
+})
+
+app.post('/events/:eventId/', (req, res) => {
+    const eventId = req.params.eventId // Fix the parameter name
+    const taskToAdd = addTask(req.body, eventId)
+
+    if (taskToAdd) {
+        res.status(201).json(taskToAdd)
+    } else {
+        res.status(404).json({
+            error: 'Event not found or failed to add task to event',
+        })
     }
 })
 
