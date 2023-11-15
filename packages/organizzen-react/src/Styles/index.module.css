@@ -1,91 +1,91 @@
 body {
-  background: #d7bbbb;
-  font-family: "Be Vietnam Pro", sans-serif;
-  --radius: 8px;
-  --button-width: 100px;
-  --button-result-height: 30px;
-  --grid-spacing: 5px;
+    background: #d7bbbb;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    --radius: 8px;
+    --button-width: 100px;
+    --button-result-height: 30px;
+    --grid-spacing: 5px;
 }
 
 .Header {
-  text-align: center;
-  justify-content: center;
-  display: flex;
-  padding: 70px 0 25px 0;
-  width: 100%;
-  height: 30px;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  color: #FFFFFF;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    padding: 70px 0 25px 0;
+    width: 100%;
+    height: 30px;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    color: #ffffff;
 }
 
 .CalendarContainer {
-  width: 100%;
-  height: 175px;
-  justify-content: center;
-  display: flex;
+    width: 100%;
+    height: 175px;
+    justify-content: center;
+    display: flex;
 }
 
 .CalendarDashboard {
-  height: 175px;
-  width: 375px;
-  background-color: #f8f0e9;
-  border-radius: 15px;
-  align-items: center;
+    height: 175px;
+    width: 375px;
+    background-color: #f8f0e9;
+    border-radius: 15px;
+    align-items: center;
 }
 
 .AddContainer {
-  position: fixed;
-  bottom: 0;
-  background-color: #d7bbbb;
-  left: 50%; /* Horizontal centering */
-  transform: translateX(-50%); /* Centering adjustment */
-  width: 100%;
-  height: 90px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    position: fixed;
+    bottom: 0;
+    background-color: #d7bbbb;
+    left: 50%; /* Horizontal centering */
+    transform: translateX(-50%); /* Centering adjustment */
+    width: 100%;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .AddTaskLabel {
-  width: 165px;
-  height: 45px;
-  background-color: #f8f0e9;
-  color: #9D8E8E;
-  border-radius: 11px;
-  justify-content: center;
-  display: flex;
-  align-items: center;
-  margin-right: 9px;
+    width: 165px;
+    height: 45px;
+    background-color: #f8f0e9;
+    color: #9d8e8e;
+    border-radius: 11px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    margin-right: 9px;
 }
 
 .AddEventLabel {
-  width: 190px;
-  height: 45px;
-  background-color: #f8f0e9;
-  color: #9D8E8E;
-  border-radius: 11px;
-  justify-content: center;
-  display: flex;
-  align-items: center;
+    width: 190px;
+    height: 45px;
+    background-color: #f8f0e9;
+    color: #9d8e8e;
+    border-radius: 11px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
 }
 
 .Divider {
-  height: 25px;
-  width: 100%;
+    height: 25px;
+    width: 100%;
 }
 
 .DateContainer {
-  height: 30px;
-  width: 100%;
-  background-color: #f8f0e9;
-  border-radius: 8px;
+    height: 30px;
+    width: 100%;
+    background-color: #f8f0e9;
+    border-radius: 8px;
 }
 
 .ToDoListContainer {
-  height: 350px;
-  width: 100%;
-  overflow: scroll;
-} 
+    height: 350px;
+    width: 100%;
+    overflow: scroll;
+}

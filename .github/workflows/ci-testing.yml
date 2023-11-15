@@ -4,18 +4,20 @@
 name: CI Testing
 
 on:
-  push:
-    branches: [main]
+    push:
+        branches: [main]
+    pull:
+        branches: [main]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-      - run: npm ci
-      - run: npm run -w express-backend lint
-      - run: npm run -w react-frontend lint
-      - run: npm run -w react-frontend build
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 20
+            - run: npm ci
+            - run: npm run -w organizzen-express lint
+            - run: npm run -w organizzen-react lint
+            - run: npm run -w organizzen-react build
