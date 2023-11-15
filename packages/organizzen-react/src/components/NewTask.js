@@ -1,3 +1,5 @@
+//NewTask.js
+
 import React, { useState } from "react";
 import "./NewTask.css";
 
@@ -21,23 +23,28 @@ function NewTask() {
               X
             </button>
             <h1>New Task</h1>
+
             <form className="popupForm">
               <label htmlFor="taskName">Name: </label>
               <br></br>
               <input id="taskName" name="taskName" />
               <br></br> <br></br>
+
               <label htmlFor="taskDescription">Description: </label>
               <br></br>
               <input id="taskDescription" name="description" />
               <br></br> <br></br>
+
               <label htmlFor="taskLink">Link (Optional): </label>
               <br></br>
-              <input id="taskDescription" name="description" />
+              <input id="taskLink" name="link" />
               <br></br> <br></br>
-              <label htmlFor="taskDate">Deadline: </label>
+
+              <label htmlFor="taskDeadline">Deadline: </label>
               <br></br>
-              <input id="taskDate" type="date" />
+              <input id="taskDeadline" type="date" />
               <br></br> <br></br>
+
               <label>
                 Event:
                 <br></br>
@@ -65,6 +72,7 @@ function NewTask() {
               <br></br> <br></br>
               <input type="submit" value="Submit" />
             </form>
+            
           </div>
         </div>
       )}
