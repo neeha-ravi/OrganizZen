@@ -2,3 +2,4 @@ node_modules
 README.md
 .gitignore
 OrganizZen.drawio
+prettierrc.json

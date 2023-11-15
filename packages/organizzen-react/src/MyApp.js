@@ -7,10 +7,12 @@ const App = () => {
   return (
     <div>
       <HomePage />
-      <div className="newButtons">
-        <NewEvent />
-        <NewTask />
-      </div>
+      {
+        <div className="newButtons">
+          <NewEvent />
+          <NewTask />
+        </div>
+      }
     </div>
   );
 };
