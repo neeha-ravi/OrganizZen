@@ -1,7 +1,10 @@
+//NewEvent.js
+
 import React, { useState } from "react";
 import "./NewEvent.css";
 
 function NewEvent() {
+
   const [popup, popupState] = useState(false);
   const togglePopup = () => {
     popupState(!popup);
@@ -26,6 +29,7 @@ function NewEvent() {
               X
             </button>
             <h1>New Event</h1>
+
             <form className="popupForm">
               <label htmlFor="taskName">Name: </label>
               <br></br>
@@ -55,6 +59,7 @@ function NewEvent() {
               <br></br> <br></br>
               <input type="submit" value="Submit" />
             </form>
+
           </div>
         </div>
       )}

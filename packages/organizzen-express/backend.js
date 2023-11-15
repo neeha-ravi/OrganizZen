@@ -1,3 +1,5 @@
+//backend.js 
+
 import express from "express";
 import cors from "cors";
 
@@ -25,6 +27,7 @@ const events = {
           link: "https://example.com/task1",
           date: "2023-12-01",
           color: "red",
+          event: "1"
         },
         // Add more tasks for Event 1 if needed
       ],
@@ -44,6 +47,7 @@ const events = {
           link: "https://example.com/task2",
           date: "2023-12-15",
           color: "blue",
+          event: "2"
         },
         // Add more tasks for Event 2 if needed
       ],
@@ -80,8 +84,8 @@ app.get('/events', (req, res) => {
   res.send(events);
 });
 
-app.get("/events/:id", (req, res) => {
-  const id = req.params.id;
+app.get("/events/:eventId", (req, res) => {
+  const id = req.params.Id;
   let result = findEventById(id);
   if (result === undefined) {
     res.status(404).send("Resource not found.");
@@ -121,6 +125,16 @@ const addTask = (task, eventId) => {
   }
   return null; // Return null if event is not found
 }
+
+app.get("/events/:eventId/tasks", (req, res) => {
+  const id = req.params.eventId;
+  let result = findEventById(id);
+  if (result === undefined) {
+    res.status(404).send("Resource not found.");
+  } else {
+    res.send(result.tasks);
+  }
+});
 
 app.post('/events/:eventId/', (req, res) => {
   const eventId = req.params.eventId; // Fix the parameter name
