@@ -1,11 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './NewTask.css'
 
 function NewTask() {
     const [popup, popupState] = useState(false)
+    const [eventOptions, setEventOptions] = useState([])
     const togglePopup = () => {
         popupState(!popup)
     }
+
+    useEffect(() => {
+        fetch('http://localhost:8000/events')
+            .then((response) => response.json())
+            .then((data) => {
+                setEventOptions(data.events_list)
+            })
+    })
 
     return (
         <>
@@ -44,10 +53,14 @@ function NewTask() {
                                 Event:
                                 <br></br>
                                 <select>
-                                    <option value="event1">event1</option>
-                                    <option value="event2">event2</option>
-                                    <option value="event3">event3</option>
-                                    <option value="event4">event4</option>
+                                    {eventOptions.map((event) => (
+                                        <option
+                                            key={event.id}
+                                            value={event.name}
+                                        >
+                                            {event.name}
+                                        </option>
+                                    ))}
                                 </select>
                             </label>
                             <br></br> <br></br>
