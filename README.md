@@ -11,9 +11,5 @@ Style:
 Scripts (Run from root!):
 -  npm run format (run prettier)   ->    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
 -  npm run lint (run eslint)       ->    "lint": "npx eslint . && npx prettier --check ."
-
-Environment Variable
-- in .env file:
-    - MONGODB_URI=mongodb+srv://username:password@cluster0.u6mcxk1.mongodb.net/?retryWrites=true&w=majority
     
 NOTE: This project user Prettier and ESLint, and the project files contain the configuration for these tools. If using VSCode, please go to the "Extensions" tab and install "Prettier - Code formatter" by Prettier and "ESLint" from Microsoft. Trust the tools!
