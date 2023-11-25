@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - run: npm run -w express-backend lint
-      - run: npm run -w react-frontend lint
-      - run: npm run -w react-frontend build
+      - run: npm run -w packages/organizzen-express lint
+      - run: npm run -w packages/organizzen-react lint
+      - run: npm run -w packages/organizzen-react build
 
