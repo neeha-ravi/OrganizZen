@@ -4,8 +4,8 @@
 name: CI Testing
 
 on:
-    push:
-        branches: [main]
+  push:
+    branches: [main]
 
 jobs:
   build:
@@ -19,3 +19,4 @@ jobs:
       - run: npm run -w express-backend lint
       - run: npm run -w react-frontend lint
       - run: npm run -w react-frontend build
+

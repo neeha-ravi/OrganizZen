@@ -1,3 +1,5 @@
-require('dotenv').config();
+/* global process */
+require('dotenv').config()
 
-const mongoURI = process.env.MONGODB_URI;
+// eslint-disable-next-line no-unused-vars
+const mongoURI = process.env.MONGODB_URI
