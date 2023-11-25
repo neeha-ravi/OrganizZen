@@ -1,7 +1,8 @@
 {
     "name": "organizzen",
     "workspaces": [
-        "packages/*"
+        "packages/*",
+        "express-backend"
     ],
     "version": "1.0.0",
     "description": "OrganizZen App - 307",
