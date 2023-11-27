@@ -9,6 +9,7 @@ function HomePage() {
             <div className={styles.CalendarContainer}>
                 <div className={styles.CalendarDashboard} />
             </div>
+            <div className="Divider"></div>
             <TaskTable />
         </div>
     )
