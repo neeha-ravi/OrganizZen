@@ -50,6 +50,7 @@ function NewTask(props) {
     const [selectedEvent, setEventSelect] = useState(eventOptions[0])
     const handleEventSelect = (e) => {
         setEventSelect(e.target.value)
+        console.log('Selected Event ID:', e.target.value)
     }
 
     return (
@@ -112,7 +113,7 @@ function NewTask(props) {
                                     value={selectedEvent}
                                 >
                                     {eventOptions.map((event) => (
-                                        <option key={event.id} value={event.id}>
+                                        <option value={event.id}>
                                             {event.name}
                                         </option>
                                     ))}
