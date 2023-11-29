@@ -62,10 +62,15 @@ const App = () => {
     return (
         <div>
             <HomePage />
-            <div className="newButtons">
-                <NewEvent handleSubmit={postEvent} />
-                {/* Pass addTask function as a prop to NewTask component */}
-                <NewTask handleSubmit={postTask} events={events} />
+            <div className="newButtonContainer">
+                <div className="ButtonsContainer">
+                    <NewEvent handleSubmit={postEvent} />
+                    {/* Pass addTask function as a prop to NewTask component */}
+                    <div className="ButtonDivider"></div>
+                    <NewTask handleSubmit={postTask} events={events} />
+                </div>
+                <div className="ButtonOtherDivider" />
+                <div className="TaskWidth" />
             </div>
             {/* Render the list of events and tasks */}
             {events.map((event) => (
