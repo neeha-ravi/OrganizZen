@@ -161,7 +161,7 @@ function MyApp() {
     return (
         <div>
             <HomePage />
-            <div className="newButtons">
+            {/* <div className="newButtons">
                 <NewEvent
                     newEventData={newEventData}
                     setNewEventData={setNewEventData}
@@ -173,7 +173,7 @@ function MyApp() {
                     handleNewTaskSubmit={updateTaskList}
                     events={events}
                 />
-            </div>
+            </div> */}
         </div>
     )
 }

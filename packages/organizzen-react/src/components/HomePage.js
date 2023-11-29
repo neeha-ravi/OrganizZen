@@ -5,12 +5,13 @@ import TaskTable from './TaskTable'
 function HomePage() {
     return (
         <div>
-            <div className={styles.Header}>O R G A N I Z Z E N</div>
-            <div className={styles.CalendarContainer}>
+            <div className={styles.CalendarTaskContainer}>
                 <div className={styles.CalendarDashboard} />
+                <div className={styles.TaskCalendarDivider} />
+                <div className={styles.TaskContainer}>
+                    <TaskTable />
+                </div>
             </div>
-            <div className="Divider"></div>
-            <TaskTable />
         </div>
     )
 }
