@@ -1,17 +1,48 @@
+/* TaskTable.css */
 .Divider {
     height: 25px;
     width: 100%;
 }
 
 .DateContainer {
-    height: 30px;
+    height: 31px;
     width: 100%;
-    background-color: #f8f0e9;
+    background-color: #FFFFFF;
     border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .ToDoListContainer {
-    height: 350px;
+    height: 650px;
     width: 100%;
-    overflow: scroll;
+}
+
+.TaskContainer {
+    display: flex;
+    align-items: center;
+    height: 31px;
+    width: 100%;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.StartText {
+    height: 31px;
+    width: 15px;
+}
+
+.Checkbox {
+    height: 31px;
+    width: 31px;
+    background-color: purple;
+    margin-right: 10px; 
+}
+
+.TodoItem {
+    margin-left: 1px;
 }

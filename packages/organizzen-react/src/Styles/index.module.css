@@ -1,73 +1,33 @@
 body {
-    background: #d7bbbb;
+    background-image: linear-gradient(#8b59f641, rgba(246, 189, 65, 0.47));
     font-family: 'Be Vietnam Pro', sans-serif;
-    --radius: 8px;
-    --button-width: 100px;
-    --button-result-height: 30px;
-    --grid-spacing: 5px;
+    display:flow-root;
+    margin: 100px;
 }
 
-.Header {
-    text-align: center;
-    justify-content: center;
-    display: flex;
-    padding: 70px 0 25px 0;
+.CalendarTaskContainer {
     width: 100%;
-    height: 30px;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    color: #ffffff;
-}
-
-.CalendarContainer {
-    width: 100%;
-    height: 175px;
+    height: 650px;
     justify-content: center;
     display: flex;
 }
 
 .CalendarDashboard {
-    height: 175px;
-    width: 375px;
-    background-color: #f8f0e9;
-    border-radius: 15px;
+    height: 650px;
+    width: 550px;
+    background-color: #FFFFFF;
+    border-radius: 20px;
     align-items: center;
+    display: flex;
 }
 
-.AddContainer {
-    position: fixed;
-    bottom: 0;
-    background-color: #d7bbbb;
-    left: 50%; /* Horizontal centering */
-    transform: translateX(-50%); /* Centering adjustment */
-    width: 100%;
-    height: 90px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.TaskContainer {
+    height: 650px;
+    width: 850px;
+    /* background-color: red; */
 }
 
-.AddTaskLabel {
-    width: 165px;
-    height: 45px;
-    background-color: #f8f0e9;
-    color: #9d8e8e;
-    border-radius: 11px;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    margin-right: 9px;
-}
-
-.AddEventLabel {
-    width: 190px;
-    height: 45px;
-    background-color: #f8f0e9;
-    color: #9d8e8e;
-    border-radius: 11px;
-    justify-content: center;
-    display: flex;
-    align-items: center;
+.TaskCalendarDivider {
+    height: 650px;
+    width: 50px;
 }
