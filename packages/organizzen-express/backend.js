@@ -135,13 +135,18 @@ app.get('/events/:eventId/tasks', (req, res) => {
     }
 })
 
-app.post('/events/:eventId/', (req, res) => {
-    const eventId = req.params.eventId // Fix the parameter name
+app.post('/events/:eventId/tasks', (req, res) => {
+    //console.log('Hello World!')
+    const eventId = req.params.eventId
     const taskToAdd = addTask(req.body, eventId)
 
+    console.log('Task data:', req.body)
+
     if (taskToAdd) {
+        console.log('Task added:', taskToAdd)
         res.status(201).json(taskToAdd)
     } else {
+        console.error('Event not found or failed to add task to event')
         res.status(404).json({
             error: 'Event not found or failed to add task to event',
         })
