@@ -47,7 +47,7 @@ function NewEvent(props) {
     return (
         <>
             <button className="popupButton" onClick={togglePopup}>
-                New Event
+                Add Event
             </button>
 
             {popup && (

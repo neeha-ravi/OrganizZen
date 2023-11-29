@@ -56,7 +56,7 @@ function NewTask(props) {
     return (
         <>
             <button className="popupButton" onClick={togglePopup}>
-                New Task
+                Add Task
             </button>
 
             {popup && (
