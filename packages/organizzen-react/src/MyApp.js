@@ -72,17 +72,6 @@ const App = () => {
                 <div className="ButtonOtherDivider" />
                 <div className="TaskWidth" />
             </div>
-            {/* Render the list of events and tasks */}
-            {events.map((event) => (
-                <div key={event.id}>
-                    <h3>{event.name}</h3>
-                    <ul>
-                        {event.tasks.map((task) => (
-                            <li key={task.id}>{task.name}</li>
-                        ))}
-                    </ul>
-                </div>
-            ))}
         </div>
     )
 }

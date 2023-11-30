@@ -17,14 +17,46 @@ body {
     width: 550px;
     background-color: #FFFFFF;
     border-radius: 20px;
+    justify-content: center;
     align-items: center;
     display: flex;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.CalendarDashboard::-webkit-scrollbar {
+    width: 10px; 
+}
+
+.CalendarDashboard::-webkit-scrollbar-thumb {
+    background-color: #ffffffa3; 
+    border-radius: 10px;
+}
+
+.CalendarDashboard::-webkit-scrollbar-track {
+    background-color: #ffffff6c;
+    border-radius: 10px;
 }
 
 .TaskContainer {
     height: 650px;
     width: 850px;
-    /* background-color: red; */
+    overflow-y: auto;
+}
+
+.TaskContainer::-webkit-scrollbar {
+    width: 10px;
+}
+
+.TaskContainer::-webkit-scrollbar-thumb {
+    background-color: #ffffffa3;
+    border-radius: 10px;
+}
+
+.TaskContainer::-webkit-scrollbar-track {
+    background-color: #ffffff6c;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .TaskCalendarDivider {
