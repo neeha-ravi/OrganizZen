@@ -1,0 +1,27 @@
+.EventContainer {
+    width: 550px;
+    height: 162.5px;
+    justify-content: center;
+    align-items: center;
+    display: flex; 
+}
+
+.EventBox {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    background-color: rgba(121, 121, 200, 0.425);
+    width: 490px;
+    height: 130px;
+    border-radius: 12px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.EventBox h3 {
+    margin-bottom: 4px;
+}
+
+.EventBox p {
+    margin: 0;
+}
