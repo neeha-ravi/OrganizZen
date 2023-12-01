@@ -20,22 +20,7 @@ body {
     justify-content: center;
     align-items: center;
     display: flex;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-.CalendarDashboard::-webkit-scrollbar {
-    width: 10px; 
-}
-
-.CalendarDashboard::-webkit-scrollbar-thumb {
-    background-color: #ffffffa3; 
-    border-radius: 10px;
-}
-
-.CalendarDashboard::-webkit-scrollbar-track {
-    background-color: #ffffff6c;
-    border-radius: 10px;
+    overflow: hidden;
 }
 
 .TaskContainer {
