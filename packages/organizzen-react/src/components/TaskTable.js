@@ -1,44 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import './TaskTable.css';
+import React, { useState, useEffect } from 'react'
+import './TaskTable.css'
 
 function TaskTable() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState([])
 
   useEffect(() => {
     fetch('http://localhost:8000/events/tasks')
       .then((response) => response.json())
       .then((data) => setTasks(data))
-      .catch((error) => console.log(error));
-  }, []);
+      .catch((error) => console.log(error))
+  }, [])
 
   const groupTasksByDate = () => {
-    const groupedTasks = {};
+    const groupedTasks = {}
     tasks.forEach((task) => {
       if (!groupedTasks[task.date]) {
-        groupedTasks[task.date] = [];
+        groupedTasks[task.date] = []
       }
-      groupedTasks[task.date].push(task);
-    });
-    return groupedTasks;
-  };
+      groupedTasks[task.date].push(task)
+    })
+    return groupedTasks
+  }
 
   const renderTasks = () => {
-    const groupedTasks = groupTasksByDate();
-    const taskDates = Object.keys(groupedTasks);
+    const groupedTasks = groupTasksByDate()
+    const taskDates = Object.keys(groupedTasks)
 
-    const sortedDates = taskDates.sort((a, b) => new Date(a) - new Date(b));
+    const sortedDates = taskDates.sort((a, b) => new Date(a) - new Date(b))
 
-    const currentDate = new Date();
+    const currentDate = new Date()
 
     return sortedDates.map((date, index) => {
-      const tasksForDate = groupedTasks[date];
+      const tasksForDate = groupedTasks[date]
 
       const filteredTasks = tasksForDate.filter(
         (task) => new Date(task.date) >= currentDate
-      );
+      )
 
       if (filteredTasks.length === 0) {
-        return null;
+        return null
       }
 
       return (
@@ -64,11 +64,11 @@ function TaskTable() {
 
           {index < sortedDates.length - 1 && <div className="Divider"></div>}
         </div>
-      );
-    });
-  };
+      )
+    })
+  }
 
-  return <div className="ToDoListContainer">{renderTasks()}</div>;
+  return <div className="ToDoListContainer">{renderTasks()}</div>
 }
 
-export default TaskTable;
+export default TaskTable

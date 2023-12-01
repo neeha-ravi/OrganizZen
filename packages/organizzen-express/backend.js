@@ -118,13 +118,12 @@ app.get('/events/:eventId', (req, res) => {
 const addEvent = (e) => {
     e.id = generateUniqueId(usedEventIds)
     e.tasks = []
+    
     // Convert start and end dates to UTC format
-    e.startDate = new Date(`${e.startDate}T00:00:00Z`).toISOString().split('T')[0];
-    e.endDate = new Date(`${e.endDate}T23:59:59Z`)
-    .toISOString()
-    .split('T')[0]
+    e.startDate = new Date(`${e.startDate}T00:00:00Z`).toISOString().split('T')[0]
+    e.endDate = new Date(`${e.endDate}T23:59:59Z`).toISOString().split('T')[0]
 
-    events['events_list'].push(e);
+    events['events_list'].push(e)
     return e
 }
 
@@ -178,7 +177,7 @@ app.get('/events/:eventId/tasks', (req, res) => {
     } else {
         res.send(result.tasks)
     }
-});
+})
 
 app.post('/events/:eventId/tasks', (req, res) => {
     const eventId = req.params.eventId
