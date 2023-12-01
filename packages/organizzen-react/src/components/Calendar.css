@@ -1,3 +1,25 @@
+.EventScrollContainer {
+    height: 650px;
+    width: 550px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.EventScrollContainer::-webkit-scrollbar {
+    width: 10px; 
+}
+
+.EventScrollContainer::-webkit-scrollbar-thumb {
+    background-color: #ffffffa3; 
+    border-radius: 10px;
+}
+
+.EventScrollContainer::-webkit-scrollbar-track {
+    background-color: #ffffff6c;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
 .EventContainer {
     width: 550px;
     height: 162.5px;
@@ -24,4 +46,30 @@
 
 .EventBox p {
     margin: 0;
+}
+
+.EventNotAdded {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    background-color: pink;
+    color: white;
+    border-radius: 8px;
+    z-index: 999;
+    opacity: 0;
+    animation: fadeInOut 2s ease-in-out forwards;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }

@@ -17,8 +17,8 @@ const events = {
             name: 'Event 1',
             description: 'Description for Event 1',
             link: 'https://example.com/event1',
-            startDate: '2023-12-01',
-            endDate: '2023-12-01',
+            startDate: '2023-12-04',
+            endDate: '2023-12-04',
             oneDayOnly: true,
             tasks: [
                 {
@@ -26,7 +26,7 @@ const events = {
                     name: 'Task 1',
                     description: 'Description for Task 1',
                     link: 'https://example.com/task1',
-                    date: '2023-12-01',
+                    date: '2023-12-03',
                     color: 'red',
                     event: '1',
                 },
@@ -116,12 +116,21 @@ app.get('/events/:eventId', (req, res) => {
 
 // EVENT
 const addEvent = (e) => {
-    e.id = generateUniqueId(usedEventIds);
-    e.tasks = [];
-    
     // Convert start and end dates to UTC format
     e.startDate = new Date(`${e.startDate}T00:00:00Z`).toISOString().split('T')[0];
     e.endDate = new Date(`${e.endDate}T23:59:59Z`).toISOString().split('T')[0];
+
+    // Check if the event start date is in the future
+    const currentDate = new Date();
+    const eventStartDate = new Date(e.startDate).getTime();
+
+    if (eventStartDate < currentDate.getTime()) {
+        // If the event start date has already passed, return an error
+        return null;
+    }
+
+    e.id = generateUniqueId(usedEventIds);
+    e.tasks = [];
 
     events['events_list'].push(e);
     return e;
@@ -155,11 +164,12 @@ const addTask = (task, eventId, taskDate) => {
 
     if (event) {
         // Check if the task date is within the event's date range
+        const currentDate = new Date(); // This gets the current date and time
         const taskDateTime = new Date(taskDate).getTime();
         const eventStartDate = new Date(event.startDate).getTime();
         const eventEndDate = new Date(event.endDate).getTime();
 
-        if (taskDateTime >= eventStartDate && taskDateTime <= eventEndDate) {
+        if (taskDateTime >= currentDate && taskDateTime <= eventEndDate) {
             event.tasks.push(task);
             usedTaskIds.add(task.id);
             return task;
@@ -197,5 +207,5 @@ app.post('/events/:eventId/tasks', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}/events`)
+    console.log(`Example app listening at http://localhost:${port}/events`);
 })
