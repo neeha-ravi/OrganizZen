@@ -19,5 +19,5 @@ jobs:
       - run: npm run -w packages/organizzen-express lint
 
 
-#      - run: npm run -w packages/organizzen-react lint
-#      - run: npm run -w packages/organizzen-react build
+      - run: npm run -w packages/organizzen-react lint
+      - run: npm run -w packages/organizzen-react build
