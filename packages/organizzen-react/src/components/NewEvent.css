@@ -4,12 +4,12 @@
     left: 50%;
     transform: translate(-50%, -40%);
     line-height: 1.4;
-    color: #9d8e8e;
-    background: #f9f4ef;
+    color: rgb(255, 255, 255);
+    background: #a98f8f8e;
     padding: 50px 75px;
     border-radius: 40px;
-    max-width: 600px;
-    min-width: 300px;
+    width: 450px;
+    height: 625px;
     text-align: center;
 }
 
@@ -19,12 +19,13 @@
 
 #popupClose {
     position: absolute;
-    background-color: #d7bbbb;
+    background-color: #000000 !important;
     color: white;
     font-size: 20px;
     padding: 10px;
     border-radius: 5px;
-    transform: translate(475%, -60%);
+    width: 50px;
+    left: 80%;
 }
 
 #submitform {

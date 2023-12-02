@@ -4,17 +4,97 @@
     left: 50%;
     transform: translate(-50%, -40%);
     line-height: 1.4;
-    color: #9d8e8e;
-    background: #f9f4ef;
+    color: #000000;
+    background: rgba(255, 255, 255, 0.904);
     padding: 50px 75px;
     border-radius: 40px;
-    max-width: 600px;
-    min-width: 300px;
+    width: 450px;
+    height: 700px;
     text-align: center;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    overflow-y: auto;
+}
+
+.popupContent::-webkit-scrollbar {
+    width: 10px;
+}
+
+.popupContent::-webkit-scrollbar-thumb {
+    background-color: #ffffffa3;
+    border-radius: 10px;
+}
+
+.popupContent::-webkit-scrollbar-track {
+    background-color: #ffffff6c;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .popupForm {
     font-weight: 600;
+    font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+.popupForm input {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#name,
+#description,
+#link,
+#date,
+#event {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+.colorButtons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.color-options {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.color-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    transition: filter 0.3s; 
+}
+
+.color-button:hover {
+    filter: brightness(0.8); /* Darken the color on hover */
+}
+
+.color-button:onClick {
+    filter: brightness(0.8);
+}
+
+label {
+    margin-top: 10px;
+}
+
+#date[disabled] {
+    background-color: #f0f0f0;
 }
 
 #popupClose {
@@ -24,16 +104,26 @@
     font-size: 20px;
     padding: 10px;
     border-radius: 5px;
-    transform: translate(475%, -60%);
+    width: 50px;
+    left: 80%;
+}
+
+#popupClose:hover {
+    background-color: #434242 !important;
 }
 
 #submitform {
-    background-color: #9d8e8e;
-    color: #f8f0e9;
+    background-color: #000000;
+    color: #ffffff;
     border: 0;
     border-radius: 10px;
     padding: 10px 20px;
     font-size: 24px;
     font-weight: bold;
     margin-top: 10px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+#submitform:hover {
+    background-color: #434242 !important;
 }
