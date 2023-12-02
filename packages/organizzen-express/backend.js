@@ -26,7 +26,7 @@ const events = {
                     name: 'Task 1',
                     description: 'Description for Task 1',
                     link: 'https://example.com/task1',
-                    date: '2023-12-03',
+                    date: '2023-12-04',
                     color: 'red',
                     event: '1',
                 },
@@ -124,6 +124,7 @@ const addEvent = (e) => {
 
     // Check if the event start date is in the future
     const currentDate = new Date()
+    currentDate.setDate(currentDate.getDate() - 2) //sets current date as 2 days ago because it doesn't read anything today or tomorrow
     const eventStartDate = new Date(e.startDate).getTime()
 
     if (eventStartDate < currentDate.getTime()) {
@@ -167,6 +168,7 @@ const addTask = (task, eventId, taskDate) => {
     if (event) {
         // Check if the task date is within the event's date range
         const currentDate = new Date() // This gets the current date and time
+        currentDate.setDate(currentDate.getDate() - 2) //sets current date as 2 days ago because it doesn't read anything today or tomorrow
         const taskDateTime = new Date(taskDate).getTime()
         const eventStartDate = new Date(event.startDate).getTime()
         const eventEndDate = new Date(event.endDate).getTime()
