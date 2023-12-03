@@ -39,15 +39,17 @@ function NewTask(props) {
     }
 
     const [eventOptions, setEventOptions] = useState([])
+    const [selectedEvent, setEventSelect] = useState('')
+
     useEffect(() => {
         fetch('http://localhost:8000/events')
             .then((response) => response.json())
             .then((data) => {
                 setEventOptions(data.events_list)
+                setEventSelect(data.events_list[0].id)
             })
-    })
+    }, [])
 
-    const [selectedEvent, setEventSelect] = useState(eventOptions[0])
     const handleEventSelect = (e) => {
         setEventSelect(e.target.value)
         console.log('Selected Event ID:', e.target.value)
@@ -113,14 +115,14 @@ function NewTask(props) {
                                     value={selectedEvent}
                                 >
                                     {eventOptions.map((event) => (
-                                        <option value={event.id}>
+                                        <option key={event.id} value={event.id}>
                                             {event.name}
                                         </option>
                                     ))}
                                 </select>
                             </label>
                             <br></br> <br></br>
-                            <label for="color">
+                            <label htmlFor="color">
                                 Label Color:
                                 <br></br>
                                 <select
@@ -128,15 +130,33 @@ function NewTask(props) {
                                     id="color"
                                     onChange={handleChange}
                                 >
-                                    <option value="none">None</option>
-                                    <option value="red">Red</option>
-                                    <option value="orange">Orange</option>
-                                    <option value="yellow">Yellow</option>
-                                    <option value="green">Green</option>
-                                    <option value="blue">Blue</option>
-                                    <option value="purple">Purple</option>
-                                    <option value="pink">Pink</option>
-                                    <option value="brown">Brown</option>
+                                    <option key="none" value="none">
+                                        None
+                                    </option>
+                                    <option key="red" value="red">
+                                        Red
+                                    </option>
+                                    <option key="orange" value="orange">
+                                        Orange
+                                    </option>
+                                    <option key="yellow" value="yellow">
+                                        Yellow
+                                    </option>
+                                    <option key="green" value="green">
+                                        Green
+                                    </option>
+                                    <option key="blue" value="blue">
+                                        Blue
+                                    </option>
+                                    <option key="purple" value="purple">
+                                        Purple
+                                    </option>
+                                    <option key="pink" value="pink">
+                                        Pink
+                                    </option>
+                                    <option key="brown" value="brown">
+                                        Brown
+                                    </option>
                                 </select>
                             </label>
                             <br></br> <br></br>
