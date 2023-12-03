@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import './NewTask.css';
+import React, { useState, useEffect } from 'react'
+import './NewTask.css'
 
 function NewTask(props) {
     const [task, setTask] = useState({
@@ -10,10 +10,13 @@ function NewTask(props) {
         date: '',
         color: '',
         event: '',
-    });
+    })
+
+    // Add a state to keep track of the selected color
+    const [selectedColor, setSelectedColor] = useState('none')
 
     function submitForm() {
-        props.handleSubmit(selectedEvent, task);
+        props.handleSubmit(selectedEvent, task)
         setTask({
             id: '',
             name: '',
@@ -22,44 +25,45 @@ function NewTask(props) {
             date: '',
             color: '',
             event: '',
-        });
+        })
     }
 
     function handleChange(e) {
-        const { name, value } = e.target;
+        const { name, value } = e.target
         setTask((prevTask) => ({
             ...prevTask,
             [name]: value,
             event: selectedEvent,
-        }));
+        }))
     }
 
     function handleColorChange(color) {
         setTask((prevTask) => ({
             ...prevTask,
             color: color,
-        }));
+        }))
+        setSelectedColor(color)
     }
 
-    const [popup, popupState] = useState(false);
+    const [popup, popupState] = useState(false)
     const togglePopup = () => {
-        popupState(!popup);
-    };
+        popupState(!popup)
+    }
 
-    const [eventOptions, setEventOptions] = useState([]);
+    const [eventOptions, setEventOptions] = useState([])
     useEffect(() => {
         fetch('http://localhost:8000/events')
             .then((response) => response.json())
             .then((data) => {
-                setEventOptions(data.events_list);
-            });
-    }, []);
+                setEventOptions(data.events_list)
+            })
+    }, [])
 
-    const [selectedEvent, setEventSelect] = useState(eventOptions[0]);
+    const [selectedEvent, setEventSelect] = useState(eventOptions[0])
     const handleEventSelect = (e) => {
-        setEventSelect(e.target.value);
-        console.log('Selected Event ID:', e.target.value);
-    };
+        setEventSelect(e.target.value)
+        console.log('Selected Event ID:', e.target.value)
+    }
 
     return (
         <>
@@ -128,71 +132,62 @@ function NewTask(props) {
                                 <div className="color-options">
                                     <button
                                         type="button"
-                                        className="color-button"
+                                        className={`color-button ${selectedColor === 'none' ? 'selected' : ''}`}
                                         style={{ backgroundColor: '#ffffff' }}
                                         onClick={() => handleColorChange('none')}
-                                    >
-                                    </button>
+                                    ></button>
                                     <button
                                         type="button"
-                                        className="color-button"
+                                        className={`color-button ${selectedColor === '#f59d9d' ? 'selected' : ''}`}
                                         style={{ backgroundColor: '#f59d9d' }}
-                                        onClick={() => handleColorChange('red')}
-                                    >
-                                    </button>
+                                        onClick={() => handleColorChange('#f59d9d')}
+                                    ></button>
                                     <button
                                         type="button"
-                                        className="color-button"
+                                        className={`color-button ${selectedColor === '#f5c99d' ? 'selected' : ''}`}
                                         style={{ backgroundColor: '#f5c99d' }}
-                                        onClick={() => handleColorChange('orange')}
-                                    >
-                                    </button>
+                                        onClick={() => handleColorChange('#f5c99d')}
+                                    ></button>
                                 </div>
                                 <div className="color-options">
                                     <button
                                         type="button"
-                                        className="color-button"
+                                        className={`color-button ${selectedColor === '#f5df9d' ? 'selected' : ''}`}
                                         style={{ backgroundColor: '#f5df9d' }}
-                                        onClick={() => handleColorChange('yellow')}
-                                    >
-                                    </button>
-                                    <button
-                                            type="button"
-                                            className="color-button"
-                                            style={{ backgroundColor: '#a8c7a7' }}
-                                            onClick={() => handleColorChange('green')}
-                                        >
-                                    </button>
+                                        onClick={() => handleColorChange('#f5df9d')}
+                                    ></button>
                                     <button
                                         type="button"
-                                        className="color-button"
+                                        className={`color-button ${selectedColor === '#a8c7a7' ? 'selected' : ''}`}
+                                        style={{ backgroundColor: '#a8c7a7' }}
+                                        onClick={() => handleColorChange('#a8c7a7')}
+                                    ></button>
+                                    <button
+                                        type="button"
+                                        className={`color-button ${selectedColor === '#9bc1cc' ? 'selected' : ''}`}
                                         style={{ backgroundColor: '#9bc1cc' }}
-                                        onClick={() => handleColorChange('blue')}
-                                    >
-                                    </button>
+                                        onClick={() => handleColorChange('#9bc1cc')}
+                                    ></button>
                                 </div>
                                 <div className="color-options">
                                     <button
                                         type="button"
-                                        className="color-button"
+                                        className={`color-button ${selectedColor === '#a99bcc' ? 'selected' : ''}`}
                                         style={{ backgroundColor: '#a99bcc' }}
-                                        onClick={() => handleColorChange('purple')}
-                                    >
-                                    </button>
+                                        onClick={() => handleColorChange('#a99bcc')}
+                                    ></button>
                                     <button
                                         type="button"
-                                        className="color-button"
-                                        style={{ backgroundColor: 'pink' }}
-                                        onClick={() => handleColorChange('pink')}
-                                    >
-                                    </button>
+                                        className={`color-button ${selectedColor === '#f5c3cb' ? 'selected' : ''}`}
+                                        style={{ backgroundColor: '#f5c3cb' }}
+                                        onClick={() => handleColorChange('#f5c3cb')}
+                                    ></button>
                                     <button
                                         type="button"
-                                        className="color-button"
+                                        className={`color-button ${selectedColor === 'brown' ? 'selected' : ''}`}
                                         style={{ backgroundColor: '#6b5145' }}
                                         onClick={() => handleColorChange('brown')}
-                                    >
-                                    </button>
+                                    ></button>
                                 </div>
                             </label>
                             <br /> <br />
@@ -207,7 +202,7 @@ function NewTask(props) {
                 </div>
             )}
         </>
-    );
+    )
 }
 
-export default NewTask;
+export default NewTask
