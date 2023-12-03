@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import './Calendar.css'
+import React, { useState, useEffect } from 'react';
+import './Calendar.css';
 
 function Calendar({ filter, setFilter }) {
     const [events, setEvents] = useState([])

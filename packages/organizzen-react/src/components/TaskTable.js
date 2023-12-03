@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import './TaskTable.css'
+import React, { useState, useEffect } from 'react';
+import './TaskTable.css';
 
 function TaskTable({ filter }) {
   const [tasks, setTasks] = useState([]);
@@ -54,16 +54,26 @@ function TaskTable({ filter }) {
         }
     }, [filter])
 
-    const groupTasksByDate = () => {
-        const groupedTasks = {}
-        tasks.forEach((task) => {
-            if (!groupedTasks[task.date]) {
-                groupedTasks[task.date] = []
-            }
-            groupedTasks[task.date].push(task)
+  useEffect(() => {
+    // Check if there are events selected in the filter
+    if (filter.size > 0) {
+      // Fetch tasks for each eventId in the filter
+      Promise.all([...filter].map((eventId) => fetch(`http://localhost:8000/events/${eventId}/tasks`)))
+        .then((responses) => Promise.all(responses.map((response) => response.json())))
+        .then((data) => {
+          // Flatten the array of arrays into a single array of tasks
+          const filteredTasks = data.flat();
+          setTasks(filteredTasks);
         })
-        return groupedTasks
+        .catch((error) => console.log(error));
+    } else {
+      // If no events are selected, fetch all tasks
+      fetch('http://localhost:8000/events/tasks')
+        .then((response) => response.json())
+        .then((data) => setTasks(data))
+        .catch((error) => console.log(error));
     }
+  }, [filter]);
 
     function fetchTasks(eventId) {
       if (!eventId) {
