@@ -1,10 +1,8 @@
-//backend.js
 
-require('dotenv').config()
 import express from 'express'
 import cors from 'cors'
 const { MongoClient, ObjectId } = require('mongodb')
-const { connectToMongoDB } = require('./database') // Import the connectToMongoDB function
+import { connectToMongoDB } from './database.js'
 
 const app = express()
 const port = 8000
@@ -12,10 +10,11 @@ const port = 8000
 app.use(cors())
 app.use(express.json())
 
+let mongoClient
 // Use connectToMongoDB function to establish connection
 connectToMongoDB()
-  .then((mongoClient) => {
-    
+  .then((client) => {
+    mongoClient = client
     console.log('Connected to MongoDB')
 
     const eventsCollection = mongoClient.db('Cluster0').collection('userEvents')
@@ -88,8 +87,8 @@ connectToMongoDB()
         }
     })
 
-    app.listen(port, () => {
-        console.log(`Example app listening at http://localhost:${port}`)
+    app.listen(process.env.PORT || port, () => {
+        console.log(`REST API is listening.`)
     })
 })
     .catch((error) => {

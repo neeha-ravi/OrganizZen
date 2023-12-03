@@ -6,7 +6,7 @@ function Calendar() {
 
   useEffect(() => {
     // Fetch events from the backend
-    fetch('http://localhost:8000/events')
+    fetch('https://organizzen.azurewebsites.net/')
       .then((response) => response.json())
       .then((data) => setEvents(data.events_list))
       .catch((error) => console.log(error));
