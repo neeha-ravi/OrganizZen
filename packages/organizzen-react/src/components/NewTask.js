@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import './NewTask.css';
+import React, { useState, useEffect } from 'react'
+import './NewTask.css'
 
 function NewTask(props) {
     const [task, setTask] = useState({
@@ -10,13 +10,13 @@ function NewTask(props) {
         date: '',
         color: '',
         event: '',
-    });
+    })
 
     // Add a state to keep track of the selected color
-    const [selectedColor, setSelectedColor] = useState('none');
+    const [selectedColor, setSelectedColor] = useState('none')
 
     function submitForm() {
-        props.handleSubmit(selectedEvent, task);
+        props.handleSubmit(selectedEvent, task)
         setTask({
             id: '',
             name: '',
@@ -25,46 +25,45 @@ function NewTask(props) {
             date: '',
             color: '',
             event: '',
-        });
+        })
     }
 
     function handleChange(e) {
-        const { name, value } = e.target;
+        const { name, value } = e.target
         setTask((prevTask) => ({
             ...prevTask,
             [name]: value,
             event: selectedEvent,
-        }));
+        }))
     }
 
     function handleColorChange(color) {
         setTask((prevTask) => ({
             ...prevTask,
             color: color,
-        }));
-        setSelectedColor(color);
+        }))
+        setSelectedColor(color)
     }
 
-    const [popup, popupState] = useState(false);
+    const [popup, popupState] = useState(false)
     const togglePopup = () => {
-        popupState(!popup);
-    };
+        popupState(!popup)
+    }
 
-    const [eventOptions, setEventOptions] = useState([]);
+    const [eventOptions, setEventOptions] = useState([])
     useEffect(() => {
         fetch('http://localhost:8000/events')
             .then((response) => response.json())
             .then((data) => {
-                setEventOptions(data.events_list);
-            });
-    }, []);
+                setEventOptions(data.events_list)
+            })
+    }, [])
 
-    const [selectedEvent, setEventSelect] = useState(eventOptions[0]);
-
+    const [selectedEvent, setEventSelect] = useState(eventOptions[0])
     const handleEventSelect = (e) => {
-        setEventSelect(e.target.value);
-        console.log('Selected Event ID:', e.target.value);
-    };
+        setEventSelect(e.target.value)
+        console.log('Selected Event ID:', e.target.value)
+    }
 
     return (
         <>
@@ -203,7 +202,7 @@ function NewTask(props) {
                 </div>
             )}
         </>
-    );
+    )
 }
 
-export default NewTask;
+export default NewTask
