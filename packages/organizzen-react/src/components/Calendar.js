@@ -8,7 +8,11 @@ function Calendar() {
     // Fetch events from the backend
     fetch('https://organizzen.azurewebsites.net/')
       .then((response) => response.json())
-      .then((data) => setEvents(data.events_list))
+      .then((data) => {
+        // Sort events by start date in ascending order
+        const sortedEvents = data.events_list.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+        setEvents(sortedEvents);
+      })
       .catch((error) => console.log(error));
   }, []);
 
@@ -46,7 +50,7 @@ function Calendar() {
   };
 
   return (
-    <div>
+    <div className="EventScrollContainer">
       {events.map((event) => (
         <div className="EventContainer" key={event.id}>
           <div className="EventBox">
