@@ -48,6 +48,10 @@
     margin: 0;
 }
 
+.EventBox:hover {
+    filter: brightness(0.5);
+}
+
 .EventNotAdded {
     position: fixed;
     top: 20px;
@@ -60,6 +64,10 @@
     z-index: 999;
     opacity: 0;
     animation: fadeInOut 2s ease-in-out forwards;
+}
+
+.ShadedEvent .EventBox {
+    background-color: rgb(129, 121, 171)
 }
 
 @keyframes fadeInOut {
