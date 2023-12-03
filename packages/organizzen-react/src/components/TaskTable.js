@@ -23,58 +23,62 @@ function TaskTable() {
     }
 
     const renderTasks = () => {
-        const groupedTasks = groupTasksByDate()
-        const taskDates = Object.keys(groupedTasks)
+      const groupedTasks = groupTasksByDate();
+      const taskDates = Object.keys(groupedTasks);
 
-        const sortedDates = taskDates.sort((a, b) => new Date(a) - new Date(b))
+      const sortedDates = taskDates.sort((a, b) => new Date(a) - new Date(b));
 
-        const currentDate = new Date()
-        currentDate.setDate(currentDate.getDate() - 2) //sets current date as 2 days ago because it doesn't read anything today or tomorrow
+      const currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() - 2);
 
-        return sortedDates.map((date, index) => {
-            const tasksForDate = groupedTasks[date]
+      return sortedDates.map((date, index) => {
+        const tasksForDate = groupedTasks[date];
 
-            const filteredTasks = tasksForDate.filter(
-                (task) => new Date(task.date) >= currentDate
-            )
+        const filteredTasks = tasksForDate.filter(
+          (task) => new Date(task.date) >= currentDate
+        );
 
-            if (filteredTasks.length === 0) {
-                return null
-            }
+        if (filteredTasks.length === 0) {
+          return null;
+        }
 
-            return (
-                <div key={index}>
-                    <div className="DateContainer">
-                        <b>
-                            {new Intl.DateTimeFormat('en-US', {
-                                month: 'long',
-                                day: 'numeric',
-                                year: 'numeric',
-                            }).format(
-                                new Date(
-                                    new Date(date).getTime() +
-                                        24 * 60 * 60 * 1000
-                                )
-                            )}
-                        </b>
-                    </div>
+      return (
+          <div key={index}>
+              <div className="DateContainer">
+                  <b>
+                      {new Intl.DateTimeFormat('en-US', {
+                          month: 'long',
+                          day: 'numeric',
+                          year: 'numeric',
+                      }).format(
+                          new Date(
+                              new Date(date).getTime() +
+                                  24 * 60 * 60 * 1000
+                          )
+                      )}
+                  </b>
+              </div>
 
-                    {filteredTasks.map((task) => (
-                        <div className="TaskContainer" key={task.id}>
-                            <div className="StartText" />
-                            <div className="TodoItem">
-                                <label>{task.name}</label>
-                            </div>
-                        </div>
-                    ))}
+              {filteredTasks.map((task) => (
+                  <div
+                      className="TaskContainer"
+                      key={task.id}
+                      style={{ backgroundColor: task.color || '#ffffff' }}
+                  >
+                      <div className="StartText" />
+                      <div className="TodoItem">
+                          <label>{task.name}</label>
+                      </div>
+                  </div>
+              ))}
 
-                    {index < sortedDates.length - 1 && (
-                        <div className="Divider"></div>
-                    )}
-                </div>
-            )
-        })
-    }
+              {index < sortedDates.length - 1 && (
+                  <div className="Divider"></div>
+              )}
+          </div>
+          );
+        });
+    };
 
     return <div className="ToDoListContainer">{renderTasks()}</div>
 }
