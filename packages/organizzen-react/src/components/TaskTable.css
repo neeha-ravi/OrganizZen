@@ -30,6 +30,10 @@
     overflow: hidden;
 }
 
+.TaskContainer:hover {
+    filter: brightness(0.8);
+}
+
 .StartText {
     height: 31px;
     width: 15px;
