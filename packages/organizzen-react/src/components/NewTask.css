@@ -82,11 +82,11 @@
 }
 
 .color-button:hover {
-    filter: brightness(0.8); /* Darken the color on hover */
+    filter: brightness(0.8); 
 }
 
-.color-button:onClick {
-    filter: brightness(0.8);
+.color-button.selected {
+    filter: brightness(0.7);
 }
 
 label {
