@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import './NewTask.css'
+import React, { useState, useEffect } from 'react';
+import './NewTask.css';
 
 function NewTask(props) {
     const [task, setTask] = useState({
@@ -10,10 +10,13 @@ function NewTask(props) {
         date: '',
         color: '',
         event: '',
-    })
+    });
+
+    // Add a state to keep track of the selected color
+    const [selectedColor, setSelectedColor] = useState('none');
 
     function submitForm() {
-        props.handleSubmit(selectedEvent, task)
+        props.handleSubmit(selectedEvent, task);
         setTask({
             id: '',
             name: '',
@@ -22,38 +25,45 @@ function NewTask(props) {
             date: '',
             color: '',
             event: '',
-        })
+        });
     }
+
     function handleChange(e) {
-        const { name, value } = e.target
+        const { name, value } = e.target;
         setTask((prevTask) => ({
             ...prevTask,
             [name]: value,
             event: selectedEvent,
-        }))
+        }));
     }
 
-    const [popup, popupState] = useState(false)
+    function handleColorChange(color) {
+        setTask((prevTask) => ({
+            ...prevTask,
+            color: color,
+        }));
+        setSelectedColor(color);
+    }
+
+    const [popup, popupState] = useState(false);
     const togglePopup = () => {
-        popupState(!popup)
-    }
+        popupState(!popup);
+    };
 
-    const [eventOptions, setEventOptions] = useState([])
-    const [selectedEvent, setEventSelect] = useState('')
-
+    const [eventOptions, setEventOptions] = useState([]);
     useEffect(() => {
         fetch('http://localhost:8000/events')
             .then((response) => response.json())
             .then((data) => {
-                setEventOptions(data.events_list)
-                setEventSelect(data.events_list[0].id)
-            })
-    }, [])
+                setEventOptions(data.events_list);
+            });
+    }, []);
 
+    const [selectedEvent, setEventSelect] = useState(eventOptions[0]);
     const handleEventSelect = (e) => {
-        setEventSelect(e.target.value)
-        console.log('Selected Event ID:', e.target.value)
-    }
+        setEventSelect(e.target.value);
+        console.log('Selected Event ID:', e.target.value);
+    };
 
     return (
         <>
@@ -71,43 +81,39 @@ function NewTask(props) {
                         <h1>New Task</h1>
                         <form className="popupForm">
                             <label htmlFor="taskName">Name: </label>
-                            <br></br>
+                            <br />
                             <input
                                 id="name"
                                 name="name"
                                 onChange={handleChange}
                             />
-                            <br></br> <br></br>
+                            <br /> <br />
                             <label htmlFor="taskDescription">
                                 Description:{' '}
                             </label>
-                            <br></br>
+                            <br />
                             <input
                                 id="description"
                                 name="description"
                                 onChange={handleChange}
                             />
-                            <br></br> <br></br>
+                            <br /> <br />
                             <label htmlFor="taskLink">Link (Optional): </label>
-                            <br></br>
-                            <input
-                                id="link"
-                                name="link"
-                                onChange={handleChange}
-                            />
-                            <br></br> <br></br>
+                            <br />
+                            <input id="link" name="link" onChange={handleChange} />
+                            <br /> <br />
                             <label htmlFor="date">Deadline: </label>
-                            <br></br>
+                            <br />
                             <input
                                 id="date"
                                 type="date"
                                 name="date"
                                 onChange={handleChange}
                             />
-                            <br></br> <br></br>
+                            <br /> <br />
                             <label>
                                 Event:
-                                <br></br>
+                                <br />
                                 <select
                                     name="event"
                                     id="event"
@@ -115,51 +121,77 @@ function NewTask(props) {
                                     value={selectedEvent}
                                 >
                                     {eventOptions.map((event) => (
-                                        <option key={event.id} value={event.id}>
-                                            {event.name}
-                                        </option>
+                                        <option value={event.id}>{event.name}</option>
                                     ))}
                                 </select>
                             </label>
-                            <br></br> <br></br>
+                            <br /> <br />
                             <label htmlFor="color">
                                 Label Color:
-                                <br></br>
-                                <select
-                                    name="color"
-                                    id="color"
-                                    onChange={handleChange}
-                                >
-                                    <option key="none" value="none">
-                                        None
-                                    </option>
-                                    <option key="red" value="red">
-                                        Red
-                                    </option>
-                                    <option key="orange" value="orange">
-                                        Orange
-                                    </option>
-                                    <option key="yellow" value="yellow">
-                                        Yellow
-                                    </option>
-                                    <option key="green" value="green">
-                                        Green
-                                    </option>
-                                    <option key="blue" value="blue">
-                                        Blue
-                                    </option>
-                                    <option key="purple" value="purple">
-                                        Purple
-                                    </option>
-                                    <option key="pink" value="pink">
-                                        Pink
-                                    </option>
-                                    <option key="brown" value="brown">
-                                        Brown
-                                    </option>
-                                </select>
+                                <br />
+                                <div className="color-options">
+                                    <button
+                                        type="button"
+                                        className={`color-button ${selectedColor === 'none' ? 'selected' : ''}`}
+                                        style={{ backgroundColor: '#ffffff' }}
+                                        onClick={() => handleColorChange('none')}
+                                    ></button>
+                                    <button
+                                        type="button"
+                                        className={`color-button ${selectedColor === 'red' ? 'selected' : ''}`}
+                                        style={{ backgroundColor: '#f59d9d' }}
+                                        onClick={() => handleColorChange('red')}
+                                    ></button>
+                                    <button
+                                        type="button"
+                                        className={`color-button ${selectedColor === 'orange' ? 'selected' : ''}`}
+                                        style={{ backgroundColor: '#f5c99d' }}
+                                        onClick={() => handleColorChange('orange')}
+                                    ></button>
+                                </div>
+                                <div className="color-options">
+                                    <button
+                                        type="button"
+                                        className={`color-button ${selectedColor === 'yellow' ? 'selected' : ''}`}
+                                        style={{ backgroundColor: '#f5df9d' }}
+                                        onClick={() => handleColorChange('yellow')}
+                                    ></button>
+                                    <button
+                                        type="button"
+                                        className={`color-button ${selectedColor === 'green' ? 'selected' : ''}`}
+                                        style={{ backgroundColor: '#a8c7a7' }}
+                                        onClick={() => handleColorChange('green')}
+                                    ></button>
+                                    <button
+                                        type="button"
+                                        className={`color-button ${selectedColor === 'blue' ? 'selected' : ''}`}
+                                        style={{ backgroundColor: '#9bc1cc' }}
+                                        onClick={() => handleColorChange('blue')}
+                                    ></button>
+                                </div>
+                                <div className="color-options">
+                                    <button
+                                        type="button"
+                                        className={`color-button ${selectedColor === 'purple' ? 'selected' : ''}`}
+                                        style={{ backgroundColor: '#a99bcc' }}
+                                        onClick={() => handleColorChange('purple')}
+                                    ></button>
+                                    <button
+                                        type="button"
+                                        className={`color-button ${selectedColor === 'pink' ? 'selected' : ''}`}
+                                        style={{ backgroundColor: 'pink' }}
+                                        onClick={() => handleColorChange('pink')}
+                                    ></button>
+                                    <button
+                                        type="button"
+                                        className={`color-button ${selectedColor === 'brown' ? 'selected' : ''}`}
+                                        style={{ backgroundColor: '#6b5145' }}
+                                        onClick={() => handleColorChange('brown')}
+                                    ></button>
+                                </div>
+                                {/* ... (similar modifications for other color-options) */}
                             </label>
-                            <br></br> <br></br>
+                            <br /> <br />
                             <input
                                 type="submit"
                                 value="Submit"
@@ -171,7 +203,7 @@ function NewTask(props) {
                 </div>
             )}
         </>
-    )
+    );
 }
 
-export default NewTask
+export default NewTask;
