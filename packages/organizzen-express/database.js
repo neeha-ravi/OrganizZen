@@ -6,20 +6,23 @@ dotenv.config()
 const mongoURI = process.env.MONGODB_URI
 
 const connectToMongoDB = async () => {
-    const client = new MongoClient(mongoURI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    })
+  const client = new MongoClient(mongoURI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+  })
 
-    try {
-        await client.connect()
-        console.log('Connected to MongoDB')
-        return client
-    } catch (err) {
-        console.error('Error connecting to MongoDB:', err)
-        throw err
-    }
+  console.log("hello")
+  try {
+      console.log('Connecting to MongoDB...')
+      await client.connect()
+      console.log('Connected to MongoDB')
+      return client
+  } catch (err) {
+      console.error('Error connecting to MongoDB:', err)
+      throw err
+  }
 }
+
 
 //EVENT STUFF
 

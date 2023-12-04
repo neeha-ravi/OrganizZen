@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './NewTask.css'
 
-const API_BASE_URL = 'https://organizzen.azurewebsites.net/'
 function NewTask(props) {
     const [task, setTask] = useState({
-        _id: '',
+        id: '',
         name: '',
         description: '',
         link: '',
@@ -19,7 +18,7 @@ function NewTask(props) {
     function submitForm() {
         props.handleSubmit(selectedEvent, task)
         setTask({
-            _id: '',
+            id: '',
             name: '',
             description: '',
             link: '',
@@ -53,10 +52,11 @@ function NewTask(props) {
 
     const [eventOptions, setEventOptions] = useState([])
     useEffect(() => {
-        fetch(`${API_BASE_URL}/events/`)
+        fetch('http://localhost:8000/events')
             .then((response) => response.json())
             .then((data) => {
                 setEventOptions(data.events_list)
+                setEventSelect(data.events_list[0].id)
             })
     }, [])
 
@@ -152,23 +152,25 @@ function NewTask(props) {
                                     <button
                                         type="button"
                                         className={`color-button ${
-                                            selectedColor === 'red'
+                                            selectedColor === '#f59d9d'
                                                 ? 'selected'
                                                 : ''
                                         }`}
                                         style={{ backgroundColor: '#f59d9d' }}
-                                        onClick={() => handleColorChange('red')}
+                                        onClick={() =>
+                                            handleColorChange('#f59d9d')
+                                        }
                                     ></button>
                                     <button
                                         type="button"
                                         className={`color-button ${
-                                            selectedColor === 'orange'
+                                            selectedColor === '#f5c99d'
                                                 ? 'selected'
                                                 : ''
                                         }`}
                                         style={{ backgroundColor: '#f5c99d' }}
                                         onClick={() =>
-                                            handleColorChange('orange')
+                                            handleColorChange('#f5c99d')
                                         }
                                     ></button>
                                 </div>
@@ -176,37 +178,37 @@ function NewTask(props) {
                                     <button
                                         type="button"
                                         className={`color-button ${
-                                            selectedColor === 'yellow'
+                                            selectedColor === '#f5df9d'
                                                 ? 'selected'
                                                 : ''
                                         }`}
                                         style={{ backgroundColor: '#f5df9d' }}
                                         onClick={() =>
-                                            handleColorChange('yellow')
+                                            handleColorChange('#f5df9d')
                                         }
                                     ></button>
                                     <button
                                         type="button"
                                         className={`color-button ${
-                                            selectedColor === 'green'
+                                            selectedColor === '#a8c7a7'
                                                 ? 'selected'
                                                 : ''
                                         }`}
                                         style={{ backgroundColor: '#a8c7a7' }}
                                         onClick={() =>
-                                            handleColorChange('green')
+                                            handleColorChange('#a8c7a7')
                                         }
                                     ></button>
                                     <button
                                         type="button"
                                         className={`color-button ${
-                                            selectedColor === 'blue'
+                                            selectedColor === '#9bc1cc'
                                                 ? 'selected'
                                                 : ''
                                         }`}
                                         style={{ backgroundColor: '#9bc1cc' }}
                                         onClick={() =>
-                                            handleColorChange('blue')
+                                            handleColorChange('#9bc1cc')
                                         }
                                     ></button>
                                 </div>
@@ -214,41 +216,40 @@ function NewTask(props) {
                                     <button
                                         type="button"
                                         className={`color-button ${
-                                            selectedColor === 'purple'
+                                            selectedColor === '#a99bcc'
                                                 ? 'selected'
                                                 : ''
                                         }`}
                                         style={{ backgroundColor: '#a99bcc' }}
                                         onClick={() =>
-                                            handleColorChange('purple')
+                                            handleColorChange('#a99bcc')
                                         }
                                     ></button>
                                     <button
                                         type="button"
                                         className={`color-button ${
-                                            selectedColor === 'pink'
+                                            selectedColor === '#f5c3cb'
                                                 ? 'selected'
                                                 : ''
                                         }`}
-                                        style={{ backgroundColor: 'pink' }}
+                                        style={{ backgroundColor: '#f5c3cb' }}
                                         onClick={() =>
-                                            handleColorChange('pink')
+                                            handleColorChange('#f5c3cb')
                                         }
                                     ></button>
                                     <button
                                         type="button"
                                         className={`color-button ${
-                                            selectedColor === 'brown'
+                                            selectedColor === '#786660'
                                                 ? 'selected'
                                                 : ''
                                         }`}
-                                        style={{ backgroundColor: '#6b5145' }}
+                                        style={{ backgroundColor: '#786660' }}
                                         onClick={() =>
-                                            handleColorChange('brown')
+                                            handleColorChange('#786660')
                                         }
                                     ></button>
                                 </div>
-                                {/* ... (similar modifications for other color-options) */}
                             </label>
                             <br /> <br />
                             <input

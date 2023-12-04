@@ -1,14 +1,28 @@
 import React, { useState, useEffect } from 'react'
 import './Calendar.css'
 
-const API_BASE_URL = 'https://organizzen.azurewebsites.net/'
-
-function Calendar() {
+function Calendar({ filter, setFilter }) {
     const [events, setEvents] = useState([])
+    const [selectedEvent, setSelectedEvent] = useState(null)
+
+    const handleEventClick = (eventId) => {
+        // Toggle the clicked event ID in the filter
+        setFilter((prevFilter) => {
+            const updatedFilter = new Set(prevFilter)
+            if (updatedFilter.has(eventId)) {
+                updatedFilter.delete(eventId) // Remove the event if it was selected
+                setSelectedEvent(null) // Unset SelectedEvent when the event is removed
+            } else {
+                updatedFilter.add(eventId) // Add the event if it wasn't selected
+                setSelectedEvent(eventId)
+            }
+            return updatedFilter
+        })
+    }
 
     useEffect(() => {
         // Fetch events from the backend
-        fetch(`${API_BASE_URL}/events`)
+        fetch('http://localhost:8000/events')
             .then((response) => response.json())
             .then((data) => {
                 // Sort events by start date in ascending order
@@ -56,7 +70,13 @@ function Calendar() {
     return (
         <div className="EventScrollContainer">
             {events.map((event) => (
-                <div className="EventContainer" key={event.id}>
+                <div
+                    className={`EventContainer ${
+                        selectedEvent === event.id ? 'SelectedEvent' : ''
+                    } ${filter.has(event.id) ? 'ShadedEvent' : ''}`}
+                    key={event.id}
+                    onClick={() => handleEventClick(event.id)}
+                >
                     <div className="EventBox">
                         <h3>{event.name}</h3>
                         <p>{formatDate(event.startDate, event.endDate)}</p>
