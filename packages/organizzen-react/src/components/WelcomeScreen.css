@@ -51,7 +51,7 @@ body {
 
 .loginScreen,
 .welcomeScreen {
-    background: linear-gradient(bottom, #8b59f641, rgba(246, 189, 65, 0.47));
+    background: linear-gradient(to bottom, #8b59f641, rgba(246, 189, 65, 0.47));
     font-family: 'Be Vietnam Pro', sans-serif;
     display: flow-root;
     margin: 100px;
