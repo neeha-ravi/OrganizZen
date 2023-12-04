@@ -53,7 +53,9 @@ const App = () => {
                 // Update the tasks for the specific event in the state
                 setEvents((prevEvents) =>
                     prevEvents.map((event) =>
-                        event._id === eventId ? { ...event, tasks: data } : event
+                        event._id === eventId
+                            ? { ...event, tasks: data }
+                            : event
                     )
                 )
             })
@@ -84,7 +86,6 @@ const App = () => {
                     </ul>
                 </div>
             ))}
-
         </div>
     )
 }

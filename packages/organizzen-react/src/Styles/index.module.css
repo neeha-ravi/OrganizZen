@@ -1,7 +1,7 @@
 body {
     background-image: linear-gradient(#8b59f641, rgba(246, 189, 65, 0.47));
     font-family: 'Be Vietnam Pro', sans-serif;
-    display:flow-root;
+    display: flow-root;
     margin: 100px;
 }
 
@@ -15,7 +15,7 @@ body {
 .CalendarDashboard {
     height: 650px;
     width: 550px;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     border-radius: 20px;
     justify-content: center;
     align-items: center;
