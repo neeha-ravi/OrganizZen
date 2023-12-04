@@ -1,12 +1,12 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import './WelcomeScreen.css'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './WelcomeScreen.css';
 
 function WelcomeScreen() {
     return (
-        <div id="welcomeScreen">
+        <div className="welcomeScreen">
             <div className="loginBox">
-                <h1>Welcome to OrganizZen!</h1>
+                <h1>Welcome to OrganizZen!🪻</h1>
                 <p>
                     For event planners, team leaders, and collaborative groups
                     who are overwhelmed with a great number of tasks and
@@ -20,7 +20,7 @@ function WelcomeScreen() {
                     Are you a returning OrganizZer? Log in! Are you new? Become
                     an OrganizZer through our signup form!
                 </p>
-                <br></br>
+                <br />
                 <div id="buttonHolders">
                     <Link to="/login">
                         <button className="routeButtons">Login</button>
@@ -32,7 +32,7 @@ function WelcomeScreen() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default WelcomeScreen
+export default WelcomeScreen;

@@ -31,7 +31,7 @@ function SignupScreen(props) {
     }
 
     return (
-        <div id="loginScreen">
+        <div className="loginScreen">
             <div className="loginBox">
                 <h1>Sign up here!</h1>
                 <form className="loginForm" onSubmit={submitForm}>
