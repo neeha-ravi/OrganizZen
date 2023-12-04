@@ -29,7 +29,7 @@ const events = {
                     link: 'https://example.com/task1',
                     date: '2023-12-04',
                     color: '#f59d9d',
-                    event: '1',
+                    eventId: '1',
                                     },
                 // Add more tasks for Event 1 if needed
             ],
@@ -51,7 +51,7 @@ const events = {
                     link: 'https://example.com/task2',
                     date: '2023-12-15',
                     color: '#9bc1cc',
-                    event: '2',
+                    eventId: '2',
                                     },
                 // Add more tasks for Event 2 if needed
             ],

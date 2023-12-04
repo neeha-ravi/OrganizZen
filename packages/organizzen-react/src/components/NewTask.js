@@ -9,7 +9,7 @@ function NewTask(props) {
         link: '',
         date: '',
         color: '',
-        event: '',
+        eventId: '',
         done: false,
     })
 
@@ -25,7 +25,7 @@ function NewTask(props) {
             link: '',
             date: '',
             color: '',
-            event: '',
+            eventId: '',
             done: false,
         })
     }
