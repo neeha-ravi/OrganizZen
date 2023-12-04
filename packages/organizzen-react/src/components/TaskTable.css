@@ -6,7 +6,7 @@
 .DateContainer {
     height: 31px;
     width: 100%;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     border-radius: 8px;
     display: flex;
     justify-content: center;
@@ -25,11 +25,12 @@
     align-items: center; /* Center vertically */
     height: 31px;
     width: 100%;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     border-radius: 8px;
     margin-top: 20px;
     overflow: hidden;
 }
+
 
 
 
@@ -50,6 +51,9 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+
+  .TaskContainer:hover {
+    filter: brightness(0.8);
 }
 
 .StartText {
@@ -57,12 +61,12 @@
     width: 15px;
 }
 
-.Checkbox {
+/* .Checkbox {
     height: 31px;
     width: 31px;
     background-color: purple;
     margin-right: 10px; 
-}
+} */
 
 .completedtoggle {
     font-family: 'Be Vietnam Pro', sans-serif;
@@ -73,4 +77,16 @@
     align-items: center;
     text-align: center;
     margin-bottom: 20px;
+}
+
+.TodoItem {
+    margin-left: 1px;
+}
+
+.NoTasksContainer {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    font-size: large;
+    font-weight: medium;
 }

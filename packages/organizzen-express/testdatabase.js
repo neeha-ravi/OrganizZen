@@ -1,5 +1,6 @@
-const { MongoClient } = require('mongodb')
+// database.js
 require('dotenv').config()
+const { MongoClient } = require('mongodb')
 
 const mongoURI = process.env.MONGODB_URI
 
@@ -19,4 +20,4 @@ const connectToMongoDB = async () => {
     }
 }
 
-module.exports = { connectToMongoDB }
+export { connectToMongoDB }
