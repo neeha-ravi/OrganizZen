@@ -6,11 +6,11 @@
 }
 
 .EventScrollContainer::-webkit-scrollbar {
-    width: 10px; 
+    width: 10px;
 }
 
 .EventScrollContainer::-webkit-scrollbar-thumb {
-    background-color: #ffffffa3; 
+    background-color: #ffffffa3;
     border-radius: 10px;
 }
 
@@ -25,7 +25,7 @@
     height: 162.5px;
     justify-content: center;
     align-items: center;
-    display: flex; 
+    display: flex;
 }
 
 .EventBox {

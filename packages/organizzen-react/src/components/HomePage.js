@@ -8,7 +8,7 @@ function HomePage() {
         <div>
             <div className={styles.CalendarTaskContainer}>
                 <div className={styles.CalendarDashboard}>
-                    <Calendar/>
+                    <Calendar />
                 </div>
                 <div className={styles.TaskCalendarDivider} />
                 <div className={styles.TaskContainer}>

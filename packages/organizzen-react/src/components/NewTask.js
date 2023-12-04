@@ -101,7 +101,11 @@ function NewTask(props) {
                             <br /> <br />
                             <label htmlFor="taskLink">Link (Optional): </label>
                             <br />
-                            <input id="link" name="link" onChange={handleChange} />
+                            <input
+                                id="link"
+                                name="link"
+                                onChange={handleChange}
+                            />
                             <br /> <br />
                             <label htmlFor="date">Deadline: </label>
                             <br />
@@ -122,7 +126,9 @@ function NewTask(props) {
                                     value={selectedEvent}
                                 >
                                     {eventOptions.map((event) => (
-                                        <option value={event.id}>{event.name}</option>
+                                        <option value={event.id}>
+                                            {event.name}
+                                        </option>
                                     ))}
                                 </select>
                             </label>
@@ -133,61 +139,113 @@ function NewTask(props) {
                                 <div className="color-options">
                                     <button
                                         type="button"
-                                        className={`color-button ${selectedColor === 'none' ? 'selected' : ''}`}
+                                        className={`color-button ${
+                                            selectedColor === 'none'
+                                                ? 'selected'
+                                                : ''
+                                        }`}
                                         style={{ backgroundColor: '#ffffff' }}
-                                        onClick={() => handleColorChange('none')}
+                                        onClick={() =>
+                                            handleColorChange('none')
+                                        }
                                     ></button>
                                     <button
                                         type="button"
-                                        className={`color-button ${selectedColor === 'red' ? 'selected' : ''}`}
+                                        className={`color-button ${
+                                            selectedColor === 'red'
+                                                ? 'selected'
+                                                : ''
+                                        }`}
                                         style={{ backgroundColor: '#f59d9d' }}
                                         onClick={() => handleColorChange('red')}
                                     ></button>
                                     <button
                                         type="button"
-                                        className={`color-button ${selectedColor === 'orange' ? 'selected' : ''}`}
+                                        className={`color-button ${
+                                            selectedColor === 'orange'
+                                                ? 'selected'
+                                                : ''
+                                        }`}
                                         style={{ backgroundColor: '#f5c99d' }}
-                                        onClick={() => handleColorChange('orange')}
+                                        onClick={() =>
+                                            handleColorChange('orange')
+                                        }
                                     ></button>
                                 </div>
                                 <div className="color-options">
                                     <button
                                         type="button"
-                                        className={`color-button ${selectedColor === 'yellow' ? 'selected' : ''}`}
+                                        className={`color-button ${
+                                            selectedColor === 'yellow'
+                                                ? 'selected'
+                                                : ''
+                                        }`}
                                         style={{ backgroundColor: '#f5df9d' }}
-                                        onClick={() => handleColorChange('yellow')}
+                                        onClick={() =>
+                                            handleColorChange('yellow')
+                                        }
                                     ></button>
                                     <button
                                         type="button"
-                                        className={`color-button ${selectedColor === 'green' ? 'selected' : ''}`}
+                                        className={`color-button ${
+                                            selectedColor === 'green'
+                                                ? 'selected'
+                                                : ''
+                                        }`}
                                         style={{ backgroundColor: '#a8c7a7' }}
-                                        onClick={() => handleColorChange('green')}
+                                        onClick={() =>
+                                            handleColorChange('green')
+                                        }
                                     ></button>
                                     <button
                                         type="button"
-                                        className={`color-button ${selectedColor === 'blue' ? 'selected' : ''}`}
+                                        className={`color-button ${
+                                            selectedColor === 'blue'
+                                                ? 'selected'
+                                                : ''
+                                        }`}
                                         style={{ backgroundColor: '#9bc1cc' }}
-                                        onClick={() => handleColorChange('blue')}
+                                        onClick={() =>
+                                            handleColorChange('blue')
+                                        }
                                     ></button>
                                 </div>
                                 <div className="color-options">
                                     <button
                                         type="button"
-                                        className={`color-button ${selectedColor === 'purple' ? 'selected' : ''}`}
+                                        className={`color-button ${
+                                            selectedColor === 'purple'
+                                                ? 'selected'
+                                                : ''
+                                        }`}
                                         style={{ backgroundColor: '#a99bcc' }}
-                                        onClick={() => handleColorChange('purple')}
+                                        onClick={() =>
+                                            handleColorChange('purple')
+                                        }
                                     ></button>
                                     <button
                                         type="button"
-                                        className={`color-button ${selectedColor === 'pink' ? 'selected' : ''}`}
+                                        className={`color-button ${
+                                            selectedColor === 'pink'
+                                                ? 'selected'
+                                                : ''
+                                        }`}
                                         style={{ backgroundColor: 'pink' }}
-                                        onClick={() => handleColorChange('pink')}
+                                        onClick={() =>
+                                            handleColorChange('pink')
+                                        }
                                     ></button>
                                     <button
                                         type="button"
-                                        className={`color-button ${selectedColor === 'brown' ? 'selected' : ''}`}
+                                        className={`color-button ${
+                                            selectedColor === 'brown'
+                                                ? 'selected'
+                                                : ''
+                                        }`}
                                         style={{ backgroundColor: '#6b5145' }}
-                                        onClick={() => handleColorChange('brown')}
+                                        onClick={() =>
+                                            handleColorChange('brown')
+                                        }
                                     ></button>
                                 </div>
                                 {/* ... (similar modifications for other color-options) */}
