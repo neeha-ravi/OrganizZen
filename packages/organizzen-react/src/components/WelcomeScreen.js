@@ -1,6 +1,6 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import './WelcomeScreen.css'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './WelcomeScreen.css';
 
 function WelcomeScreen() {
     return (
@@ -32,7 +32,7 @@ function WelcomeScreen() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default WelcomeScreen
+export default WelcomeScreen;
