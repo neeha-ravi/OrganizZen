@@ -1,0 +1,35 @@
+#welcomeScreen {
+    background-color: #d7bbbb;
+    font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+button {
+    background-color: #9d8e8e;
+    color: #f8f0e9;
+}
+
+button:hover {
+    background-color: #d7bbbb;
+    color: #9d8e8e;
+ }
+
+a {
+    width: 50%;
+}
+
+ #buttonHolders{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.routeButtons {
+    border: 0;
+    border-radius: 10px;
+    padding: 15px 35px;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px;
+    width: 100%;
+}

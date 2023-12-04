@@ -1,9 +1,10 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import './LoginScreen.css'
 
 function LoginScreen() {
     return (
-        <div>
+        <div id="loginScreen">
             <div className="loginBox">
                 <h1>Welcome back!</h1>
                 <form className="loginForm">
@@ -15,10 +16,14 @@ function LoginScreen() {
                     <br></br>
                     <input id="password" />
                     <br></br> <br></br>
-                    <input type="submit" value="Login" />
+                    <input type="submit" value="Login" id="submitform" />
                 </form>
                 <br></br>
-                <p>Don't have an account yet? Sign up here!</p>
+                <p>
+                    <Link to="/signup">
+                        Don't have an account yet? Sign up here!
+                    </Link>
+                </p>
             </div>
         </div>
     )
