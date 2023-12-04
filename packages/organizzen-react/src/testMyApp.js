@@ -27,7 +27,7 @@ const App = () => {
         })
             .then(() => {
                 // After successfully adding the event, fetch the updated list
-                return fetch('https://organizzen.azurewebsites.net/');
+                return fetch('https://organizzen.azurewebsites.net/')
             })
             .then((response) => response.json())
             .then((data) => setEvents(data)) // Update this line
@@ -45,18 +45,20 @@ const App = () => {
         })
             .then(() => {
                 // After successfully adding the task, fetch the updated list
-                return fetch(`https://organizzen.azurewebsites.net/`);
+                return fetch(`https://organizzen.azurewebsites.net/`)
             })
             .then((response) => response.json())
             .then((data) => {
                 // Update the tasks for the specific event in the state
                 setEvents((prevEvents) =>
                     prevEvents.map((event) =>
-                        event._id === eventId ? { ...event, tasks: data } : event
+                        event._id === eventId
+                            ? { ...event, tasks: data }
+                            : event
                     )
                 )
             })
-            .catch((error) => console.log(error));
+            .catch((error) => console.log(error))
     }
 
     return (
@@ -83,7 +85,6 @@ const App = () => {
                     </ul>
                 </div>
             ))}
-
         </div>
     )
 }
