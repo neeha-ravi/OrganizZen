@@ -217,7 +217,7 @@ function TaskTable({ filter }) {
       localStorage.setItem('showCompleted', newShowCompleted.toString());
       return newShowCompleted;
     });
-  };
+  };  
 
   return (
     <div>
@@ -229,4 +229,4 @@ function TaskTable({ filter }) {
   );
 }
 
-export default TaskTable
+export default TaskTable;
