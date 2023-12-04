@@ -5,8 +5,6 @@ dotenv.config();
 
 const mongoURI = process.env.MONGODB_URI;
 
-// Ensure your MongoDB connection string is correctly specified in your .env file
-
 const connectToMongoDB = async () => {
     try {
         const client = new MongoClient(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
