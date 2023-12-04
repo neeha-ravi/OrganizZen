@@ -12,7 +12,9 @@
         "lint": "npx eslint . && npx prettier --check .",
         "frontend": "npm run start -w organizzen-react",
         "backend-start": "npm run start -w organizzen-express",
-        "backend-dev": "npm run dev -w organizzen-express"
+        "backend-dev": "npm run dev -w organizzen-express",
+        "backend-start-users": "npm run start-users -w organizzen-express",
+        "backend-dev-users": "npm run dev-users -w organizzen-express"
     },
     "author": "",
     "license": "ISC",
