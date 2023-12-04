@@ -8,7 +8,7 @@ function Calendar() {
 
   useEffect(() => {
     // Fetch events from the backend
-    fetch('${API_BASE_URL}/events')
+    fetch(`${API_BASE_URL}/events`)
       .then((response) => response.json())
       .then((data) => {
         // Sort events by start date in ascending order

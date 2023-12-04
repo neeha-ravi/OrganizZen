@@ -53,7 +53,7 @@ function NewTask(props) {
 
     const [eventOptions, setEventOptions] = useState([])
     useEffect(() => {
-        fetch('${API_BASE_URL}/events/')
+        fetch(`${API_BASE_URL}/events/`)
             .then((response) => response.json())
             .then((data) => {
                 setEventOptions(data.events_list)

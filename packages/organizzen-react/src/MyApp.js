@@ -11,7 +11,7 @@ const App = () => {
     // Replace the fetch URLs in MyApp.js
     useEffect(() => {
         // Fetch the list of events when the component mounts
-        fetch('${API_BASE_URL}/events')
+        fetch(`${API_BASE_URL}/events`)
             .then((response) => response.json())
             .then((data) => setEvents(data)) // Update this line
             .catch((error) => console.log(error))
@@ -19,7 +19,7 @@ const App = () => {
 
     function postEvent(event) {
         // Add the new event to the backend
-        fetch('${API_BASE_URL}/events', {
+        fetch(`${API_BASE_URL}/events`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ const App = () => {
         })
             .then(() => {
                 // After successfully adding the event, fetch the updated list
-                return fetch('${API_BASE_URL}/events')
+                return fetch(`${API_BASE_URL}/events`)
             })
             .then((response) => response.json())
             .then((data) => setEvents(data)) // Update this line
