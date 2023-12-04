@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import './TaskTable.css';
+import React, { useState, useEffect } from 'react'
+import './TaskTable.css'
 
 function TaskTable({ filter }) {
   const [tasks, setTasks] = useState([]);
@@ -65,15 +65,8 @@ function TaskTable({ filter }) {
           const filteredTasks = data.flat();
           setTasks(filteredTasks);
         })
-        .catch((error) => console.log(error));
-    } else {
-      // If no events are selected, fetch all tasks
-      fetch('http://localhost:8000/events/tasks')
-        .then((response) => response.json())
-        .then((data) => setTasks(data))
-        .catch((error) => console.log(error));
+        return groupedTasks
     }
-  }, [filter]);
 
     function fetchTasks(eventId) {
       if (!eventId) {
