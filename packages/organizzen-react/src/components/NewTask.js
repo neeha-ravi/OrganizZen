@@ -173,7 +173,7 @@ function NewTask(props) {
                                     <button
                                         type="button"
                                         className={`color-button ${selectedColor === '#a99bcc' ? 'selected' : ''}`}
-                                        style={{ backgroundColor: '#a99bcc' }}
+                                        style={{ backgroundColor: '#a99bcc'}}
                                         onClick={() => handleColorChange('#a99bcc')}
                                     ></button>
                                     <button
@@ -184,9 +184,9 @@ function NewTask(props) {
                                     ></button>
                                     <button
                                         type="button"
-                                        className={`color-button ${selectedColor === 'brown' ? 'selected' : ''}`}
-                                        style={{ backgroundColor: '#6b5145' }}
-                                        onClick={() => handleColorChange('brown')}
+                                        className={`color-button ${selectedColor === '#786660' ? 'selected' : ''}`}
+                                        style={{ backgroundColor: '#786660' }}
+                                        onClick={() => handleColorChange('#786660')}
                                     ></button>
                                 </div>
                             </label>
