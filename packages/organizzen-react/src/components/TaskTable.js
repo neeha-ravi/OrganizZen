@@ -142,7 +142,7 @@ function TaskTable() {
 
   return (
     <div>
-      <button onClick={toggleShowCompleted}>
+      <button onClick={toggleShowCompleted} className = "completedtoggle">
         {showCompleted ? 'Show Incomplete Tasks' : 'Show Completed Tasks'}
       </button>
       <div className="ToDoListContainer">{renderTasks()}</div>

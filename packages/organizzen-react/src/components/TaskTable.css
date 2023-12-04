@@ -64,3 +64,13 @@
     margin-right: 10px; 
 }
 
+.completedtoggle {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    height: 31px;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
+}
