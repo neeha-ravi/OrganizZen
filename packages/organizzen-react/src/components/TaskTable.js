@@ -47,20 +47,29 @@ function TaskTable({ filter }) {
   const renderTasks = () => {
     const groupedTasks = groupTasksByDate();
     const taskDates = Object.keys(groupedTasks);
-
+  
     const sortedDates = taskDates.sort((a, b) => new Date(a) - new Date(b));
-
+  
     const currentDate = new Date();
-
+  
+    // Check if there are no tasks at all
+    if (tasks.length === 0) {
+      return (
+        <div className="NoTasksContainer">
+          <div className="NoTasks">No Tasks Remaining!!☻</div>
+        </div>
+      );
+    }
+  
     return sortedDates.map((date, index) => {
       const tasksForDate = groupedTasks[date];
-
+  
       const filteredTasks = tasksForDate.filter((task) => new Date(task.date) >= currentDate);
-
+  
       if (filteredTasks.length === 0) {
         return null;
       }
-
+  
       return (
         <div key={index}>
           <div className="DateContainer">
@@ -72,7 +81,7 @@ function TaskTable({ filter }) {
               }).format(new Date(new Date(date).getTime() + 24 * 60 * 60 * 1000))}
             </b>
           </div>
-
+  
           {filteredTasks.map((task) => (
             <div className="TaskContainer" key={task.id}>
               <div className="StartText" />
@@ -81,12 +90,12 @@ function TaskTable({ filter }) {
               </div>
             </div>
           ))}
-
+  
           {index < sortedDates.length - 1 && <div className="Divider"></div>}
         </div>
       );
     });
-  };
+  };  
 
   return <div className="ToDoListContainer">{renderTasks()}</div>;
 }
