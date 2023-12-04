@@ -1,0 +1,42 @@
+.loginScreen,
+.welcomeScreen {
+    min-height: 60vh;
+    background: linear-gradient(bottom, #8b59f641, rgba(246, 189, 65, 0.47));
+    background-repeat: no-repeat !important;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    display: flow-root;
+    margin: 100px;
+}
+
+button {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    border: 0;
+    border-radius: 10px;
+    padding: 15px 35px;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #575454;
+    color: #ffffff;
+}
+
+a {
+    width: 50%;
+}
+
+#buttonHolders {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.routeButtons {
+    width: 100%;
+}

@@ -1,15 +1,43 @@
 import React, { useState, useEffect } from 'react'
 import './TaskTable.css'
 
-function TaskTable() {
+function TaskTable({ filter }) {
     const [tasks, setTasks] = useState([])
 
     useEffect(() => {
+        // Fetch all tasks initially
         fetch('http://localhost:8000/events/tasks')
             .then((response) => response.json())
             .then((data) => setTasks(data))
             .catch((error) => console.log(error))
     }, [])
+
+    useEffect(() => {
+        // Check if there are events selected in the filter
+        if (filter.size > 0) {
+            // Fetch tasks for each eventId in the filter
+            Promise.all(
+                [...filter].map((eventId) =>
+                    fetch(`http://localhost:8000/events/${eventId}/tasks`)
+                )
+            )
+                .then((responses) =>
+                    Promise.all(responses.map((response) => response.json()))
+                )
+                .then((data) => {
+                    // Flatten the array of arrays into a single array of tasks
+                    const filteredTasks = data.flat()
+                    setTasks(filteredTasks)
+                })
+                .catch((error) => console.log(error))
+        } else {
+            // If no events are selected, fetch all tasks
+            fetch('http://localhost:8000/events/tasks')
+                .then((response) => response.json())
+                .then((data) => setTasks(data))
+                .catch((error) => console.log(error))
+        }
+    }, [filter])
 
     const groupTasksByDate = () => {
         const groupedTasks = {}
@@ -30,6 +58,15 @@ function TaskTable() {
 
         const currentDate = new Date()
         currentDate.setDate(currentDate.getDate() - 2) //sets current date as 2 days ago because it doesn't read anything today or tomorrow
+
+        // Check if there are no tasks at all
+        if (tasks.length === 0) {
+            return (
+                <div className="NoTasksContainer">
+                    <div className="NoTasks">No Tasks Remaining!!☻</div>
+                </div>
+            )
+        }
 
         return sortedDates.map((date, index) => {
             const tasksForDate = groupedTasks[date]
@@ -60,7 +97,11 @@ function TaskTable() {
                     </div>
 
                     {filteredTasks.map((task) => (
-                        <div className="TaskContainer" key={task.id}>
+                        <div
+                            className="TaskContainer"
+                            key={task.id}
+                            style={{ backgroundColor: task.color || '#ffffff' }}
+                        >
                             <div className="StartText" />
                             <div className="TodoItem">
                                 <label>{task.name}</label>

@@ -30,11 +30,16 @@
     overflow: hidden;
 }
 
+.TaskContainer:hover {
+    filter: brightness(0.8);
+}
+
 .StartText {
     height: 31px;
     width: 15px;
 }
 
+<<<<<<< HEAD
 .Checkbox {
     height: 31px;
     width: 31px;
@@ -42,6 +47,16 @@
     margin-right: 10px;
 }
 
+=======
+>>>>>>> 61f7028dc9eebd585e45bdd1e14e0f51e7e0287e
 .TodoItem {
     margin-left: 1px;
+}
+
+.NoTasksContainer {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    font-size: large;
+    font-weight: medium;
 }

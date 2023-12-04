@@ -26,7 +26,7 @@ const App = () => {
         })
             .then(() => {
                 // After successfully adding the event, fetch the updated list
-                return fetch('http://localhost:8000/events')
+                return fetch('https://organizzen.azurewebsites.net/')
             })
             .then((response) => response.json())
             .then((data) => setEvents(data.events_list))
@@ -45,14 +45,16 @@ const App = () => {
         })
             .then(() => {
                 // After successfully adding the task, fetch the updated list
-                return fetch(`http://localhost:8000/events/${eventId}/tasks`)
+                return fetch(`https://organizzen.azurewebsites.net/`)
             })
             .then((response) => response.json())
             .then((data) => {
                 // Update the tasks for the specific event in the state
                 setEvents((prevEvents) =>
                     prevEvents.map((event) =>
-                        event.id === eventId ? { ...event, tasks: data } : event
+                        event._id === eventId
+                            ? { ...event, tasks: data }
+                            : event
                     )
                 )
             })
@@ -72,6 +74,17 @@ const App = () => {
                 <div className="ButtonOtherDivider" />
                 <div className="TaskWidth" />
             </div>
+            {/* Render the list of events and tasks */}
+            {events.map((event) => (
+                <div key={event._id}>
+                    <h3>{event.name}</h3>
+                    <ul>
+                        {event.tasks.map((task) => (
+                            <li key={task._id}>{task.name}</li>
+                        ))}
+                    </ul>
+                </div>
+            ))}
         </div>
     )
 }
