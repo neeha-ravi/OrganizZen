@@ -21,13 +21,35 @@
 
 .TaskContainer {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
+    align-items: center; /* Center vertically */
     height: 31px;
     width: 100%;
     background-color: #FFFFFF;
     border-radius: 8px;
     margin-top: 20px;
     overflow: hidden;
+}
+
+
+
+.TodoItem {
+    padding-left: 10px;
+    padding-right: 10px;
+    flex-grow: 1; /* Take up remaining space */
+    
+}
+
+.CompletedButton {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    height: 31px;
+    width: 10%;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .StartText {
@@ -42,6 +64,3 @@
     margin-right: 10px; 
 }
 
-.TodoItem {
-    margin-left: 1px;
-}

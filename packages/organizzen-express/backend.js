@@ -20,6 +20,7 @@ const events = {
             startDate: '2023-12-04',
             endDate: '2023-12-04',
             oneDayOnly: true,
+            done: false,
             tasks: [
                 {
                     id: '1',
@@ -27,9 +28,9 @@ const events = {
                     description: 'Description for Task 1',
                     link: 'https://example.com/task1',
                     date: '2023-12-04',
-                    color: 'red',
+                    color: '#f59d9d',
                     event: '1',
-                },
+                                    },
                 // Add more tasks for Event 1 if needed
             ],
         },
@@ -41,6 +42,7 @@ const events = {
             startDate: '2023-12-15',
             endDate: '2023-12-15',
             oneDayOnly: false,
+            done: false,
             tasks: [
                 {
                     id: '2',
@@ -48,9 +50,9 @@ const events = {
                     description: 'Description for Task 2',
                     link: 'https://example.com/task2',
                     date: '2023-12-15',
-                    color: 'blue',
+                    color: '#9bc1cc',
                     event: '2',
-                },
+                                    },
                 // Add more tasks for Event 2 if needed
             ],
         },
@@ -61,6 +63,17 @@ const events = {
 const findEventById = (eventId) => {
     return events['events_list'].find((event) => event.id === eventId)
 }
+
+const findTaskById = (eventId, taskId) => {
+    const event = findEventById(eventId);
+
+    if (event) {
+        const task = event.tasks.find(t => t.id === taskId);
+        return task;
+    }
+
+    return null;
+};
 
 const usedEventIds = new Set()
 usedEventIds.add(1).add(2)
@@ -77,7 +90,6 @@ const generateUniqueId = (usedIds) => {
     return id.toString()
 }
 
-// Add a new route to get all tasks for all events
 app.get('/events/tasks', (req, res) => {
     const allTasks = events.events_list.flatMap((event) => event.tasks)
     res.send(allTasks)
@@ -113,6 +125,42 @@ app.get('/events/:eventId', (req, res) => {
         res.send(result)
     }
 })
+
+
+
+// Modify the existing route to get tasks for a specific event
+app.get('/events/:eventId/tasks', (req, res) => {
+    const eventId = req.params.eventId
+    const event = findEventById(eventId)
+
+    if (event === undefined) {
+        res.status(404).send('Resource not found.')
+    } else {
+        res.send(event.tasks)
+    }
+})
+
+app.get('/events/:eventId/tasks/:taskId', (req, res) => {
+    const eventId = req.params.eventId;
+    const taskId = req.params.taskId;
+
+    // Find the event by eventId
+    const event = findEventById(eventId);
+
+    if (event === undefined) {
+        res.status(404).send('Event not found.');
+    } else {
+        // Find the task within the event by taskId
+        const task = event.tasks.find((task) => task.id === taskId);
+
+        if (task === undefined) {
+            res.status(404).send('Task not found.');
+        } else {
+            res.send(task);
+        }
+    }
+});
+
 
 // EVENT
 const addEvent = (e) => {
@@ -193,6 +241,21 @@ app.get('/events/:eventId/tasks', (req, res) => {
     }
 })
 
+app.get('/events/:eventId/tasks/:taskId/mark-as-done', (req, res) => {
+    const eventId = req.params.eventId;
+    const taskId = req.params.taskId;
+
+    // Find the task by eventId and taskId
+    const task = findTaskById(eventId, taskId);
+
+    if (task) {
+        // Return information about the task (or any other relevant data)
+        res.status(200).json(task);
+    } else {
+        res.status(404).json({ error: 'Task not found' });
+    }
+});
+
 app.post('/events/:eventId/tasks', (req, res) => {
     const eventId = req.params.eventId
     const taskToAdd = addTask(req.body, eventId, req.body.date) // Include task date
@@ -209,6 +272,32 @@ app.post('/events/:eventId/tasks', (req, res) => {
         })
     }
 })
+
+
+app.put('/events/:eventId/tasks/:taskId/mark-as-done', (req, res) => {
+    const eventId = req.params.eventId;
+    const taskId = req.params.taskId;
+
+    // Find the event by eventId
+    const event = findEventById(eventId);
+
+    if (event === undefined) {
+        res.status(404).json({ error: 'Event not found.' });
+    } else {
+        // Find the task within the event by taskId
+        const task = event.tasks.find((task) => task.id === taskId);
+
+        if (task === undefined) {
+            res.status(404).json({ error: 'Task not found.' });
+        } else {
+            // Set the 'done' field to true
+            task.done = true;
+
+            res.status(200).json(task);
+        }
+    }
+});
+
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}/events`)

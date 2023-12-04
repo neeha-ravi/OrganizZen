@@ -3,6 +3,9 @@ import './TaskTable.css'
 
 function TaskTable() {
     const [tasks, setTasks] = useState([])
+    const [eventOptions, setEventOptions] = useState([]);
+    const [selectedEvent, setEventSelect] = useState(eventOptions[0]);
+
 
     useEffect(() => {
         fetch('http://localhost:8000/events/tasks')
@@ -21,6 +24,52 @@ function TaskTable() {
         })
         return groupedTasks
     }
+
+    function fetchTasks(eventId) {
+      if (!eventId) {
+          console.error('No event ID provided.');
+          return;
+      }
+  
+      // Make a GET request to fetch tasks for the specified event
+      fetch(`http://localhost:8000/events/${eventId}/tasks`)
+          .then((response) => {
+              if (!response.ok) {
+                  throw new Error('Failed to fetch tasks');
+              }
+              return response.json();
+          })
+          .then((tasks) => {
+              // Process the fetched tasks, update state, or perform other actions
+              console.log('Fetched tasks for event', eventId, ':', tasks);
+              setTasks(tasks); // Update the tasks state
+          })
+          .catch((error) => {
+              console.error('Error fetching tasks:', error);
+          });
+  }
+  
+  
+    
+
+    function handleDone(taskId, eventId) {
+      // Make a PUT request to update the task as done
+      fetch(`http://localhost:8000/events/${eventId}/tasks/${taskId}/mark-as-done`, {
+          method: 'PUT',
+      })
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error('Failed to mark task as done');
+              }
+              // Refresh the tasks after marking as done
+              fetchTasks(eventId); // Assuming you have a function fetchTasks that fetches tasks for a specific event
+          })
+          .catch(error => {
+              console.error('Error marking task as done:', error);
+          });
+  }
+  
+  
 
     const renderTasks = () => {
       const groupedTasks = groupTasksByDate();
@@ -65,12 +114,17 @@ function TaskTable() {
                       key={task.id}
                       style={{ backgroundColor: task.color || '#ffffff' }}
                   >
-                      <div className="StartText" />
-                      <div className="TodoItem">
-                          <label>{task.name}</label>
-                      </div>
+                  <div className="StartText" />
+                  <div className="TodoItem">
+                        <label>{task.name}</label>
                   </div>
-              ))}
+                        <button
+                            onClick={() => handleDone(task.id, task.event)}
+                              className="CompletedButton">
+                      DONE
+                        </button>
+                  </div>
+                ))}
 
               {index < sortedDates.length - 1 && (
                   <div className="Divider"></div>
@@ -81,6 +135,5 @@ function TaskTable() {
     };
 
     return <div className="ToDoListContainer">{renderTasks()}</div>
-}
-
+  }
 export default TaskTable
