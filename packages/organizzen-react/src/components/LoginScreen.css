@@ -21,6 +21,7 @@
 .loginForm label {
     color: #000000; /* Text color for labels */
     font-size: 18px; /* Font size for labels */
+    font-family: 'Be Vietnam Pro', sans-serif !important;
 }
 
 .loginForm input {
@@ -30,6 +31,7 @@
     border: 2px solid #000000; /* Border for input fields */
     border-radius: 5px; /* Border radius for input fields */
     font-size: 18px;
+    font-family: 'Be Vietnam Pro', sans-serif !important;
 }
 
 #submitform {
