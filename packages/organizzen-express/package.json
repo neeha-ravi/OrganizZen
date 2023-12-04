@@ -8,6 +8,8 @@
         "test": "npx jest",
         "dev": "nodemon backend.js",
         "start": "node backend.js",
+        "dev-users": "nodemon backendUsers.js",
+        "start-users": "node backendUsers.js",
         "lint": "npx eslint . && npx prettier --check ."
     },
     "author": "",
