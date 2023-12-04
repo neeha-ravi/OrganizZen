@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import './LoginScreen.css'
 
 function SignupScreen(props) {
+    const navigate = useNavigate()
     const [userFormData, setUserFormData] = useState({
         userId: '',
         username: '',
@@ -25,10 +27,11 @@ function SignupScreen(props) {
             password: '',
             email: '',
         })
+        navigate('/dashboard')
     }
 
     return (
-        <div>
+        <div id="loginScreen">
             <div className="loginBox">
                 <h1>Sign up here!</h1>
                 <form className="loginForm" onSubmit={submitForm}>
@@ -55,7 +58,9 @@ function SignupScreen(props) {
                     <input type="submit" value="Sign up" id="submitform" />
                 </form>
                 <br></br>
-                <p>Already on OrganizZen? Log in here!</p>
+                <p>
+                    <Link to="/login">Already on OrganizZen? Log in here!</Link>
+                </p>
             </div>
         </div>
     )

@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import SignupScreen from './components/SignupScreen'
+import LoginScreen from './components/LoginScreen'
+import WelcomeScreen from './components/WelcomeScreen'
+import App from './MyApp'
 
 const LoginApp = () => {
     const [users, setUsers] = useState([])
@@ -26,16 +30,26 @@ const LoginApp = () => {
 
     function updateUsers(user) {
         postUser(user)
-            .then(() => setUsers([...users, user]))
+            .then(() => {
+                setUsers([...users, user])
+            })
             .catch((error) => {
                 console.log(error)
             })
     }
 
     return (
-        <div>
-            <SignupScreen handleSubmit={updateUsers} />
-        </div>
+        <Router>
+            <Routes>
+                <Route path="/" element={<WelcomeScreen />} />
+                <Route
+                    path="/signup"
+                    element={<SignupScreen handleSubmit={updateUsers} />}
+                />
+                <Route path="/login" element={<LoginScreen />} />
+                <Route path="/dashboard" element={<App />} />
+            </Routes>
+        </Router>
     )
 }
 
