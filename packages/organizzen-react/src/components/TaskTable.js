@@ -3,6 +3,10 @@ import './TaskTable.css'
 
 function TaskTable({ filter }) {
     const [tasks, setTasks] = useState([])
+    const [completedTasks, setCompletedTasks] = useState([]);
+    const [eventOptions, setEventOptions] = useState([]);
+    const [selectedEvent, setEventSelect] = useState(eventOptions[0]);
+    const [showCompleted, setShowCompleted] = useState(false);
 
     useEffect(() => {
         // Fetch all tasks initially
@@ -48,6 +52,64 @@ function TaskTable({ filter }) {
             groupedTasks[task.date].push(task)
         })
         return groupedTasks
+    }
+
+    function fetchTasks(eventId) {
+      if (!eventId) {
+        console.error('No event ID provided.');
+        return;
+      }
+  
+      // Make a GET request to fetch tasks for the specified event
+      fetch(`http://localhost:8000/events/${eventId}/tasks`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Failed to fetch tasks');
+          }
+          return response.json();
+        })
+        .then((tasks) => {
+          // Process the fetched tasks, update state, or perform other actions
+          console.log('Fetched tasks for event', eventId, ':', tasks);
+          setTasks(tasks); // Update the tasks state
+        })
+        .catch((error) => {
+          console.error('Error fetching tasks:', error);
+        });
+    }
+
+    function handleDone(taskId, eventId) {
+      // Make a PUT request to update the task as done
+      fetch(`http://localhost:8000/events/${eventId}/tasks/${taskId}/mark-as-done`, {
+        method: 'PUT',
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Failed to mark task as done');
+          }
+    
+          // Toggle the 'done' field for the specific task
+          const updatedTasks = tasks.map((task) =>
+            task.id === taskId ? { ...task, done: !task.done } : task
+          );
+    
+          // Update the local state with the modified tasks
+          setTasks(updatedTasks);
+    
+          // Move the task to completed tasks if it's marked as done
+          const completedTask = updatedTasks.find((task) => task.id === taskId);
+          if (completedTask.done) {
+            setCompletedTasks((prevCompletedTasks) => [...prevCompletedTasks, completedTask]);
+          } else {
+            // Remove the task from completed tasks if it's marked as undone
+            setCompletedTasks((prevCompletedTasks) =>
+              prevCompletedTasks.filter((completedTask) => completedTask.id !== taskId)
+            );
+          }
+        })
+        .catch((error) => {
+          console.error('Error marking task as done:', error);
+        });
     }
 
     const renderTasks = () => {
@@ -96,28 +158,48 @@ function TaskTable({ filter }) {
                         </b>
                     </div>
 
-                    {filteredTasks.map((task) => (
-                        <div
-                            className="TaskContainer"
-                            key={task.id}
-                            style={{ backgroundColor: task.color || '#ffffff' }}
-                        >
-                            <div className="StartText" />
-                            <div className="TodoItem">
-                                <label>{task.name}</label>
-                            </div>
-                        </div>
-                    ))}
-
-                    {index < sortedDates.length - 1 && (
-                        <div className="Divider"></div>
-                    )}
+                    {filteredTasks.map((task) => {
+            const isCompleted = completedTasks.some((completedTask) => completedTask.id === task.id);
+  
+            if ((showCompleted && isCompleted) || (!showCompleted && !isCompleted)) {
+              return (
+                <div
+                  className="TaskContainer"
+                  key={task.id}
+                  style={{ backgroundColor: task.color || '#ffffff' }}
+                >
+                  <div className="StartText" />
+                  <div className="TodoItem">
+                    <label>{task.name}</label>
+                  </div>
+                  <button onClick={() => handleDone(task.id, task.eventId)} className="CompletedButton">
+                    {task.done ? 'UNDO' : 'DONE'}
+                  </button>
                 </div>
-            )
-        })
-    }
+              );
+            }
+  
+            return null;
+          })}
 
-    return <div className="ToDoListContainer">{renderTasks()}</div>
+{index < sortedDates.length - 1 && <div className="Divider"></div>}
+        </div>
+      );
+    }).filter(Boolean);
+  };
+
+  const toggleShowCompleted = () => {
+    setShowCompleted((prevShowCompleted) => !prevShowCompleted);
+  };
+
+  return (
+    <div>
+      <button onClick={toggleShowCompleted} className="completedtoggle">
+        {showCompleted ? 'Show Incomplete Tasks' : 'Show Completed Tasks'}
+      </button>
+      <div className="ToDoListContainer">{renderTasks()}</div>
+    </div>
+  );
 }
 
 export default TaskTable
