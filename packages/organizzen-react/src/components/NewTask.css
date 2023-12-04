@@ -78,11 +78,11 @@
     border: none;
     cursor: pointer;
     font-family: 'Be Vietnam Pro', sans-serif;
-    transition: filter 0.3s; 
+    transition: filter 0.3s;
 }
 
 .color-button:hover {
-    filter: brightness(0.8); 
+    filter: brightness(0.8);
 }
 
 .color-button.selected {

@@ -1,4 +1,3 @@
-
 import express from 'express'
 import cors from 'cors'
 const { MongoClient, ObjectId } = require('mongodb')
@@ -13,91 +12,97 @@ app.use(express.json())
 let mongoClient
 // Use connectToMongoDB function to establish connection
 connectToMongoDB()
-  .then((client) => {
-    mongoClient = client
-    console.log('Connected to MongoDB')
+    .then((client) => {
+        mongoClient = client
+        console.log('Connected to MongoDB')
 
-    const eventsCollection = mongoClient.db('Cluster0').collection('userEvents')
-    const tasksCollection = mongoClient.db('Cluster0').collection('eventTasks')
+        const eventsCollection = mongoClient
+            .db('Cluster0')
+            .collection('userEvents')
+        const tasksCollection = mongoClient
+            .db('Cluster0')
+            .collection('eventTasks')
 
+        app.get('/', (req, res) => {
+            res.send('Hello World!') //sets the endpoint to accept http GET requests
+        })
 
-    app.get('/', (req, res) => {
-        res.send('Hello World!') //sets the endpoint to accept http GET requests
+        // Retrieve events
+        app.get('/events', async (req, res) => {
+            try {
+                const events = await eventsCollection.find().toArray()
+                res.json(events)
+            } catch (error) {
+                console.error('Error fetching events:', error)
+                res.status(500).json({ error: 'Failed to fetch events' })
+            }
+        })
+
+        app.get('/events/:eventId', async (req, res) => {
+            const eventId = req.params.eventId
+            try {
+                const event = await eventsCollection.findOne({
+                    _id: new ObjectId(eventId),
+                })
+                if (event) {
+                    res.json(event)
+                } else {
+                    res.status(404).json({ error: 'Event not found' })
+                }
+            } catch (error) {
+                console.error('Error fetching event:', error)
+                res.status(500).json({ error: 'Failed to fetch event' })
+            }
+        })
+
+        app.post('/events', async (req, res) => {
+            const eventToAdd = req.body
+            try {
+                const addedEvent = await eventsCollection.insertOne(eventToAdd)
+                res.status(201).json(addedEvent.ops[0])
+            } catch (error) {
+                console.error('Error adding event:', error)
+                res.status(500).json({ error: 'Failed to add event' })
+            }
+        })
+
+        app.get('/events/:eventId/tasks', async (req, res) => {
+            const eventId = req.params.eventId
+            try {
+                const tasks = await tasksCollection
+                    .find({ eventId: eventId })
+                    .toArray()
+                res.json(tasks)
+            } catch (error) {
+                console.error('Error fetching tasks:', error)
+                res.status(500).json({ error: 'Failed to fetch tasks' })
+            }
+        })
+
+        app.post('/events/:eventId/tasks', async (req, res) => {
+            const eventId = req.params.eventId
+            const taskToAdd = req.body
+            console.log('Task data:', req.body)
+            taskToAdd.eventId = eventId // Set the event id for the task
+            try {
+                const addedTask = await tasksCollection.insertOne(taskToAdd)
+                res.status(201).json(addedTask.ops[0])
+            } catch (error) {
+                console.error('Error adding task:', error)
+                res.status(500).json({ error: 'Failed to add task' })
+            }
+        })
+
+        app.listen(process.env.PORT || port, () => {
+            console.log(`REST API is listening.`)
+        })
     })
-
-    // Retrieve events
-    app.get('/events', async (req, res) => {
-        try {
-        const events = await eventsCollection.find().toArray()
-        res.json(events)
-        } catch (error) {
-        console.error('Error fetching events:', error)
-        res.status(500).json({ error: 'Failed to fetch events' })
-        }
-    })
-
-    app.get('/events/:eventId', async (req, res) => {
-        const eventId = req.params.eventId
-        try {
-          const event = await eventsCollection.findOne({ _id: new ObjectId(eventId) })
-          if (event) {
-            res.json(event)
-          } else {
-            res.status(404).json({ error: 'Event not found' })
-          }
-        } catch (error) {
-          console.error('Error fetching event:', error)
-          res.status(500).json({ error: 'Failed to fetch event' })
-        }
-    })
-
-    app.post('/events', async (req, res) => {
-        const eventToAdd = req.body
-        try {
-        const addedEvent = await eventsCollection.insertOne(eventToAdd)
-        res.status(201).json(addedEvent.ops[0])
-        } catch (error) {
-        console.error('Error adding event:', error)
-        res.status(500).json({ error: 'Failed to add event' })
-        }
-    })
-
-    app.get('/events/:eventId/tasks', async (req, res) => {
-        const eventId = req.params.eventId
-        try {
-          const tasks = await tasksCollection.find({ eventId: eventId }).toArray()
-          res.json(tasks)
-        } catch (error) {
-          console.error('Error fetching tasks:', error)
-          res.status(500).json({ error: 'Failed to fetch tasks' })
-        }
-    })
-    
-    app.post('/events/:eventId/tasks', async (req, res) => {
-        const eventId = req.params.eventId
-        const taskToAdd = req.body
-        console.log('Task data:', req.body)
-        taskToAdd.eventId = eventId // Set the event id for the task
-        try {
-          const addedTask = await tasksCollection.insertOne(taskToAdd)
-          res.status(201).json(addedTask.ops[0])
-        } catch (error) {
-          console.error('Error adding task:', error)
-          res.status(500).json({ error: 'Failed to add task' })
-        }
-    })
-
-    app.listen(process.env.PORT || port, () => {
-        console.log(`REST API is listening.`)
-    })
-})
     .catch((error) => {
         console.error('Error connecting to MongoDB', error)
-    }
-)
+    })
 
 process.on('SIGINT', () => {
     console.log('Closing MongoDB connection')
     mongoClient.close()
     process.exit()
-  })
+})
