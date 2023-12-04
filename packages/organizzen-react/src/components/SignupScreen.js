@@ -27,7 +27,7 @@ function SignupScreen(props) {
             password: '',
             email: '',
         })
-        navigate('/dashboard')
+        navigate('/login')
     }
 
     return (
