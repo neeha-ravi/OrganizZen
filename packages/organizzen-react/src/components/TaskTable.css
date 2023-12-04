@@ -39,13 +39,21 @@
     width: 15px;
 }
 
-.Checkbox {
+/* .Checkbox {
     height: 31px;
     width: 31px;
     background-color: purple;
     margin-right: 10px; 
-}
+} */
 
 .TodoItem {
     margin-left: 1px;
+}
+
+.NoTasksContainer {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    font-size: larger;
+    font-weight: bold;
 }
