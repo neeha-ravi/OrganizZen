@@ -66,6 +66,8 @@ app.post('/events/:eventId/tasks', async (req, res) => {
 })
 
 app.listen(process.env.PORT || port, () => {
-    //process not defined
-    console.log(`REST API is listening.`)
+    if (process.eventNames.PORT) {
+        console.log(`REST API is listening on port: ${process.env.PORT}.`)
+    }
+    else console.log(`Example app listening at http://localhost:${port}/events`)
 })
