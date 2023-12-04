@@ -1,4 +1,4 @@
-import { MongoClient, ObjectId } from 'mongodb'
+import { MongoClient/*, ObjectId*/} from 'mongodb'
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -8,7 +8,7 @@ const mongoURI = process.env.MONGODB_URI
 const connectToMongoDB = async () => {
     const client = new MongoClient(mongoURI, {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
     })
 
     try {
@@ -88,4 +88,10 @@ async function addTaskForEvent(eventId, task) {
     }
 }
 
-export { connectToMongoDB, getEvents, addEvent, getTasksForEvent, addTaskForEvent }
+export {
+    connectToMongoDB,
+    getEvents,
+    addEvent,
+    getTasksForEvent,
+    addTaskForEvent,
+  }

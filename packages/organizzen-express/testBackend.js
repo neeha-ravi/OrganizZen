@@ -1,4 +1,3 @@
-
 import express from 'express'
 import cors from 'cors'
 
@@ -169,7 +168,7 @@ const addTask = (task, eventId, taskDate) => {
         const currentDate = new Date() // This gets the current date and time
         currentDate.setDate(currentDate.getDate() - 2) //sets current date as 2 days ago because it doesn't read anything today or tomorrow
         const taskDateTime = new Date(taskDate).getTime()
-        const eventStartDate = new Date(event.startDate).getTime()
+        //const eventStartDate = new Date(event.startDate).getTime()
         const eventEndDate = new Date(event.endDate).getTime()
 
         if (taskDateTime >= currentDate && taskDateTime <= eventEndDate) {
@@ -210,7 +209,7 @@ app.post('/events/:eventId/tasks', (req, res) => {
 })
 
 app.listen(process.env.PORT || port, () => {
-    if (process.eventNames.PORT){
+    if (process.eventNames.PORT) {
         console.log(`REST API is listening on port: ${process.env.PORT}.`)
     }
     console.log(`Example app listening at http://localhost:${port}/events`)

@@ -1,11 +1,16 @@
 // backend.js
 import express from 'express'
 import cors from 'cors'
-import { ObjectId } from 'mongodb'
-import { connectToMongoDB, getEvents, addEvent, getTasksForEvent, addTaskForEvent } from './database.js'
+//import { ObjectId } from 'mongodb'
+import {
+    getEvents,
+    addEvent,
+    getTasksForEvent,
+    addTaskForEvent,
+} from './database.js'
 
 const app = express()
-const port = process.env.PORT || 8000
+const port = process.env.PORT || 8000 //process not defined
 
 app.use(cors())
 app.use(express.json())
@@ -60,6 +65,6 @@ app.post('/events/:eventId/tasks', async (req, res) => {
     }
 })
 
-app.listen(process.env.PORT || port, () => {
+app.listen(process.env.PORT || port, () => { //process not defined
     console.log(`REST API is listening.`)
 })
