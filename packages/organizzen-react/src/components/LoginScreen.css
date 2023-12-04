@@ -1,16 +1,11 @@
-#loginScreen {
-    background-color: #d7bbbb;
-    font-family: 'Be Vietnam Pro', sans-serif;
-}
-
 .loginBox {
     position: absolute;
     top: 40%;
     left: 50%;
     transform: translate(-50%, -40%);
     line-height: 1.4;
-    color: #9d8e8e;
-    background: #f9f4ef;
+    color: #000000;
+    background: #ffffff;
     padding: 50px 75px;
     border-radius: 70px;
     max-width: 800px;
@@ -20,20 +15,35 @@
 
 .loginBox h1 {
     font-size: 48px;
+    font-family: 'Be Vietnam Pro', sans-serif !important; 
+}
+
+.loginForm label {
+    color: #000000; /* Text color for labels */
+    font-size: 18px; /* Font size for labels */
+}
+
+.loginForm input {
+    width: 100%; /* Full width for input fields */
+    padding: 10px; /* Padding for input fields */
+    margin: 10px 0; /* Margin for input fields */
+    border: 2px solid #000000; /* Border for input fields */
+    border-radius: 5px; /* Border radius for input fields */
+    font-size: 18px;
 }
 
 #submitform {
-    background-color: #9d8e8e;
-    color: #f8f0e9;
-    border: 0;
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border: 2px solid #000000;
     border-radius: 10px;
     padding: 15px 35px;
     font-size: 24px;
-    font-weight: bold;
     margin-top: 10px;
+    cursor: pointer; /* Add cursor pointer on hover */
 }
 
 #submitform:hover {
-    background-color: #d7bbbb;
-    color: #9d8e8e;
- }
+    background-color: #575454 !important;
+    color: #ffffff !important;
+}
