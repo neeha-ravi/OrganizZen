@@ -27,7 +27,7 @@ const events = {
                     description: 'Description for Task 1',
                     link: 'https://example.com/task1',
                     date: '2023-12-04',
-                    color: 'red',
+                    color: '#f59d9d',
                     event: '1',
                 },
                 // Add more tasks for Event 1 if needed
@@ -48,7 +48,7 @@ const events = {
                     description: 'Description for Task 2',
                     link: 'https://example.com/task2',
                     date: '2023-12-15',
-                    color: 'blue',
+                    color: '#9bc1cc',
                     event: '2',
                 },
                 // Add more tasks for Event 2 if needed
@@ -117,10 +117,16 @@ app.get('/events/:eventId', (req, res) => {
 // EVENT
 const addEvent = (e) => {
     // Convert start and end dates to UTC format
+    console.log(e.startDate);
+    console.log(e.endDate);
+
     e.startDate = new Date(`${e.startDate}T00:00:00Z`)
         .toISOString()
         .split('T')[0]
     e.endDate = new Date(`${e.endDate}T23:59:59Z`).toISOString().split('T')[0]
+
+    console.log(e.startDate);
+    console.log(e.endDate);
 
     // Check if the event start date is in the future
     const currentDate = new Date()

@@ -83,7 +83,9 @@ function TaskTable({ filter }) {
           </div>
   
           {filteredTasks.map((task) => (
-            <div className="TaskContainer" key={task.id}>
+            <div className="TaskContainer" 
+                 key={task.id}
+                 style={{ backgroundColor: task.color || '#ffffff' }}>
               <div className="StartText" />
               <div className="TodoItem">
                 <label>{task.name}</label>
