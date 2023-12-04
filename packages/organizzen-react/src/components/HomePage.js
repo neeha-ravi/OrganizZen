@@ -1,6 +1,6 @@
 //import logo from "./logo.svg";
 import styles from '../Styles/index.module.css'
-import TaskTable from './TaskTable';
+import TaskTable from './TaskTable'
 import Calendar from './Calendar'
 import React, { useState } from 'react'
 
