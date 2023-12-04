@@ -1,22 +1,9 @@
-const { MongoClient } = require('mongodb')
-require('dotenv').config()
+/* global process */
+import mongoose from "mongoose"
+import dotenv from "dotenv"
 
+// Load environment variables from a .env file
+dotenv.config()
+
+// eslint-disable-next-line no-unused-vars
 const mongoURI = process.env.MONGODB_URI
-
-const connectToMongoDB = async () => {
-    const client = new MongoClient(mongoURI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    })
-
-    try {
-        await client.connect()
-        console.log('Connected to MongoDB')
-        return client
-    } catch (err) {
-        console.error('Error connecting to MongoDB:', err)
-        throw err
-    }
-}
-
-module.exports = { connectToMongoDB }

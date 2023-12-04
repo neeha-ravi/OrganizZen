@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './NewTask.css'
 
-const API_BASE_URL = 'https://organizzen.azurewebsites.net/'
 function NewTask(props) {
     const [task, setTask] = useState({
-        _id: '',
+        id: '',
         name: '',
         description: '',
         link: '',
@@ -19,7 +18,7 @@ function NewTask(props) {
     function submitForm() {
         props.handleSubmit(selectedEvent, task)
         setTask({
-            _id: '',
+            id: '',
             name: '',
             description: '',
             link: '',
@@ -53,7 +52,7 @@ function NewTask(props) {
 
     const [eventOptions, setEventOptions] = useState([])
     useEffect(() => {
-        fetch('${API_BASE_URL}/events/')
+        fetch('http://localhost:8000/events')
             .then((response) => response.json())
             .then((data) => {
                 setEventOptions(data.events_list)

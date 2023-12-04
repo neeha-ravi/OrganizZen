@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import './Calendar.css'
 
+const API_BASE_URL = 'https://organizzen.azurewebsites.net/'
+
 function Calendar() {
   const [events, setEvents] = useState([])
 
   useEffect(() => {
     // Fetch events from the backend
-    fetch('http://localhost:8000/events')
+    fetch('${API_BASE_URL}/events')
       .then((response) => response.json())
       .then((data) => {
         // Sort events by start date in ascending order
