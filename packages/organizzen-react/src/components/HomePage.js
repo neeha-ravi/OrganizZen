@@ -11,11 +11,7 @@ function HomePage() {
         <div>
             <div className={styles.CalendarTaskContainer}>
                 <div className={styles.CalendarDashboard}>
-<<<<<<< HEAD
-                    <Calendar />
-=======
                     <Calendar filter={filter} setFilter={setFilter} />
->>>>>>> 61f7028dc9eebd585e45bdd1e14e0f51e7e0287e
                 </div>
                 <div className={styles.TaskCalendarDivider} />
                 <div className={styles.TaskContainer}>
