@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import ViewDetails from './ViewDetails'
 import './TaskTable.css'
 
 function TaskTable({ filter }) {
@@ -66,6 +67,7 @@ function TaskTable({ filter }) {
         return groupedTasks
     }
 
+    // eslint-disable-next-line no-unused-vars
     function fetchTasks(eventId) {
         if (!eventId) {
             console.error('No event ID provided.')
@@ -147,6 +149,7 @@ function TaskTable({ filter }) {
     }
 
     const renderTasks = () => {
+        // eslint-disable-next-line no-unused-vars
         const filteredTasks = showCompleted ? completedTasks : tasks
         const groupedTasks = groupTasksByDate()
         const taskDates = Object.keys(groupedTasks)
@@ -215,6 +218,9 @@ function TaskTable({ filter }) {
                                         <div className="StartText" />
                                         <div className="TodoItem">
                                             <label>{task.name}</label>
+                                        </div>
+                                        <div>
+                                            <ViewDetails task={task} />
                                         </div>
                                         <div className="CompletedButtonContainer">
                                             <button
