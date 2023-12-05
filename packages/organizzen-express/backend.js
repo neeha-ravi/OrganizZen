@@ -299,30 +299,33 @@ app.put('/events/:eventId/tasks/:taskId/mark-as-done', (req, res) => {
     }
 })
 
-app.put('/events/:eventId/tasks/:taskId/undo', (req, res) => {
-    const eventId = req.params.eventId
-    const taskId = req.params.taskId
+app.delete('/events/:eventId/tasks/:taskId', (req, res) => {
+    const eventId = req.params.eventId;
+    const taskId = req.params.taskId;
 
     // Find the event by eventId
-    const event = findEventById(eventId)
+    const event = findEventById(eventId);
 
     if (event === undefined) {
-        res.status(404).json({ error: 'Event not found.' })
+        res.status(404).json({ error: 'Event not found.' });
     } else {
-        // Find the task within the event by taskId
-        const task = event.tasks.find((task) => task.id === taskId)
+        // Filter out the task from the array within the event
+        const updatedTasks = event.tasks.filter((task) => task.id !== taskId);
 
-        if (task === undefined) {
-            res.status(404).json({ error: 'Task not found.' })
-        } else {
-            // Set the 'done' field to false (undo)
-            task.done = false
+        // Update the tasks array in the events object
+        events.events_list.forEach((e, index) => {
+            if (e.id === eventId) {
+                events.events_list[index].tasks = updatedTasks;
+                return;
+            }
+        });
 
-            res.status(200).json(task)
-        }
+        res.status(200).json({ message: 'Task deleted successfully', updatedTasks });
     }
-})
+});
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}/events`)
-})
+    console.log(`Server is running on port ${port}`);
+});
+
+  

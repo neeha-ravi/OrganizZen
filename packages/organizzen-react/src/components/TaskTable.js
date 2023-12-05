@@ -68,11 +68,11 @@ function TaskTable({ filter }) {
 
     function handleDelete(taskId, eventId) {
       const confirmDelete = window.confirm('Are you sure you want to delete this task?');
-
+  
       if (!confirmDelete) {
           return;
       }
-
+  
       // Make a DELETE request to remove the task
       fetch(
           `http://localhost:8000/events/${eventId}/tasks/${taskId}`,
@@ -84,39 +84,55 @@ function TaskTable({ filter }) {
               if (!response.ok) {
                   throw new Error('Failed to delete task');
               }
-
-              // Refetch tasks after deletion
-              fetchTasks(eventId);
+  
+              // Update the local state to remove the deleted task
+              setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+  
+              // If the task is completed, update completedTasks as well
+              setCompletedTasks((prevCompletedTasks) =>
+                  prevCompletedTasks.filter((completedTask) => completedTask.id !== taskId)
+              );
           })
           .catch((error) => {
               console.error('Error deleting task:', error);
           });
   }
+  
 
 
-    function fetchTasks(eventId) {
-        if (!eventId) {
-            console.error('No event ID provided.')
-            return
-        }
-
-        // Make a GET request to fetch tasks for the specified event
-        fetch(`http://localhost:8000/events/${eventId}/tasks`)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch tasks')
-                }
-                return response.json()
-            })
-            .then((tasks) => {
-                // Process the fetched tasks, update state, or perform other actions
-                console.log('Fetched tasks for event', eventId, ':', tasks)
-                setTasks(tasks) // Update the tasks state
-            })
-            .catch((error) => {
-                console.error('Error fetching tasks:', error)
-            })
+  function fetchTasks(eventId) {
+    if (!eventId) {
+        console.error('No event ID provided.')
+        return
     }
+
+    // Make a GET request to fetch tasks for the specified event
+    fetch(`http://localhost:8000/events/${eventId}/tasks`)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch tasks')
+            }
+            return response.json()
+        })
+        .then((tasks) => {
+            // Process the fetched tasks, update state, or perform other actions
+            console.log('Fetched tasks for event', eventId, ':', tasks)
+
+            // Use the current state to update tasks, preventing potential race conditions
+            setTasks((prevTasks) => {
+                // Create a new array with the updated tasks
+                const updatedTasks = prevTasks.map((task) =>
+                    task.eventId === eventId ? tasks.find((t) => t.id === task.id) || task : task
+                );
+
+                return updatedTasks;
+            });
+        })
+        .catch((error) => {
+            console.error('Error fetching tasks:', error)
+        });
+}
+
 
     function handleDone(taskId, eventId) {
         const isCompleted = completedTasks.some(
