@@ -33,13 +33,12 @@
     right: 7%;
 }
 
-  
-  .TaskTableContainer {
+.TaskTableContainer {
     position: relative; /* Ensure relative positioning for children */
     display: flex;
-  }
-  
-  .ToDoListContainer {
+}
+
+.ToDoListContainer {
     height: 650px;
     width: 100%;
     margin-top: 40px;
@@ -52,7 +51,7 @@
     align-items: center; /* Center vertically */
     height: 31px;
     width: 100%;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     border-radius: 8px;
     margin-top: 20px;
     /* overflow: hidden; */
@@ -82,7 +81,7 @@
     flex-grow: 1;
 }
 
-.CompletedButtonContainer{
+.CompletedButtonContainer {
     width: 100px;
     height: 31px;
     justify-content: center;
@@ -92,7 +91,7 @@
 
 .CompletedButton {
     width: 10px;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     color: black;
     display: flex;
     justify-content: center;
@@ -107,8 +106,6 @@
     background-color: #000000;
     color: white;
 }
-
-
 
 .completedtoggle:hover {
     background-color: #000000;

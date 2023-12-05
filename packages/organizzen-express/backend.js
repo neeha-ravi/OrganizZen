@@ -65,15 +65,15 @@ const findEventById = (eventId) => {
 }
 
 const findTaskById = (eventId, taskId) => {
-    const event = findEventById(eventId);
+    const event = findEventById(eventId)
 
     if (event) {
-        const task = event.tasks.find(t => t.id === taskId);
-        return task;
+        const task = event.tasks.find((t) => t.id === taskId)
+        return task
     }
 
-    return null;
-};
+    return null
+}
 
 const usedEventIds = new Set()
 usedEventIds.add(1).add(2)
@@ -120,26 +120,25 @@ app.get('/events/:eventId/tasks', (req, res) => {
 })
 
 app.get('/events/:eventId/tasks/:taskId', (req, res) => {
-    const eventId = req.params.eventId;
-    const taskId = req.params.taskId;
+    const eventId = req.params.eventId
+    const taskId = req.params.taskId
 
     // Find the event by eventId
-    const event = findEventById(eventId);
+    const event = findEventById(eventId)
 
     if (event === undefined) {
-        res.status(404).send('Event not found.');
+        res.status(404).send('Event not found.')
     } else {
         // Find the task within the event by taskId
-        const task = event.tasks.find((task) => task.id === taskId);
+        const task = event.tasks.find((task) => task.id === taskId)
 
         if (task === undefined) {
-            res.status(404).send('Task not found.');
+            res.status(404).send('Task not found.')
         } else {
-            res.send(task);
+            res.send(task)
         }
     }
-});
-
+})
 
 app.get('/', (req, res) => {
     res.send('Hello World!') // sets the endpoint to accept http GET requests
@@ -161,19 +160,19 @@ app.get('/events/:eventId', (req, res) => {
 })
 
 app.get('/events/:eventId/tasks/:taskId/mark-as-done', (req, res) => {
-    const eventId = req.params.eventId;
-    const taskId = req.params.taskId;
+    const eventId = req.params.eventId
+    const taskId = req.params.taskId
 
     // Find the task by eventId and taskId
-    const task = findTaskById(eventId, taskId);
+    const task = findTaskById(eventId, taskId)
 
     if (task) {
         // Return information about the task (or any other relevant data)
-        res.status(200).json(task);
+        res.status(200).json(task)
     } else {
-        res.status(404).json({ error: 'Task not found' });
+        res.status(404).json({ error: 'Task not found' })
     }
-});
+})
 
 // EVENT
 const addEvent = (e) => {
@@ -281,55 +280,53 @@ app.post('/events/:eventId/tasks', (req, res) => {
     }
 })
 
-
 app.put('/events/:eventId/tasks/:taskId/mark-as-done', (req, res) => {
-    const eventId = req.params.eventId;
-    const taskId = req.params.taskId;
+    const eventId = req.params.eventId
+    const taskId = req.params.taskId
 
     // Find the event by eventId
-    const event = findEventById(eventId);
+    const event = findEventById(eventId)
 
     if (event === undefined) {
-        res.status(404).json({ error: 'Event not found.' });
+        res.status(404).json({ error: 'Event not found.' })
     } else {
         // Find the task within the event by taskId
-        const task = event.tasks.find((task) => task.id === taskId);
+        const task = event.tasks.find((task) => task.id === taskId)
 
         if (task === undefined) {
-            res.status(404).json({ error: 'Task not found.' });
+            res.status(404).json({ error: 'Task not found.' })
         } else {
             // Set the 'done' field to true
-            task.done = true;
+            task.done = true
 
-            res.status(200).json(task);
+            res.status(200).json(task)
         }
     }
-});
+})
 
 app.put('/events/:eventId/tasks/:taskId/undo', (req, res) => {
-    const eventId = req.params.eventId;
-    const taskId = req.params.taskId;
-  
+    const eventId = req.params.eventId
+    const taskId = req.params.taskId
+
     // Find the event by eventId
-    const event = findEventById(eventId);
-  
+    const event = findEventById(eventId)
+
     if (event === undefined) {
-      res.status(404).json({ error: 'Event not found.' });
+        res.status(404).json({ error: 'Event not found.' })
     } else {
-      // Find the task within the event by taskId
-      const task = event.tasks.find((task) => task.id === taskId);
-  
-      if (task === undefined) {
-        res.status(404).json({ error: 'Task not found.' });
-      } else {
-        // Set the 'done' field to false (undo)
-        task.done = false;
-  
-        res.status(200).json(task);
-      }
+        // Find the task within the event by taskId
+        const task = event.tasks.find((task) => task.id === taskId)
+
+        if (task === undefined) {
+            res.status(404).json({ error: 'Task not found.' })
+        } else {
+            // Set the 'done' field to false (undo)
+            task.done = false
+
+            res.status(200).json(task)
+        }
     }
-  });
-  
+})
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}/events`)
