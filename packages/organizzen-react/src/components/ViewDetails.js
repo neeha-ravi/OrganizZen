@@ -21,7 +21,7 @@ function ViewDetails({ task }) {
                             X
                         </button>
                         <h1>{task.name}</h1>
-                        <h2>{task.description}</h2>
+                        <h2>DESCRIPTION: {task.description}</h2>
                         <hr />
                         {task.link !== '' ? (
                             <h3>
