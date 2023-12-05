@@ -15,13 +15,15 @@ function NewEvent(props) {
     function submitForm(submitEvent) {
         submitEvent.preventDefault()
 
-        if (event.startDate > event.endDate) {
-            setInvalidInput(1)
-            return
+        if (event.oneDayOnly === false) {
+            if (event.startDate > event.endDate) {
+                setInvalidInput(1)
+                return
+            }
         } else if (event.name === '') {
             setInvalidInput(2)
             return
-        } else if (event.startDate === '') {
+        } else if (event.startDate === '' && event.oneDayOnly === true) {
             setInvalidInput(3)
             return
         }
