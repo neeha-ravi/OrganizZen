@@ -236,14 +236,9 @@ const addTask = (task, eventId, taskDate) => {
         const currentDate = new Date() // This gets the current date and time
         currentDate.setDate(currentDate.getDate() - 2) //sets current date as 2 days ago because it doesn't read anything today or tomorrow
         const taskDateTime = new Date(taskDate).getTime()
-        const eventStartDate = new Date(event.startDate).getTime()
         const eventEndDate = new Date(event.endDate).getTime()
 
-        if (
-            taskDateTime >= currentDate &&
-            taskDateTime <= eventEndDate &&
-            taskDateTime >= eventStartDate
-        ) {
+        if (taskDateTime >= currentDate && taskDateTime <= eventEndDate) {
             event.tasks.push(task)
             usedTaskIds.add(task.id)
             return task

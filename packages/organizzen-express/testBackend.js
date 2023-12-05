@@ -17,10 +17,10 @@ connectToMongoDB()
         console.log('Connected to MongoDB')
 
         const eventsCollection = mongoClient
-            .db('Cluster0')
+            .db('OrganizzenData')
             .collection('userEvents')
         const tasksCollection = mongoClient
-            .db('Cluster0')
+            .db('OrganizzenData')
             .collection('eventTasks')
 
         app.get('/', (req, res) => {
