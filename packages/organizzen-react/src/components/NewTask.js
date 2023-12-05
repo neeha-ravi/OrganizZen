@@ -26,10 +26,7 @@ function NewTask(props) {
         if (selectedDate === '') {
             setInvalidInput(3)
             return
-        } else if (
-            selectedDate < selectedEventData.startDate ||
-            selectedDate > selectedEventData.endDate
-        ) {
+        } else if (selectedDate > selectedEventData.endDate) {
             setInvalidInput(1)
             return
         } else if (inputName === '') {
