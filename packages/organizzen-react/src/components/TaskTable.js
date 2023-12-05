@@ -210,13 +210,15 @@ function TaskTable({ filter }) {
   };
 
   return (
-    <div>
-      <button onClick={toggleShowCompleted} className="completedtoggle">
-        {showCompleted ? 'Show Incomplete Tasks' : 'Show Completed Tasks'}
-      </button>
+    <div className="TaskTableContainer">
+      <div className="ButtonContainer">
+        <button onClick={toggleShowCompleted} className="completedtoggle">
+          {showCompleted ? 'Show Incomplete Tasks' : 'Show Completed Tasks'}
+        </button>
+      </div>
       <div className="ToDoListContainer">{renderTasks()}</div>
     </div>
   );
 }
 
-export default TaskTable
+export default TaskTable;
