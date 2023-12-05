@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import ViewDetails from './ViewDetails'
 import './TaskTable.css'
 
 function TaskTable({ filter }) {
@@ -65,7 +66,7 @@ function TaskTable({ filter }) {
         })
         return groupedTasks
     }
-
+    
     function handleDelete(taskId, eventId) {
       const confirmDelete = window.confirm('Are you sure you want to delete this task?');
   
@@ -191,6 +192,7 @@ function TaskTable({ filter }) {
     }
 
     const renderTasks = () => {
+        // eslint-disable-next-line no-unused-vars
         const filteredTasks = showCompleted ? completedTasks : tasks
         const groupedTasks = groupTasksByDate()
         const taskDates = Object.keys(groupedTasks)
@@ -266,6 +268,10 @@ function TaskTable({ filter }) {
                                                     className="DeleteButton">🗑️
                                                   </button>
                                         </div>
+                                        <div>
+                                            <ViewDetails task={task} />
+                                        </div>
+                                    
                                         <div className="CompletedButtonContainer">
                                             <button
                                                 onClick={() =>
