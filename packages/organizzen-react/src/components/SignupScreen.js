@@ -1,25 +1,25 @@
 // SignupScreen.js
 
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import './LoginScreen.css';
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import './LoginScreen.css'
 
 function SignupScreen(props) {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
     const [userFormData, setUserFormData] = useState({
         userId: '',
         username: '',
         password: '',
         email: '',
-    });
+    })
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value } = e.target
         setUserFormData({
             ...userFormData,
             [name]: value,
-        });
-    };
+        })
+    }
 
     const validateForm = () => {
         // Check if all three fields are filled
@@ -27,23 +27,23 @@ function SignupScreen(props) {
             userFormData.username.trim() !== '' &&
             userFormData.password.trim() !== '' &&
             userFormData.email.trim() !== ''
-        );
-    };
+        )
+    }
 
     const submitForm = () => {
         if (validateForm()) {
-            props.handleSubmit(userFormData);
+            props.handleSubmit(userFormData)
             setUserFormData({
                 userId: '',
                 username: '',
                 password: '',
                 email: '',
-            });
-            navigate('/login');
+            })
+            navigate('/login')
         } else {
-            alert('Please fill in ALL fields.');
+            alert('Please fill in ALL fields.')
         }
-    };
+    }
 
     return (
         <div className="loginScreen">
@@ -85,7 +85,7 @@ function SignupScreen(props) {
                 </p>
             </div>
         </div>
-    );
+    )
 }
 
-export default SignupScreen;
+export default SignupScreen
