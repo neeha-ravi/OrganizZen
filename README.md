@@ -5,6 +5,7 @@ For event planners, team leaders, and collaborative groups who are overwhelmed w
 # UI Prototype
 See the Figma!
 [PROTOTYPE] https://www.figma.com/file/pZ8oo4HfhDI6RlzLrSeHOo/Prototype?type=design&node-id=0-1&mode=design&t=TIlkFC3eWPdjNO6a-0 
+
 [WIREFRAME] https://www.figma.com/file/YENWh5f5g0Fv2FgBzbFjee/Prototype?type=design&node-id=0-1&mode=design&t=uyaBs6wzBL4t2mry-0 
 
 # Contributing
