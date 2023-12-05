@@ -14,7 +14,6 @@ Scripts to set up frontend developer environment (Run all of these scripts from 
 Scripts to set up frontend developer environment (Pick between either start or dev commands):
 -  npm run backend-start             ->       starts backend for tasks/events
 -  npm run backend-start-users       ->       starts backend for users
-OR
 -  npm run backend-dev               ->       starts backend for tasks/events (but using nodemon)
 -  npm run backend-dev-users         ->       starts backend for users (but using nodemon)
 
