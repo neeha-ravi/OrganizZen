@@ -28,7 +28,7 @@
     background-color: #FFFFFF;
     border-radius: 8px;
     margin-top: 20px;
-    overflow: hidden;
+    /* overflow: hidden; */
     margin-bottom: 20px;
 }
 
@@ -55,8 +55,16 @@
     flex-grow: 1;
 }
 
+.CompletedButtonContainer{
+    width: 100px;
+    height: 31px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
 .CompletedButton {
-    width: 10%;
+    width: 10px;
     background-color: #FFFFFF;
     color: black;
     display: flex;
@@ -65,15 +73,29 @@
     font-family: 'Be Vietnam Pro', sans-serif;
     font-size: 90%;
     margin: 25px;
-    height: 2px;
+    height: 31px;
+}
+
+.CompletedButton:hover {
+    background-color: #000000;
+    color: white;
 }
 
 .completedtoggle {
     font-family: 'Be Vietnam Pro', sans-serif;
     color: black;
     font-size: 90%;
-    width: 20%;
-    background-color: #FFFFFF;
+    width: 200px;
+    height: 27px !important;
+    background-color: #ffffff;
+    justify-content: center;
+    align-items: center;
+    display: flex;
     padding: 10px;
     margin-bottom: 20px;
+}
+
+.completedtoggle:hover {
+    background-color: #000000;
+    color: white;
 }
