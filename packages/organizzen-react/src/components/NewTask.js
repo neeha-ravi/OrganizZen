@@ -10,6 +10,7 @@ function NewTask(props) {
         date: '',
         color: '',
         event: '',
+        done: false,
     })
 
     // Add a state to keep track of the selected color
@@ -25,6 +26,7 @@ function NewTask(props) {
             date: '',
             color: '',
             event: '',
+            done: false,
         })
     }
 
