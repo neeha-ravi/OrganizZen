@@ -2,19 +2,30 @@ import React, { useState, useEffect } from 'react'
 import './TaskTable.css'
 
 function TaskTable({ filter }) {
-    const [tasks, setTasks] = useState([])
-    const [completedTasks, setCompletedTasks] = useState([]);
-    const [eventOptions, setEventOptions] = useState([]);
-    const [selectedEvent, setEventSelect] = useState(eventOptions[0]);
-    const [showCompleted, setShowCompleted] = useState(false);
+  const [tasks, setTasks] = useState([]);
+  const [completedTasks, setCompletedTasks] = useState([]);
+  const [showCompleted, setShowCompleted] = useState(
+    localStorage.getItem('showCompleted') === 'true' ? true : false
+  );
 
-    useEffect(() => {
-        // Fetch all tasks initially
-        fetch('http://localhost:8000/events/tasks')
-            .then((response) => response.json())
-            .then((data) => setTasks(data))
-            .catch((error) => console.log(error))
-    }, [])
+  useEffect(() => {
+    // Fetch all tasks initially
+    fetch('http://localhost:8000/events/tasks')
+      .then((response) => response.json())
+      .then((data) => {
+        const allTasks = data;
+        const initialCompletedTasks = allTasks.filter((task) => task.done);
+        setCompletedTasks(initialCompletedTasks);
+        setTasks(allTasks);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  useEffect(() => {
+    // Update localStorage whenever completedTasks state changes
+    localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
+  }, [completedTasks]);
+
 
     useEffect(() => {
         // Check if there are events selected in the filter
@@ -79,40 +90,41 @@ function TaskTable({ filter }) {
     }
 
     function handleDone(taskId, eventId) {
-      // Make a PUT request to update the task as done
-      fetch(`http://localhost:8000/events/${eventId}/tasks/${taskId}/mark-as-done`, {
+      const isCompleted = completedTasks.some((completedTask) => completedTask.id === taskId);
+    
+      // Make a PUT request to update the task as done or undone
+      fetch(`http://localhost:8000/events/${eventId}/tasks/${taskId}/${isCompleted ? 'undo' : 'mark-as-done'}`, {
         method: 'PUT',
       })
         .then((response) => {
           if (!response.ok) {
-            throw new Error('Failed to mark task as done');
+            throw new Error(isCompleted ? 'Failed to undo task' : 'Failed to mark task as done');
           }
     
-          // Toggle the 'done' field for the specific task
+          // Update the local state with the modified tasks
           const updatedTasks = tasks.map((task) =>
             task.id === taskId ? { ...task, done: !task.done } : task
           );
-    
-          // Update the local state with the modified tasks
           setTasks(updatedTasks);
     
-          // Move the task to completed tasks if it's marked as done
-          const completedTask = updatedTasks.find((task) => task.id === taskId);
-          if (completedTask.done) {
-            setCompletedTasks((prevCompletedTasks) => [...prevCompletedTasks, completedTask]);
-          } else {
-            // Remove the task from completed tasks if it's marked as undone
+          // Move the task between incomplete and completed tasks based on its current state
+          if (isCompleted) {
             setCompletedTasks((prevCompletedTasks) =>
               prevCompletedTasks.filter((completedTask) => completedTask.id !== taskId)
             );
+          } else {
+            const completedTask = updatedTasks.find((task) => task.id === taskId);
+            setCompletedTasks((prevCompletedTasks) => [...prevCompletedTasks, completedTask]);
           }
         })
         .catch((error) => {
-          console.error('Error marking task as done:', error);
+          console.error(`Error ${isCompleted ? 'undoing' : 'marking as done'} task:`, error);
         });
     }
+    
 
     const renderTasks = () => {
+        const filteredTasks = showCompleted ? completedTasks : tasks;
         const groupedTasks = groupTasksByDate()
         const taskDates = Object.keys(groupedTasks)
 
@@ -190,7 +202,11 @@ function TaskTable({ filter }) {
   };
 
   const toggleShowCompleted = () => {
-    setShowCompleted((prevShowCompleted) => !prevShowCompleted);
+    setShowCompleted((prevShowCompleted) => {
+      const newShowCompleted = !prevShowCompleted;
+      localStorage.setItem('showCompleted', newShowCompleted.toString());
+      return newShowCompleted;
+    });
   };
 
   return (

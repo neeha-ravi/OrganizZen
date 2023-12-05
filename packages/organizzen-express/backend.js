@@ -306,6 +306,31 @@ app.put('/events/:eventId/tasks/:taskId/mark-as-done', (req, res) => {
     }
 });
 
+app.put('/events/:eventId/tasks/:taskId/undo', (req, res) => {
+    const eventId = req.params.eventId;
+    const taskId = req.params.taskId;
+  
+    // Find the event by eventId
+    const event = findEventById(eventId);
+  
+    if (event === undefined) {
+      res.status(404).json({ error: 'Event not found.' });
+    } else {
+      // Find the task within the event by taskId
+      const task = event.tasks.find((task) => task.id === taskId);
+  
+      if (task === undefined) {
+        res.status(404).json({ error: 'Task not found.' });
+      } else {
+        // Set the 'done' field to false (undo)
+        task.done = false;
+  
+        res.status(200).json(task);
+      }
+    }
+  });
+  
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}/events`)
 })
