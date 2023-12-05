@@ -80,6 +80,7 @@ function NewTask(props) {
     const [popup, popupState] = useState(false)
     const togglePopup = () => {
         popupState(!popup)
+        setInvalidInput(0)
     }
 
     const [invalidInput, setInvalidInput] = useState([])
