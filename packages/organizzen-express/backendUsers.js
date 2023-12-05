@@ -1,79 +1,104 @@
-// backend.js
+import express from 'express';
+import cors from 'cors';
+import { MongoClient } from 'mongodb';
+import { connectToMongoDB } from './database.js';
 
-import express from 'express'
-import cors from 'cors'
+const app = express();
+const port = 8001;
 
-const app = express()
-const port = 8001
+app.use(cors());
+app.use(express.json());
 
-app.use(cors())
-app.use(express.json()) // set up express to process incoming data in JSON format
+let mongoClient;
 
-// Store events with associated tasks
-const users = {
-    users_list: [
-        {
-            userId: '1',
-            username: 'user1',
-            password: 'user1password',
-            email: 'user1@realemail.com',
-        },
-    ],
-}
+// Use connectToMongoDB function to establish connection
+connectToMongoDB()
+    .then((client) => {
+        mongoClient = client;
+        console.log('Connected to MongoDB');
 
-const findEventById = (eventId) => {
-    return users['users_list'].find((event) => event.id === eventId)
-}
+        const usersCollection = mongoClient
+            .db('OrganizzenData') // Replace with your actual database name
+            .collection('OZusers'); // Replace with your actual collection name
 
-const usedUserIds = new Set()
-usedUserIds.add(1).add(2)
+        app.get('/', (req, res) => {
+            res.send('This is the backendUser.js file!');
+        });
 
-// Generate a unique ID between 1 and infinity
-const generateUniqueId = (usedIds) => {
-    let id = 1
-    while (usedIds.has(id)) {
-        id++
-    }
-    usedIds.add(id)
-    return id.toString()
-}
+        // Retrieve users
+        app.get('/users', async (req, res) => {
+            try {
+                const users = await usersCollection.find().toArray();
+                res.json({ users_list: users });
+            } catch (error) {
+                console.error('Error fetching users:', error);
+                res.status(500).json({ error: 'Failed to fetch users' });
+            }
+        });
 
-app.get('/', (req, res) => {
-    res.send('This is the backendUser.js file!') // sets the endpoint to accept http GET requests
-})
+        app.get('/users/:userId', async (req, res) => {
+            const id = req.params.userId;
+            try {
+                const user = await usersCollection.findOne({
+                    userId: id,
+                });
+                if (user) {
+                    res.json(user);
+                } else {
+                    res.status(404).json({ error: 'User not found' });
+                }
+            } catch (error) {
+                console.error('Error fetching user:', error);
+                res.status(500).json({ error: 'Failed to fetch user' });
+            }
+        });
 
-// Retrieve users
-app.get('/users', (req, res) => {
-    res.send(users)
-})
+        // USERS
+        const addUser = async (user) => {
+            try {
+                // Check for duplicate username or email
+                const existingUser = await usersCollection.findOne({
+                    $or: [{ username: user.username }, { email: user.email }],
+                });
 
-app.get('/users/:userId', (req, res) => {
-    const id = req.params.Id
-    let result = findEventById(id)
-    if (result === undefined) {
-        res.status(404).send('Resource not found.')
-    } else {
-        res.send(result)
-    }
-})
+                if (existingUser) {
+                    return { error: 'Username or email already exists.' };
+                }
 
-// USERS
-const addUser = (user) => {
-    user.userId = generateUniqueId(usedUserIds)
-    users['users_list'].push(user)
-    return user
-}
+                const result = await usersCollection.insertOne(user);
+                return result.ops[0];
+            } catch (error) {
+                return { error: 'Failed to add user' };
+            }
+        };
 
-app.post('/users', (req, res) => {
-    const userToAdd = req.body
-    if (userToAdd) {
-        addUser(userToAdd)
-        res.status(201).json(userToAdd)
-    } else {
-        res.status(500).json({ error: 'Failed to add user' })
-    }
-})
+        app.post('/users', async (req, res) => {
+            try {
+                const userToAdd = req.body;
+                const result = await addUser(userToAdd);
+        
+                if (result.error) {
+                    // Send a 400 Bad Request status for duplicate user
+                    res.status(400).json({ error: result.error });
+                } else {
+                    res.status(201).json(result);
+                }
+            } catch (error) {
+                console.error('Error adding user:', error.message);
+                res.status(500).json({ error: 'Failed to add user' });
+            }
+        });        
 
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}/users`)
-})
+        app.listen(port, () => {
+            console.log(`Example app listening at http://localhost:${port}/users`);
+        });
+    })
+    .catch((error) => {
+        console.error('Error connecting to MongoDB', error);
+    });
+
+process.on('SIGINT', () => {
+    console.log('Closing MongoDB connection');
+    mongoClient.close();
+    process.exit();
+});
