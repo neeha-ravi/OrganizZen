@@ -54,16 +54,13 @@ function TaskTable({ filter }) {
         }
     }, [filter])
 
-  useEffect(() => {
-    // Check if there are events selected in the filter
-    if (filter.size > 0) {
-      // Fetch tasks for each eventId in the filter
-      Promise.all([...filter].map((eventId) => fetch(`http://localhost:8000/events/${eventId}/tasks`)))
-        .then((responses) => Promise.all(responses.map((response) => response.json())))
-        .then((data) => {
-          // Flatten the array of arrays into a single array of tasks
-          const filteredTasks = data.flat();
-          setTasks(filteredTasks);
+    const groupTasksByDate = () => {
+        const groupedTasks = {}
+        tasks.forEach((task) => {
+            if (!groupedTasks[task.date]) {
+                groupedTasks[task.date] = []
+            }
+            groupedTasks[task.date].push(task)
         })
         return groupedTasks
     }
@@ -210,7 +207,7 @@ function TaskTable({ filter }) {
       localStorage.setItem('showCompleted', newShowCompleted.toString());
       return newShowCompleted;
     });
-  };  
+  };
 
   return (
     <div>
@@ -222,4 +219,4 @@ function TaskTable({ filter }) {
   );
 }
 
-export default TaskTable;
+export default TaskTable

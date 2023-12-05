@@ -22,6 +22,10 @@
     color: #000000; /* Text color for labels */
     font-size: 18px; /* Font size for labels */
     font-family: 'Be Vietnam Pro', sans-serif !important;
+}
+
+.loginForm input {
+    width: 100%; /* Full width for input fields */
     padding: 10px; /* Padding for input fields */
     margin: 10px 0; /* Margin for input fields */
     border: 2px solid #000000; /* Border for input fields */
@@ -39,11 +43,6 @@
     font-size: 24px;
     margin-top: 10px;
     cursor: pointer; /* Add cursor pointer on hover */
-}
-
-#submitform:hover {
-    background-color: #575454 !important;
-    color: #ffffff !important;
 }
 
 #submitform:hover {

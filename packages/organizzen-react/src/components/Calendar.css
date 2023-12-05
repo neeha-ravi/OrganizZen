@@ -66,6 +66,10 @@
     animation: fadeInOut 2s ease-in-out forwards;
 }
 
+.ShadedEvent .EventBox {
+    background-color: rgb(129, 121, 171);
+}
+
 @keyframes fadeInOut {
     0% {
         opacity: 0;

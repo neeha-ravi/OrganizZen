@@ -25,7 +25,7 @@
     align-items: center; /* Center vertically */
     height: 31px;
     width: 100%;
-    background-color: #ffffff;
+    background-color: #FFFFFF;
     border-radius: 8px;
     margin-top: 20px;
     /* overflow: hidden; */
@@ -33,10 +33,6 @@
 }
 
 .TodoItem:hover {
-    filter: brightness(0.8);
-}
-
-.TaskContainer:hover {
     filter: brightness(0.8);
 }
 
