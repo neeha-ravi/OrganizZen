@@ -6,7 +6,6 @@ import './MyApp.css'
 
 const App = () => {
     const [events, setEvents] = useState([])
-
     useEffect(() => {
         // Fetch the list of events when the component mounts
         fetch('http://localhost:8000/events')

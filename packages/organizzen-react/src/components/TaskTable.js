@@ -172,17 +172,18 @@ function TaskTable({ filter }) {
                   <div className="TodoItem">
                     <label>{task.name}</label>
                   </div>
-                  <button onClick={() => handleDone(task.id, task.eventId)} className="CompletedButton">
-                    {task.done ? 'UNDO' : 'DONE'}
-                  </button>
+                  <div className="CompletedButtonContainer">
+                    <button onClick={() => handleDone(task.id, task.eventId)} className="CompletedButton">
+                        {task.done ? 'UNDO' : 'DONE'}
+                    </button>
+                  </div>
                 </div>
               );
             }
-  
             return null;
           })}
 
-{index < sortedDates.length - 1 && <div className="Divider"></div>}
+    {index < sortedDates.length - 1 && <div className="Divider"></div>}
         </div>
       );
     }).filter(Boolean);

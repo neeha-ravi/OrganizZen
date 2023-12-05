@@ -1,7 +1,6 @@
 .loginScreen,
 .welcomeScreen {
     min-height: 60vh;
-    background: linear-gradient(to bottom, #8b59f641, rgba(246, 189, 65, 0.47));
     background-repeat: no-repeat !important;
     font-family: 'Be Vietnam Pro', sans-serif;
     display: flow-root;
