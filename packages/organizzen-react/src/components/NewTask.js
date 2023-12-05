@@ -16,7 +16,27 @@ function NewTask(props) {
     // Add a state to keep track of the selected color
     const [selectedColor, setSelectedColor] = useState('none')
 
-    function submitForm() {
+    function submitForm(event) {
+        event.preventDefault()
+
+        console.log('Submitted Event Data:', selectedEventData)
+        console.log('Submitted Selected Event ID:', selectedEvent)
+
+        // Invalid input errors
+        if (selectedDate === '') {
+            setInvalidInput(3)
+            return
+        } else if (
+            selectedDate < selectedEventData.startDate ||
+            selectedDate > selectedEventData.endDate
+        ) {
+            setInvalidInput(1)
+            return
+        } else if (inputName === '') {
+            setInvalidInput(2)
+            return
+        }
+
         props.handleSubmit(selectedEvent, task)
         setTask({
             id: '',
@@ -28,8 +48,12 @@ function NewTask(props) {
             event: '',
             done: false,
         })
+        const form = document.getElementById('taskForm')
+        form.submit()
     }
 
+    const [inputName, setInputName] = useState('')
+    const [selectedDate, setSelectedDate] = useState('')
     function handleChange(e) {
         const { name, value } = e.target
         setTask((prevTask) => ({
@@ -37,6 +61,12 @@ function NewTask(props) {
             [name]: value,
             event: selectedEvent,
         }))
+        if (name === 'date') {
+            setSelectedDate(value)
+        }
+        if (name === 'name') {
+            setInputName(value)
+        }
     }
 
     function handleColorChange(color) {
@@ -52,6 +82,7 @@ function NewTask(props) {
         popupState(!popup)
     }
 
+    const [invalidInput, setInvalidInput] = useState([])
     const [eventOptions, setEventOptions] = useState([])
     useEffect(() => {
         fetch('http://localhost:8000/events')
@@ -59,13 +90,22 @@ function NewTask(props) {
             .then((data) => {
                 setEventOptions(data.events_list)
                 setEventSelect(data.events_list[0].id)
+                setSelectedEventData(
+                    data.events_list.find(
+                        (event) => event.id === data.events_list[0].id
+                    )
+                )
+                setInvalidInput(0)
             })
     }, [])
 
+    const [selectedEventData, setSelectedEventData] = useState([])
     const [selectedEvent, setEventSelect] = useState(eventOptions[0])
     const handleEventSelect = (e) => {
         setEventSelect(e.target.value)
-        console.log('Selected Event ID:', e.target.value)
+        setSelectedEventData(
+            eventOptions.find((event) => event.id === e.target.value)
+        )
     }
 
     return (
@@ -82,7 +122,7 @@ function NewTask(props) {
                             X
                         </button>
                         <h1>New Task</h1>
-                        <form className="popupForm">
+                        <form className="popupForm" id="taskForm">
                             <label htmlFor="taskName">Name: </label>
                             <br />
                             <input
@@ -128,7 +168,7 @@ function NewTask(props) {
                                     value={selectedEvent}
                                 >
                                     {eventOptions.map((event) => (
-                                        <option value={event.id}>
+                                        <option value={event.id} key={event.id}>
                                             {event.name}
                                         </option>
                                     ))}
@@ -261,6 +301,34 @@ function NewTask(props) {
                                 onClick={submitForm}
                             />
                         </form>
+                        <div>
+                            {(() => {
+                                switch (invalidInput) {
+                                    case 1:
+                                        return (
+                                            <p style={{ color: 'red' }}>
+                                                Deadline does not match date
+                                                range of selected event.
+                                            </p>
+                                        )
+                                    case 2:
+                                        return (
+                                            <p style={{ color: 'red' }}>
+                                                Please input a task name.
+                                            </p>
+                                        )
+                                    case 3:
+                                        return (
+                                            <p style={{ color: 'red' }}>
+                                                Please set a task deadline.
+                                            </p>
+                                        )
+                                    default:
+                                        return
+                                }
+                            })()}
+                            <br></br>
+                        </div>
                     </div>
                 </div>
             )}
