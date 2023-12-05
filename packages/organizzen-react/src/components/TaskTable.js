@@ -9,12 +9,21 @@ function TaskTable({ filter }) {
     const [showCompleted, setShowCompleted] = useState(false);
 
     useEffect(() => {
-        // Fetch all tasks initially
-        fetch('http://localhost:8000/events/tasks')
-            .then((response) => response.json())
-            .then((data) => setTasks(data))
-            .catch((error) => console.log(error))
-    }, [])
+      // Fetch all tasks initially
+      fetch('http://localhost:8000/events/tasks')
+        .then((response) => response.json())
+        .then((data) => setTasks(data))
+        .catch((error) => console.log(error));
+  
+      // Retrieve completed tasks from localStorage
+      const storedCompletedTasks = JSON.parse(localStorage.getItem('completedTasks')) || [];
+      setCompletedTasks(storedCompletedTasks);
+    }, []);
+  
+    useEffect(() => {
+      // Save completed tasks to localStorage whenever it changes
+      localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
+    }, [completedTasks]);
 
     useEffect(() => {
         // Check if there are events selected in the filter
