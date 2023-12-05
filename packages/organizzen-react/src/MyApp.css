@@ -59,4 +59,5 @@
 
 .newButtonContainer button:hover {
     background-color: rgb(241, 236, 245);
+    color: black;
 }
