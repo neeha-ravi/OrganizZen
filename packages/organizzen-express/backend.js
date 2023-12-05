@@ -4,7 +4,7 @@ import express from 'express'
 import cors from 'cors'
 
 const app = express()
-const port = 8000
+const port = 8001
 
 app.use(cors())
 app.use(express.json()) // set up express to process incoming data in JSON format
