@@ -66,6 +66,34 @@ function TaskTable({ filter }) {
         return groupedTasks
     }
 
+    function handleDelete(taskId, eventId) {
+      const confirmDelete = window.confirm('Are you sure you want to delete this task?');
+
+      if (!confirmDelete) {
+          return;
+      }
+
+      // Make a DELETE request to remove the task
+      fetch(
+          `http://localhost:8000/events/${eventId}/tasks/${taskId}`,
+          {
+              method: 'DELETE',
+          }
+      )
+          .then((response) => {
+              if (!response.ok) {
+                  throw new Error('Failed to delete task');
+              }
+
+              // Refetch tasks after deletion
+              fetchTasks(eventId);
+          })
+          .catch((error) => {
+              console.error('Error deleting task:', error);
+          });
+  }
+
+
     function fetchTasks(eventId) {
         if (!eventId) {
             console.error('No event ID provided.')
@@ -216,6 +244,12 @@ function TaskTable({ filter }) {
                                         <div className="TodoItem">
                                             <label>{task.name}</label>
                                         </div>
+                                        <div className="DeleteButtonContainer">
+                                                <button
+                                                  onClick={() => handleDelete(task.id, task.eventId)}
+                                                    className="DeleteButton">🗑️
+                                                  </button>
+                                        </div>
                                         <div className="CompletedButtonContainer">
                                             <button
                                                 onClick={() =>
@@ -229,6 +263,7 @@ function TaskTable({ filter }) {
                                                 {task.done ? 'UNDO' : 'DONE'}
                                             </button>
                                         </div>
+                                        
                                     </div>
                                 )
                             }

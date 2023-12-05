@@ -111,3 +111,16 @@
     background-color: #000000;
     color: white;
 }
+
+.DeleteButton {
+    font-size: 90%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 90%;
+    margin: 25px;
+    height: 10px;
+    width: 2px;
+}
