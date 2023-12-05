@@ -1,13 +1,13 @@
-// backend.js
+// backendUsers.js
 
-import express from 'express'
-import cors from 'cors'
+import express from 'express';
+import cors from 'cors';
 
-const app = express()
-const port = 8001
+const app = express();
+const port = 8001;
 
-app.use(cors())
-app.use(express.json()) // set up express to process incoming data in JSON format
+app.use(cors());
+app.use(express.json());
 
 // Store events with associated tasks
 const users = {
@@ -19,61 +19,66 @@ const users = {
             email: 'user1@realemail.com',
         },
     ],
-}
+};
 
-const findEventById = (eventId) => {
-    return users['users_list'].find((event) => event.id === eventId)
-}
+const findEventById = (userId) => {
+    return users['users_list'].find((user) => user.userId === userId);
+};
 
-const usedUserIds = new Set()
-usedUserIds.add(1).add(2)
+const usedUserIds = new Set();
+usedUserIds.add(1).add(2);
 
 // Generate a unique ID between 1 and infinity
 const generateUniqueId = (usedIds) => {
-    let id = 1
+    let id = 1;
     while (usedIds.has(id)) {
-        id++
+        id++;
     }
-    usedIds.add(id)
-    return id.toString()
-}
+    usedIds.add(id);
+    return id.toString();
+};
 
 app.get('/', (req, res) => {
-    res.send('This is the backendUser.js file!') // sets the endpoint to accept http GET requests
-})
+    res.send('This is the backendUser.js file!');
+});
 
 // Retrieve users
 app.get('/users', (req, res) => {
-    res.send(users)
-})
+    res.send(users);
+});
 
 app.get('/users/:userId', (req, res) => {
-    const id = req.params.Id
-    let result = findEventById(id)
+    const id = req.params.userId;
+    let result = findEventById(id);
     if (result === undefined) {
-        res.status(404).send('Resource not found.')
+        res.status(404).send('Resource not found.');
     } else {
-        res.send(result)
+        res.send(result);
     }
-})
+});
 
 // USERS
 const addUser = (user) => {
-    user.userId = generateUniqueId(usedUserIds)
-    users['users_list'].push(user)
-    return user
-}
+    if (!user.username || !user.password || !user.email) {
+        throw new Error('Username, password, and email are required.');
+    }
+
+    user.userId = generateUniqueId(usedUserIds);
+    users['users_list'].push(user);
+    return user;
+};
 
 app.post('/users', (req, res) => {
-    const userToAdd = req.body
-    if (userToAdd) {
-        addUser(userToAdd)
-        res.status(201).json(userToAdd)
-    } else {
-        res.status(500).json({ error: 'Failed to add user' })
+    try {
+        const userToAdd = req.body;
+        addUser(userToAdd);
+        res.status(201).json(userToAdd);
+    } catch (error) {
+        console.error('Error adding user:', error);
+        res.status(500).json({ error: 'Failed to add user' });
     }
-})
+});
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}/users`)
-})
+    console.log(`Example app listening at http://localhost:${port}/users`);
+});

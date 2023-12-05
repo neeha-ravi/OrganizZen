@@ -1,34 +1,49 @@
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import './LoginScreen.css'
+// SignupScreen.js
+
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import './LoginScreen.css';
 
 function SignupScreen(props) {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [userFormData, setUserFormData] = useState({
         userId: '',
         username: '',
         password: '',
         email: '',
-    })
+    });
 
     const handleChange = (e) => {
-        const { name, value } = e.target
+        const { name, value } = e.target;
         setUserFormData({
             ...userFormData,
             [name]: value,
-        })
-    }
+        });
+    };
 
-    function submitForm() {
-        props.handleSubmit(userFormData)
-        setUserFormData({
-            userId: '',
-            username: '',
-            password: '',
-            email: '',
-        })
-        navigate('/login')
-    }
+    const validateForm = () => {
+        // Check if all three fields are filled
+        return (
+            userFormData.username.trim() !== '' &&
+            userFormData.password.trim() !== '' &&
+            userFormData.email.trim() !== ''
+        );
+    };
+
+    const submitForm = () => {
+        if (validateForm()) {
+            props.handleSubmit(userFormData);
+            setUserFormData({
+                userId: '',
+                username: '',
+                password: '',
+                email: '',
+            });
+            navigate('/login');
+        } else {
+            alert('Please fill in ALL fields.');
+        }
+    };
 
     return (
         <div className="loginScreen">
@@ -36,34 +51,41 @@ function SignupScreen(props) {
                 <h1>Sign up here!</h1>
                 <form className="loginForm" onSubmit={submitForm}>
                     <label htmlFor="username">Username: </label>
-                    <br></br>
+                    <br />
                     <input
                         id="username"
                         name="username"
                         onChange={handleChange}
+                        value={userFormData.username}
                     />
-                    <br></br> <br></br>
+                    <br /> <br />
                     <label htmlFor="password">Password: </label>
-                    <br></br>
+                    <br />
                     <input
                         id="password"
                         name="password"
                         onChange={handleChange}
+                        value={userFormData.password}
                     />
-                    <br></br> <br></br>
-                    <label htmlFor="password">Email: </label>
-                    <br></br>
-                    <input id="email" name="email" onChange={handleChange} />
-                    <br></br> <br></br>
+                    <br /> <br />
+                    <label htmlFor="email">Email: </label>
+                    <br />
+                    <input
+                        id="email"
+                        name="email"
+                        onChange={handleChange}
+                        value={userFormData.email}
+                    />
+                    <br /> <br />
                     <input type="submit" value="Sign up" id="submitform" />
                 </form>
-                <br></br>
+                <br />
                 <p>
                     <Link to="/login">Already on OrganizZen? Log in here!</Link>
                 </p>
             </div>
         </div>
-    )
+    );
 }
 
-export default SignupScreen
+export default SignupScreen;
