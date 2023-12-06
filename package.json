@@ -7,6 +7,7 @@
     "description": "OrganizZen App - 307",
     "main": "index.js",
     "scripts": {
+        "start": "npm run backend-start",
         "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
         "lint": "npx eslint . && npx prettier --check .",
         "test": "npx jest",
