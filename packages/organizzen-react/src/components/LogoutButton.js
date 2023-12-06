@@ -19,8 +19,10 @@ const LogoutButton = ({ isLoggedIn, username }) => {
     <div>
       {isLoggedIn && <span>Welcome, {username}! </span>}
       <button className = "logoutbutton" onClick={handleLogout}>LOGOUT</button>
+
     </div>
   );
 };
 
 export default LogoutButton;
+
