@@ -22,7 +22,7 @@ function NewTask(props) {
             setInvalidInput(3)
             return
         } else if (selectedDate > selectedEventData.endDate) {
-            if (selectedEventData.oneDayOnly == false) {
+            if (selectedEventData.oneDayOnly === false) {
                 setInvalidInput(1)
             }
             return
