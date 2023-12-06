@@ -73,7 +73,7 @@ const App = () => {
                 <div className="TaskWidth" />
             </div>
         </div>
-    );
+    )
 }
 
 export default App
