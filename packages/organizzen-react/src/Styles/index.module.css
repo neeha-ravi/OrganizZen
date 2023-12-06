@@ -7,17 +7,26 @@ body {
     min-height: 90vh !important;
 }
 
+.Header {
+    /* Add styles for your header */
+    font-family: 'Be Vietnam Pro', sans-serif;
+    text-align: center; /* Center the text */
+    margin-top: -50px; /* Adjust as needed */
+    margin-bottom: 50px;
+}
+
+
 .CalendarTaskContainer {
     width: 100%;
     height: 650px;
     justify-content: center;
     display: flex;
+    margin-top: -30px;
 }
 
 .CompletedTasksContainer {
     width: 100px;
     height: 27px;
-    background-color: blue;
 }
 
 .CalendarDashboard {
