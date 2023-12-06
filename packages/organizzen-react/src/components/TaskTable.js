@@ -1,166 +1,177 @@
-import React, { useState, useEffect } from 'react';
-import ViewDetails from './ViewDetails';
-import './TaskTable.css';
+import React, { useState, useEffect } from 'react'
+import ViewDetails from './ViewDetails'
+import './TaskTable.css'
 
 function TaskTable({ filter }) {
-    const [tasks, setTasks] = useState([]);
-    const [completedTasks, setCompletedTasks] = useState([]);
+    const [tasks, setTasks] = useState([])
+    const [completedTasks, setCompletedTasks] = useState([])
     const [showCompleted, setShowCompleted] = useState(
         localStorage.getItem('showCompleted') === 'true' ? true : false
-    );
+    )
 
     useEffect(() => {
         fetch('http://localhost:8000/events/tasks')
             .then((response) => response.json())
             .then((data) => {
-                const allTasks = data;
+                const allTasks = data
                 const initialCompletedTasks = allTasks.filter(
                     (task) => task.done
-                );
-                setCompletedTasks(initialCompletedTasks);
-                setTasks([...allTasks]);
+                )
+                setCompletedTasks(initialCompletedTasks)
+                setTasks([...allTasks])
             })
-            .catch((error) => console.log(error));
-    }, []);
+            .catch((error) => console.log(error))
+    }, [])
 
     useEffect(() => {
-        localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
-    }, [completedTasks]);
+        localStorage.setItem('completedTasks', JSON.stringify(completedTasks))
+    }, [completedTasks])
 
     useEffect(() => {
-      if (filter.size > 0) {
-          Promise.all(
-              [...filter].map((eventId) =>
-                  fetch(`http://localhost:8000/events/${eventId}/tasks`)
-              )
-          )
-              .then((responses) =>
-                  Promise.all(responses.map((response) => response.json()))
-              )
-              .then((data) => {
-                  const filteredTasks = data.flat();
-                  setTasks(filteredTasks);
-              })
-              .catch((error) => console.log(error));
-      } else {
-          fetch('http://localhost:8000/events/tasks')
-              .then((response) => response.json())
-              .then((data) => setTasks(data))
-              .catch((error) => console.log(error));
-      }
-    }, [filter]);  
+        if (filter.size > 0) {
+            Promise.all(
+                [...filter].map((eventId) =>
+                    fetch(`http://localhost:8000/events/${eventId}/tasks`)
+                )
+            )
+                .then((responses) =>
+                    Promise.all(responses.map((response) => response.json()))
+                )
+                .then((data) => {
+                    const filteredTasks = data.flat()
+                    setTasks(filteredTasks)
+                })
+                .catch((error) => console.log(error))
+        } else {
+            fetch('http://localhost:8000/events/tasks')
+                .then((response) => response.json())
+                .then((data) => setTasks(data))
+                .catch((error) => console.log(error))
+        }
+    }, [filter])
 
     const groupTasksByDate = () => {
-        const groupedTasks = {};
+        const groupedTasks = {}
         tasks.forEach((task) => {
             if (!groupedTasks[task.date]) {
-                groupedTasks[task.date] = [];
+                groupedTasks[task.date] = []
             }
-            groupedTasks[task.date].push(task);
-        });
-        return groupedTasks;
-    };
+            groupedTasks[task.date].push(task)
+        })
+        return groupedTasks
+    }
 
     function handleDelete(taskId, eventId) {
-      const confirmDelete = window.confirm('Are you sure you want to delete this task?');
+        const confirmDelete = window.confirm(
+            'Are you sure you want to delete this task?'
+        )
 
-      if (!confirmDelete) {
-          return;
-      }
+        if (!confirmDelete) {
+            return
+        }
 
-      fetch(`http://localhost:8000/events/${eventId}/tasks/${taskId}`, {
-          method: 'DELETE',
-      })
-          .then((response) => {
-              if (!response.ok) {
-                  throw new Error('Failed to delete task');
-              }
+        fetch(`http://localhost:8000/events/${eventId}/tasks/${taskId}`, {
+            method: 'DELETE',
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to delete task')
+                }
 
-              setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
-              setCompletedTasks((prevCompletedTasks) =>
-                  prevCompletedTasks.filter((completedTask) => completedTask.id !== taskId)
-              );
-          })
-          .then(() => console.log('Task deleted successfully!'))
-          .catch((error) => {
-              console.error('Error deleting task:', error);
-          });
+                setTasks((prevTasks) =>
+                    prevTasks.filter((task) => task.id !== taskId)
+                )
+                setCompletedTasks((prevCompletedTasks) =>
+                    prevCompletedTasks.filter(
+                        (completedTask) => completedTask.id !== taskId
+                    )
+                )
+            })
+            .then(() => console.log('Task deleted successfully!'))
+            .catch((error) => {
+                console.error('Error deleting task:', error)
+            })
     }
 
     function handleDone(taskId, eventId) {
-      console.log('EventId:', eventId, 'TaskId:', taskId);
-      const isCompleted = completedTasks.some(
-          (completedTask) => completedTask.id === taskId
-      );
+        console.log('EventId:', eventId, 'TaskId:', taskId)
+        const isCompleted = completedTasks.some(
+            (completedTask) => completedTask.id === taskId
+        )
 
-      const endpoint = isCompleted ? 'undo' : 'mark-as-done';
+        const endpoint = isCompleted ? 'undo' : 'mark-as-done'
 
-      fetch(`http://localhost:8000/events/${eventId}/tasks/${taskId}/${endpoint}`, {
-          method: 'PUT',
-      })
-          .then((response) => {
-              if (!response.ok) {
-                  throw new Error(
-                      isCompleted ? 'Failed to undo task' : 'Failed to mark task as done'
-                  );
-              }
+        fetch(
+            `http://localhost:8000/events/${eventId}/tasks/${taskId}/${endpoint}`,
+            {
+                method: 'PUT',
+            }
+        )
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(
+                        isCompleted
+                            ? 'Failed to undo task'
+                            : 'Failed to mark task as done'
+                    )
+                }
 
-              const updatedTasks = tasks.map((task) =>
-                  task.id === taskId ? { ...task, done: !task.done } : task
-              );
-              setTasks(updatedTasks);
+                const updatedTasks = tasks.map((task) =>
+                    task.id === taskId ? { ...task, done: !task.done } : task
+                )
+                setTasks(updatedTasks)
 
-              if (isCompleted) {
-                  setCompletedTasks((prevCompletedTasks) =>
-                      prevCompletedTasks.filter(
-                          (completedTask) => completedTask.id !== taskId
-                      )
-                  );
-              } else {
-                  const completedTask = updatedTasks.find(
-                      (task) => task.id === taskId
-                  );
-                  setCompletedTasks((prevCompletedTasks) => [
-                      ...prevCompletedTasks,
-                      completedTask,
-                  ]);
-              }
-          })
-          .catch((error) => {
-              console.error(
-                  `Error ${
-                      isCompleted ? 'undoing' : 'marking as done'
-                  } task:`,
-                  error
-              );
-          });
+                if (isCompleted) {
+                    setCompletedTasks((prevCompletedTasks) =>
+                        prevCompletedTasks.filter(
+                            (completedTask) => completedTask.id !== taskId
+                        )
+                    )
+                } else {
+                    const completedTask = updatedTasks.find(
+                        (task) => task.id === taskId
+                    )
+                    setCompletedTasks((prevCompletedTasks) => [
+                        ...prevCompletedTasks,
+                        completedTask,
+                    ])
+                }
+            })
+            .catch((error) => {
+                console.error(
+                    `Error ${
+                        isCompleted ? 'undoing' : 'marking as done'
+                    } task:`,
+                    error
+                )
+            })
     }
 
     const renderTasks = () => {
-        const filteredTasks = showCompleted ? completedTasks : tasks;
-        const groupedTasks = groupTasksByDate();
-        const taskDates = Object.keys(groupedTasks);
-        const sortedDates = taskDates.sort((a, b) => new Date(a) - new Date(b));
-        const currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() - 2);
+        const filteredTasks = showCompleted ? completedTasks : tasks
+        const groupedTasks = groupTasksByDate()
+        const taskDates = Object.keys(groupedTasks)
+        const sortedDates = taskDates.sort((a, b) => new Date(a) - new Date(b))
+        const currentDate = new Date()
+        currentDate.setDate(currentDate.getDate() - 2)
 
         if (tasks.length === 0) {
             return (
                 <div className="NoTasksContainer">
                     <div className="NoTasks">No Tasks Remaining!!☻</div>
                 </div>
-            );
+            )
         }
 
         return sortedDates
             .map((date, index) => {
-                const tasksForDate = groupedTasks[date];
+                const tasksForDate = groupedTasks[date]
                 const filteredTasks = tasksForDate.filter(
                     (task) => new Date(task.date) >= currentDate
-                );
+                )
 
                 if (filteredTasks.length === 0) {
-                    return null;
+                    return null
                 }
 
                 return (
@@ -203,15 +214,22 @@ function TaskTable({ filter }) {
                                             <label>{task.name}</label>
                                         </div>
                                         <div className="DeleteButtonContainer">
-                                                <button
-                                                  onClick={() => handleDelete(task.id, task.event)}
-                                                    className="DeleteButton">🗑️
-                                                  </button>
+                                            <button
+                                                onClick={() =>
+                                                    handleDelete(
+                                                        task.id,
+                                                        task.event
+                                                    )
+                                                }
+                                                className="DeleteButton"
+                                            >
+                                                🗑️
+                                            </button>
                                         </div>
                                         <div>
                                             <ViewDetails task={task} />
                                         </div>
-                                    
+
                                         <div className="CompletedButtonContainer">
                                             <button
                                                 onClick={() =>
@@ -225,7 +243,6 @@ function TaskTable({ filter }) {
                                                 {isCompleted ? 'UNDO' : 'DONE'}
                                             </button>
                                         </div>
-                                        
                                     </div>
                                 )
                             }

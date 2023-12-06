@@ -24,28 +24,30 @@ function Calendar({ filter, setFilter }) {
         // Fetch events from the backend
         const fetchEvents = async () => {
             try {
-                const response = await fetch('http://localhost:8000/events');
+                const response = await fetch('http://localhost:8000/events')
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    throw new Error(`HTTP error! Status: ${response.status}`)
                 }
-                const data = await response.json();
-                const sortedEvents = data.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
-                console.log('Fetched events:', sortedEvents);
-                setEvents(sortedEvents);
+                const data = await response.json()
+                const sortedEvents = data.sort(
+                    (a, b) => new Date(a.startDate) - new Date(b.startDate)
+                )
+                console.log('Fetched events:', sortedEvents)
+                setEvents(sortedEvents)
             } catch (error) {
-                console.error('Error fetching events:', error);
+                console.error('Error fetching events:', error)
             }
-        };
-    
-        fetchEvents();
-    }, [selectedEvent]); // Add selectedEvent as a dependency
-    
+        }
+
+        fetchEvents()
+    }, [selectedEvent]) // Add selectedEvent as a dependency
+
     useEffect(() => {
         // Handle the case when a new event is added
         if (selectedEvent) {
-            setSelectedEvent(null); // Reset selectedEvent to trigger a re-fetch
+            setSelectedEvent(null) // Reset selectedEvent to trigger a re-fetch
         }
-    }, [selectedEvent]);     
+    }, [selectedEvent])
 
     const formatDate = (startDateString, endDateString) => {
         try {

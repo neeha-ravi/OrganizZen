@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import './NewTask.css';
+import React, { useState, useEffect } from 'react'
+import './NewTask.css'
 
 function NewTask(props) {
     const [task, setTask] = useState({
@@ -10,12 +10,12 @@ function NewTask(props) {
         color: '',
         event: '',
         done: false,
-    });
+    })
 
-    const [selectedColor, setSelectedColor] = useState('none');
+    const [selectedColor, setSelectedColor] = useState('none')
 
     function submitForm(event) {
-        event.preventDefault();
+        event.preventDefault()
 
         fetch(`http://localhost:8000/events/${selectedEvent}/tasks`, {
             method: 'POST',
@@ -26,12 +26,12 @@ function NewTask(props) {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log('Task added successfully:', data);
-                props.handleSubmit(selectedEvent, task);
+                console.log('Task added successfully:', data)
+                props.handleSubmit(selectedEvent, task)
             })
             .catch((error) => {
-                console.error('Error adding task:', error);
-            });
+                console.error('Error adding task:', error)
+            })
 
         setTask({
             name: '',
@@ -41,27 +41,27 @@ function NewTask(props) {
             color: '',
             event: '',
             done: false,
-        });
+        })
 
-        const form = document.getElementById('taskForm');
-        form.submit();
+        const form = document.getElementById('taskForm')
+        form.submit()
     }
 
-    const [inputName, setInputName] = useState('');
-    const [selectedDate, setSelectedDate] = useState('');
+    const [inputName, setInputName] = useState('')
+    const [selectedDate, setSelectedDate] = useState('')
 
     function handleChange(e) {
-        const { name, value } = e.target;
+        const { name, value } = e.target
         setTask((prevTask) => ({
             ...prevTask,
             [name]: value,
             event: selectedEvent,
-        }));
+        }))
         if (name === 'date') {
-            setSelectedDate(value);
+            setSelectedDate(value)
         }
         if (name === 'name') {
-            setInputName(value);
+            setInputName(value)
         }
     }
 
@@ -69,45 +69,49 @@ function NewTask(props) {
         setTask((prevTask) => ({
             ...prevTask,
             color: color,
-        }));
-        setSelectedColor(color);
+        }))
+        setSelectedColor(color)
     }
 
-    const [popup, popupState] = useState(false);
+    const [popup, popupState] = useState(false)
     const togglePopup = () => {
-        popupState(!popup);
-        setInvalidInput(0);
-    };
+        popupState(!popup)
+        setInvalidInput(0)
+    }
 
-    const [invalidInput, setInvalidInput] = useState([]);
-    const [eventOptions, setEventOptions] = useState([]);
+    const [invalidInput, setInvalidInput] = useState([])
+    const [eventOptions, setEventOptions] = useState([])
 
     useEffect(() => {
         fetch('http://localhost:8000/events')
             .then((response) => response.json())
             .then((data) => {
-                const eventsList = data || [];
+                const eventsList = data || []
 
                 if (eventsList.length > 0) {
-                    setEventOptions(eventsList);
-                    setEventSelect(eventsList[0].id);
-                    setSelectedEventData(eventsList.find((event) => event.id === eventsList[0].id));
-                    setInvalidInput(0);
+                    setEventOptions(eventsList)
+                    setEventSelect(eventsList[0].id)
+                    setSelectedEventData(
+                        eventsList.find(
+                            (event) => event.id === eventsList[0].id
+                        )
+                    )
+                    setInvalidInput(0)
                 } else {
-                    console.error('No events available.');
+                    console.error('No events available.')
                 }
-            });
-    }, []);
+            })
+    }, [])
 
-    const [selectedEventData, setSelectedEventData] = useState([]);
-    const [selectedEvent, setEventSelect] = useState(eventOptions[0]);
+    const [selectedEventData, setSelectedEventData] = useState([])
+    const [selectedEvent, setEventSelect] = useState(eventOptions[0])
 
     const handleEventSelect = (e) => {
-        setEventSelect(e.target.value);
+        setEventSelect(e.target.value)
         setSelectedEventData(
             eventOptions.find((event) => event.id === e.target.value)
-        );
-    };
+        )
+    }
 
     return (
         <>
@@ -132,7 +136,9 @@ function NewTask(props) {
                                 onChange={handleChange}
                             />
                             <br /> <br />
-                            <label htmlFor="taskDescription">Description: </label>
+                            <label htmlFor="taskDescription">
+                                Description:{' '}
+                            </label>
                             <br />
                             <input
                                 id="description"
@@ -166,7 +172,11 @@ function NewTask(props) {
                                     onChange={handleEventSelect}
                                     value={selectedEvent || ''}
                                 >
-                                    {eventOptions.length === 0 && <option value="">Loading events...</option>}
+                                    {eventOptions.length === 0 && (
+                                        <option value="">
+                                            Loading events...
+                                        </option>
+                                    )}
                                     {eventOptions.map((event) => (
                                         <option value={event.id} key={event.id}>
                                             {event.name}
@@ -310,21 +320,21 @@ function NewTask(props) {
                                                 Deadline does not match date
                                                 range of selected event.
                                             </p>
-                                        );
+                                        )
                                     case 2:
                                         return (
                                             <p style={{ color: 'red' }}>
                                                 Please input a task name.
                                             </p>
-                                        );
+                                        )
                                     case 3:
                                         return (
                                             <p style={{ color: 'red' }}>
                                                 Please set a task deadline.
                                             </p>
-                                        );
+                                        )
                                     default:
-                                        return null;
+                                        return null
                                 }
                             })()}
                             <br></br>
@@ -333,7 +343,7 @@ function NewTask(props) {
                 </div>
             )}
         </>
-    );
+    )
 }
 
-export default NewTask;
+export default NewTask
