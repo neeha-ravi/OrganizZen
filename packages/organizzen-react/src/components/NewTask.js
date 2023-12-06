@@ -38,7 +38,7 @@ function NewTask(props) {
         }
 
         fetch(
-            `https://lively-mud-0344e681e.4.azurestaticapps.net/events/${selectedEvent}/tasks`,
+            `http://organizzen.azurewebsites.net/events/${selectedEvent}/tasks`,
             {
                 method: 'POST',
                 headers: {
@@ -106,7 +106,7 @@ function NewTask(props) {
     const [eventOptions, setEventOptions] = useState([])
 
     useEffect(() => {
-        fetch('https://lively-mud-0344e681e.4.azurestaticapps.net/events')
+        fetch('http://organizzen.azurewebsites.net/events')
             .then((response) => response.json())
             .then((data) => {
                 const eventsList = data || []

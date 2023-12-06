@@ -28,7 +28,7 @@ function Calendar({ filter, setFilter }) {
         const fetchEvents = async () => {
             try {
                 const response = await fetch(
-                    'https://lively-mud-0344e681e.4.azurestaticapps.net/events'
+                    'http://organizzen.azurewebsites.net/events'
                 )
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`)
@@ -96,7 +96,7 @@ function Calendar({ filter, setFilter }) {
         }
 
         // Delete the event
-        fetch(`https://lively-mud-0344e681e.4.azurestaticapps.net/events/${eventId}`, {
+        fetch(`http://organizzen.azurewebsites.net/events/${eventId}`, {
             method: 'DELETE',
         })
             .then(async (response) => {
@@ -108,7 +108,7 @@ function Calendar({ filter, setFilter }) {
                 try {
                     // Delete associated tasks
                     const tasksResponse = await fetch(
-                        `https://lively-mud-0344e681e.4.azurestaticapps.net/events/${eventId}/tasks`,
+                        `http://organizzen.azurewebsites.net/events/${eventId}/tasks`,
                         {
                             method: 'DELETE',
                         }
