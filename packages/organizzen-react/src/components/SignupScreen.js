@@ -39,7 +39,7 @@ function SignupScreen(props) {
                 password: '',
                 email: '',
             })
-            navigate('/login')
+            navigate('/dashboard')
         } else {
             alert('Please fill in ALL fields.')
         }
