@@ -11,7 +11,7 @@ function TaskTable({ filter }) {
     const toggleTaskDetailsPopup = () => {
         setTaskDetailsPopupState(!taskDetailsPopup)
     }
-    
+
     useEffect(() => {
         fetch('http://localhost:8000/events/tasks')
             .then((response) => response.json())
@@ -151,6 +151,7 @@ function TaskTable({ filter }) {
     }
 
     const renderTasks = () => {
+        // eslint-disable-next-line no-unused-vars
         const filteredTasks = showCompleted ? completedTasks : tasks
         const groupedTasks = groupTasksByDate()
         const taskDates = Object.keys(groupedTasks)
@@ -305,9 +306,11 @@ function TaskTable({ filter }) {
                     onClick={toggleShowCompleted}
                     className="completedtoggle"
                 >
-                    {showCompleted
-                        ? <b>Show Incomplete Tasks</b>
-                        : <b>Show Completed Tasks</b>}
+                    {showCompleted ? (
+                        <b>Show Incomplete Tasks</b>
+                    ) : (
+                        <b>Show Completed Tasks</b>
+                    )}
                 </button>
             </div>
             <div className="ToDoListContainer">{renderTasks()}</div>
