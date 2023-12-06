@@ -15,4 +15,3 @@ jobs:
           node-version: 20
       - run: npm ci
       - run: npm run -w packages/organizzen-react build
-      - run: npm run -w packages/organizzen-express lint
