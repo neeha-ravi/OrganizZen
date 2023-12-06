@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import './TaskTable.css'
 
-function TaskTable({ filter, onToggleShowCompleted }) {
+function TaskTable({ filter }) {
     const [tasks, setTasks] = useState([])
     const [completedTasks, setCompletedTasks] = useState([])
     const [showCompleted, setShowCompleted] = useState(
         localStorage.getItem('showCompleted') === 'true'
     )
     const [taskDetailsPopups, setTaskDetailsPopups] = useState({})
-    const [selectedTaskDetails, setSelectedTaskDetails] = useState(null)
+    // Remove unused variables
+    // const [selectedTaskDetails, setSelectedTaskDetails] = useState(null)
+    // const [selectTaskDetails, setSelectTaskDetails] = useState(null)
 
-    // Function to set the selected task's details
-    const selectTaskDetails = (taskId) => {
-        const selectedTask = tasks.find((task) => task.id === taskId)
-        setSelectedTaskDetails(selectedTask)
-    }
 
     // Function to set the details popup state for a specific task
     const setTaskDetailsPopup = (taskId, isOpen) => {
