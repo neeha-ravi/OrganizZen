@@ -48,7 +48,7 @@ function Calendar({ filter, setFilter }) {
         if (selectedEvent) {
             setSelectedEvent(null) // Reset selectedEvent to trigger a re-fetch
         }
-    }, [selectedEvent])
+    }, [events, selectedEvent])
 
     const formatDate = (startDateString, endDateString) => {
         try {
