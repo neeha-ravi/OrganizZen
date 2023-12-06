@@ -3,12 +3,14 @@ import styles from '../Styles/index.module.css'
 import TaskTable from './TaskTable'
 import Calendar from './Calendar'
 import React, { useState } from 'react'
+import LogoutButton from './LogoutButton'
 
 function HomePage() {
     const [filter, setFilter] = useState(new Set())
 
     return (
         <div>
+            <LogoutButton/>
             <div className={styles.CalendarTaskContainer}>
                 <div className={styles.CalendarDashboard}>
                     <Calendar filter={filter} setFilter={setFilter} />
