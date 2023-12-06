@@ -22,17 +22,29 @@ function Calendar({ filter, setFilter }) {
 
     useEffect(() => {
         // Fetch events from the backend
-        fetch('http://localhost:8000/events')
-            .then((response) => response.json())
-            .then((data) => {
-                // Sort events by start date in ascending order
-                const sortedEvents = data.events_list.sort(
-                    (a, b) => new Date(a.startDate) - new Date(b.startDate)
-                )
-                setEvents(sortedEvents)
-            })
-            .catch((error) => console.log(error))
-    }, [])
+        const fetchEvents = async () => {
+            try {
+                const response = await fetch('http://localhost:8000/events');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+                console.log('Fetched events:', data);
+                setEvents(data); // Update to use the correct response structure
+            } catch (error) {
+                console.error('Error fetching events:', error);
+            }
+        };
+    
+        fetchEvents();
+    }, [selectedEvent]); // Add selectedEvent as a dependency
+    
+    useEffect(() => {
+        // Handle the case when a new event is added
+        if (selectedEvent) {
+            setSelectedEvent(null); // Reset selectedEvent to trigger a re-fetch
+        }
+    }, [selectedEvent]);     
 
     const formatDate = (startDateString, endDateString) => {
         try {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './NewEvent.css'
 
 function NewEvent(props) {
@@ -12,7 +12,22 @@ function NewEvent(props) {
         oneDayOnly: false,
     })
 
-    function submitForm() {
+    function submitForm(submitEvent) {
+        submitEvent.preventDefault()
+
+        if (event.oneDayOnly === false) {
+            if (event.startDate > event.endDate) {
+                setInvalidInput(1)
+                return
+            }
+        } else if (event.name === '') {
+            setInvalidInput(2)
+            return
+        } else if (event.startDate === '' && event.oneDayOnly === true) {
+            setInvalidInput(3)
+            return
+        }
+
         props.handleSubmit(event)
         setEvent({
             _id: '',
@@ -22,7 +37,11 @@ function NewEvent(props) {
             date: '',
             oneDayOnly: false,
         })
+        const form = document.getElementById('eventForm')
+        form.submit()
     }
+
+    const [invalidInput, setInvalidInput] = useState([''])
 
     function handleChange(event) {
         const { name, value } = event.target
@@ -44,6 +63,10 @@ function NewEvent(props) {
         setChecked(!checked)
     }
 
+    useEffect(() => {
+        setInvalidInput(0)
+    }, [])
+
     return (
         <>
             <button className="popupButton" onClick={togglePopup}>
@@ -58,7 +81,7 @@ function NewEvent(props) {
                             X
                         </button>
                         <h1>New Event</h1>
-                        <form className="popupForm">
+                        <form className="popupForm" id="eventForm">
                             <label htmlFor="taskName">Name: </label>
                             <br></br>
                             <input
@@ -118,6 +141,33 @@ function NewEvent(props) {
                                 onClick={submitForm}
                             />
                         </form>
+                        <div>
+                            {(() => {
+                                switch (invalidInput) {
+                                    case 1:
+                                        return (
+                                            <p style={{ color: 'red' }}>
+                                                Invalid date range.
+                                            </p>
+                                        )
+                                    case 2:
+                                        return (
+                                            <p style={{ color: 'red' }}>
+                                                Please input an event name.
+                                            </p>
+                                        )
+                                    case 3:
+                                        return (
+                                            <p style={{ color: 'red' }}>
+                                                Please set a start date.
+                                            </p>
+                                        )
+                                    default:
+                                        return
+                                }
+                            })()}
+                            <br></br>
+                        </div>
                     </div>
                 </div>
             )}

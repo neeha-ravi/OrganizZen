@@ -1,70 +1,113 @@
-import React, { useState, useEffect } from 'react'
-import './NewTask.css'
+import React, { useState, useEffect } from 'react';
+import './NewTask.css';
 
 function NewTask(props) {
     const [task, setTask] = useState({
-        id: '',
         name: '',
         description: '',
         link: '',
         date: '',
         color: '',
         event: '',
-    })
+        done: false,
+    });
 
-    // Add a state to keep track of the selected color
-    const [selectedColor, setSelectedColor] = useState('none')
+    const [selectedColor, setSelectedColor] = useState('none');
 
-    function submitForm() {
-        props.handleSubmit(selectedEvent, task)
+    function submitForm(event) {
+        event.preventDefault();
+
+        fetch(`http://localhost:8000/events/${selectedEvent}/tasks`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(task),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Task added successfully:', data);
+                props.handleSubmit(selectedEvent, task);
+            })
+            .catch((error) => {
+                console.error('Error adding task:', error);
+            });
+
         setTask({
-            id: '',
             name: '',
             description: '',
             link: '',
             date: '',
             color: '',
             event: '',
-        })
+            done: false,
+        });
+
+        const form = document.getElementById('taskForm');
+        form.submit();
     }
 
+    const [inputName, setInputName] = useState('');
+    const [selectedDate, setSelectedDate] = useState('');
+
     function handleChange(e) {
-        const { name, value } = e.target
+        const { name, value } = e.target;
         setTask((prevTask) => ({
             ...prevTask,
             [name]: value,
             event: selectedEvent,
-        }))
+        }));
+        if (name === 'date') {
+            setSelectedDate(value);
+        }
+        if (name === 'name') {
+            setInputName(value);
+        }
     }
 
     function handleColorChange(color) {
         setTask((prevTask) => ({
             ...prevTask,
             color: color,
-        }))
-        setSelectedColor(color)
+        }));
+        setSelectedColor(color);
     }
 
-    const [popup, popupState] = useState(false)
+    const [popup, popupState] = useState(false);
     const togglePopup = () => {
-        popupState(!popup)
-    }
+        popupState(!popup);
+        setInvalidInput(0);
+    };
 
-    const [eventOptions, setEventOptions] = useState([])
+    const [invalidInput, setInvalidInput] = useState([]);
+    const [eventOptions, setEventOptions] = useState([]);
+
     useEffect(() => {
         fetch('http://localhost:8000/events')
             .then((response) => response.json())
             .then((data) => {
-                setEventOptions(data.events_list)
-                setEventSelect(data.events_list[0].id)
-            })
-    }, [])
+                const eventsList = data || [];
 
-    const [selectedEvent, setEventSelect] = useState(eventOptions[0])
+                if (eventsList.length > 0) {
+                    setEventOptions(eventsList);
+                    setEventSelect(eventsList[0].id);
+                    setSelectedEventData(eventsList.find((event) => event.id === eventsList[0].id));
+                    setInvalidInput(0);
+                } else {
+                    console.error('No events available.');
+                }
+            });
+    }, []);
+
+    const [selectedEventData, setSelectedEventData] = useState([]);
+    const [selectedEvent, setEventSelect] = useState(eventOptions[0]);
+
     const handleEventSelect = (e) => {
-        setEventSelect(e.target.value)
-        console.log('Selected Event ID:', e.target.value)
-    }
+        setEventSelect(e.target.value);
+        setSelectedEventData(
+            eventOptions.find((event) => event.id === e.target.value)
+        );
+    };
 
     return (
         <>
@@ -80,7 +123,7 @@ function NewTask(props) {
                             X
                         </button>
                         <h1>New Task</h1>
-                        <form className="popupForm">
+                        <form className="popupForm" id="taskForm">
                             <label htmlFor="taskName">Name: </label>
                             <br />
                             <input
@@ -89,9 +132,7 @@ function NewTask(props) {
                                 onChange={handleChange}
                             />
                             <br /> <br />
-                            <label htmlFor="taskDescription">
-                                Description:{' '}
-                            </label>
+                            <label htmlFor="taskDescription">Description: </label>
                             <br />
                             <input
                                 id="description"
@@ -123,10 +164,11 @@ function NewTask(props) {
                                     name="event"
                                     id="event"
                                     onChange={handleEventSelect}
-                                    value={selectedEvent}
+                                    value={selectedEvent || ''}
                                 >
+                                    {eventOptions.length === 0 && <option value="">Loading events...</option>}
                                     {eventOptions.map((event) => (
-                                        <option value={event.id}>
+                                        <option value={event.id} key={event.id}>
                                             {event.name}
                                         </option>
                                     ))}
@@ -216,37 +258,37 @@ function NewTask(props) {
                                     <button
                                         type="button"
                                         className={`color-button ${
-                                            selectedColor === '#a99bcc'
+                                            selectedColor === '#a3a3e0'
                                                 ? 'selected'
                                                 : ''
                                         }`}
-                                        style={{ backgroundColor: '#a99bcc' }}
+                                        style={{ backgroundColor: '#a3a3e0' }}
                                         onClick={() =>
-                                            handleColorChange('#a99bcc')
+                                            handleColorChange('#a3a3e0')
                                         }
                                     ></button>
                                     <button
                                         type="button"
                                         className={`color-button ${
-                                            selectedColor === '#f5c3cb'
+                                            selectedColor === '#d6a3e0'
                                                 ? 'selected'
                                                 : ''
                                         }`}
-                                        style={{ backgroundColor: '#f5c3cb' }}
+                                        style={{ backgroundColor: '#d6a3e0' }}
                                         onClick={() =>
-                                            handleColorChange('#f5c3cb')
+                                            handleColorChange('#d6a3e0')
                                         }
                                     ></button>
                                     <button
                                         type="button"
                                         className={`color-button ${
-                                            selectedColor === '#786660'
+                                            selectedColor === '#e0a3b6'
                                                 ? 'selected'
                                                 : ''
                                         }`}
-                                        style={{ backgroundColor: '#786660' }}
+                                        style={{ backgroundColor: '#e0a3b6' }}
                                         onClick={() =>
-                                            handleColorChange('#786660')
+                                            handleColorChange('#e0a3b6')
                                         }
                                     ></button>
                                 </div>
@@ -259,11 +301,39 @@ function NewTask(props) {
                                 onClick={submitForm}
                             />
                         </form>
+                        <div>
+                            {(() => {
+                                switch (invalidInput) {
+                                    case 1:
+                                        return (
+                                            <p style={{ color: 'red' }}>
+                                                Deadline does not match date
+                                                range of selected event.
+                                            </p>
+                                        );
+                                    case 2:
+                                        return (
+                                            <p style={{ color: 'red' }}>
+                                                Please input a task name.
+                                            </p>
+                                        );
+                                    case 3:
+                                        return (
+                                            <p style={{ color: 'red' }}>
+                                                Please set a task deadline.
+                                            </p>
+                                        );
+                                    default:
+                                        return null;
+                                }
+                            })()}
+                            <br></br>
+                        </div>
                     </div>
                 </div>
             )}
         </>
-    )
+    );
 }
 
-export default NewTask
+export default NewTask;

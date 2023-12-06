@@ -14,6 +14,12 @@ body {
     display: flex;
 }
 
+.CompletedTasksContainer {
+    width: 100px;
+    height: 27px;
+    background-color: blue;
+}
+
 .CalendarDashboard {
     height: 650px;
     width: 550px;
@@ -29,6 +35,7 @@ body {
     height: 650px;
     width: 850px;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .TaskContainer::-webkit-scrollbar {
@@ -49,4 +56,11 @@ body {
 .TaskCalendarDivider {
     height: 650px;
     width: 50px;
+}
+
+.ErrorMessage {
+    background-color: rgb(152, 0, 0);
+    height: 700px;
+    width: 800px;
+    color: black;
 }

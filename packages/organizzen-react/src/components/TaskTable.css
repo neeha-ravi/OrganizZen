@@ -14,23 +14,51 @@
     text-align: center;
 }
 
+.completedtoggle {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    color: black;
+    font-size: 90%;
+    width: 200px;
+    height: 27px !important;
+    background-color: #ffffff;
+    justify-content: flex-start;
+    align-items: center;
+    display: flex;
+    padding: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    top: 4%;
+    right: 7%;
+}
+
+.TaskTableContainer {
+    position: relative; /* Ensure relative positioning for children */
+    display: flex;
+}
+
 .ToDoListContainer {
     height: 650px;
     width: 100%;
+    margin-top: 40px;
+    flex-grow: 1;
 }
 
 .TaskContainer {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
+    align-items: center; /* Center vertically */
     height: 31px;
     width: 100%;
     background-color: #ffffff;
     border-radius: 8px;
     margin-top: 20px;
-    overflow: hidden;
+    /* overflow: hidden; */
+    margin-bottom: 20px;
 }
 
-.TaskContainer:hover {
+.TodoItem:hover {
     filter: brightness(0.8);
 }
 
@@ -39,24 +67,60 @@
     width: 15px;
 }
 
-<<<<<<< HEAD
-.Checkbox {
-    height: 31px;
-    width: 31px;
-    background-color: purple;
-    margin-right: 10px;
-}
-
-=======
->>>>>>> 61f7028dc9eebd585e45bdd1e14e0f51e7e0287e
-.TodoItem {
-    margin-left: 1px;
-}
-
 .NoTasksContainer {
     justify-content: center;
     align-items: center;
     display: flex;
     font-size: large;
     font-weight: medium;
+}
+
+.TodoItem {
+    padding-left: 10px;
+    padding-right: 10px;
+    flex-grow: 1;
+}
+
+.CompletedButtonContainer {
+    width: 100px;
+    height: 31px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.CompletedButton {
+    width: 10px;
+    background-color: #ffffff;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 90%;
+    margin: 25px;
+    height: 31px;
+}
+
+.CompletedButton:hover {
+    background-color: #000000;
+    color: white;
+}
+
+.completedtoggle:hover {
+    background-color: #000000;
+    color: white;
+}
+
+.DeleteButton {
+    font-size: 90%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 90%;
+    margin: 25px;
+    height: 10px;
+    width: 2px;
 }

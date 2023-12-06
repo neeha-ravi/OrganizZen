@@ -13,6 +13,10 @@
     text-align: center;
 }
 
+.popopButton:hover {
+    color: black;
+}
+
 .popupForm {
     font-weight: 600;
 }

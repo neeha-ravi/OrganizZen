@@ -30,11 +30,19 @@ const LoginApp = () => {
 
     function updateUsers(user) {
         postUser(user)
-            .then(() => {
-                setUsers([...users, user])
+            .then((response) => {
+                if (!response.ok) {
+                    return response.json().then((data) => {
+                        throw new Error(data.error)
+                    })
+                }
+                return response.json()
+            })
+            .then((data) => {
+                setUsers([...users, data])
             })
             .catch((error) => {
-                console.log(error)
+                alert(error.message) // Display the error to the user
             })
     }
 
