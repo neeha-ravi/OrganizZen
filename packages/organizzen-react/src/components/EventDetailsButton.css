@@ -28,9 +28,10 @@
     transform: translate(-50%, -40%);
     line-height: 1.4;
     color: black;
-    background: rgba(255, 255, 255, 0.947);
+    background: rgba(255, 255, 255, 0.832);
     border-radius: 40px;
-    width: 600px;
+    width: 400px;
+    height: 300px;
     text-align: center;
     flex-direction: column;
     z-index: 1;
