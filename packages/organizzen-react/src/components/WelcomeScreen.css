@@ -7,7 +7,7 @@
     margin: 100px;
 }
 
-button {
+.routeButtons {
     background-color: #000000;
     color: #ffffff;
     font-family: 'Be Vietnam Pro', sans-serif;
@@ -20,7 +20,7 @@ button {
     width: 100%;
 }
 
-button:hover {
+.routeButtons:hover {
     background-color: #575454;
     color: #ffffff;
 }
@@ -36,6 +36,3 @@ a {
     gap: 2rem;
 }
 
-.routeButtons {
-    width: 100%;
-}
