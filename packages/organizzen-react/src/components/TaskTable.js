@@ -18,7 +18,7 @@ function TaskTable({ filter }) {
                     (task) => task.done
                 );
                 setCompletedTasks(initialCompletedTasks);
-                setTasks(allTasks);
+                setTasks([...allTasks]);
             })
             .catch((error) => console.log(error));
     }, []);

@@ -261,21 +261,21 @@ connectToMongoDB()
             }
         });
 
+        /// Inside markTaskAsDone function
         const markTaskAsDone = async (eventId, taskId) => {
-            console.log('Marking task as done:', eventId, taskId);
-            if (!eventId) {
-                return res.status(400).json({ error: 'Missing eventId in the request.' });
-            }
+            console.log('Received request to mark task as done. EventId:', eventId, 'TaskId:', taskId);
             try {
-                const result = await tasksCollection.findOneAndUpdate(
-                    { event: eventId, id: taskId },
-                    { $set: { done: true } },
-                    { returnDocument: 'after' }
+                const result = await tasksCollection.updateOne(
+                    { event: eventId, id: taskId },  // Adjust the condition here
+                    { $set: { done: true } }
                 );
         
-                if (result && result.value) {
-                    console.log('Task marked as done:', result.value);
-                    return result.value;
+                console.log('Result:', result);
+        
+                if (result && result.modifiedCount > 0) {
+                    const updatedTask = await tasksCollection.findOne({ event: eventId, id: taskId });
+                    console.log('Task marked as done:', updatedTask);
+                    return updatedTask;
                 } else {
                     console.error('Task not found');
                     return null;
@@ -284,8 +284,8 @@ connectToMongoDB()
                 console.error('Error updating task:', error);
                 throw error; // Re-throw the error to be caught in the catch block
             }
-        };        
-
+        };             
+      
         // Endpoint to mark a specific task as done
         app.put('/events/:eventId/tasks/:taskId/mark-as-done', async (req, res) => {
             const eventId = req.params.eventId;
@@ -304,15 +304,15 @@ connectToMongoDB()
         // Inside undoMarkTaskAsDone function
         const undoMarkTaskAsDone = async (eventId, taskId) => {
             try {
-                const result = await tasksCollection.findOneAndUpdate(
+                const result = await tasksCollection.updateOne(
                     { event: eventId, id: taskId },
-                    { $set: { done: false } },
-                    { returnDocument: 'after' }
+                    { $set: { done: false } }
                 );
 
-                if (result && result.value) {
-                    console.log('Task marked as done:', result.value);
-                    return result.value;
+                if (result && result.modifiedCount > 0) {
+                    const updatedTask = await tasksCollection.findOne({ event: eventId, id: taskId });
+                    console.log('Task marked as not done:', updatedTask);
+                    return updatedTask;
                 } else {
                     console.error('Task not found');
                     return null;
