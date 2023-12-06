@@ -261,56 +261,86 @@ connectToMongoDB()
             }
         });
 
+        const markTaskAsDone = async (eventId, taskId) => {
+            console.log('Marking task as done:', eventId, taskId);
+            if (!eventId) {
+                return res.status(400).json({ error: 'Missing eventId in the request.' });
+            }
+            try {
+                const result = await tasksCollection.findOneAndUpdate(
+                    { event: eventId, id: taskId },
+                    { $set: { done: true } },
+                    { returnDocument: 'after' }
+                );
+        
+                if (result && result.value) {
+                    console.log('Task marked as done:', result.value);
+                    return result.value;
+                } else {
+                    console.error('Task not found');
+                    return null;
+                }
+            } catch (error) {
+                console.error('Error updating task:', error);
+                throw error; // Re-throw the error to be caught in the catch block
+            }
+        };        
+
         // Endpoint to mark a specific task as done
         app.put('/events/:eventId/tasks/:taskId/mark-as-done', async (req, res) => {
             const eventId = req.params.eventId;
             const taskId = req.params.taskId;
+            console.log('Received request to mark task as done. EventId:', eventId, 'TaskId:', taskId);
 
+            const task = await markTaskAsDone(eventId, taskId);
+
+            if (task) {
+                res.status(200).json(task);
+            } else {
+                res.status(404).json({ error: 'Task not found' });
+            }
+        });
+
+        // Inside undoMarkTaskAsDone function
+        const undoMarkTaskAsDone = async (eventId, taskId) => {
             try {
                 const result = await tasksCollection.findOneAndUpdate(
-                    { "event.id": eventId, id: taskId },
-                    { $set: { done: true } },
+                    { event: eventId, id: taskId },
+                    { $set: { done: false } },
                     { returnDocument: 'after' }
                 );
 
                 if (result && result.value) {
-                    res.status(200).json(result.value);
+                    console.log('Task marked as done:', result.value);
+                    return result.value;
                 } else {
-                    res.status(404).json({ error: 'Task not found' });
+                    console.error('Task not found');
+                    return null;
                 }
             } catch (error) {
-                console.error('Error updating task:', error);
-                res.status(500).json({ error: 'Failed to mark task as done' });
+                console.error('Error undoing mark task as done:', error);
+                return null;
             }
-        });
+        };
 
         // Endpoint to undo marking a specific task as done
         app.put('/events/:eventId/tasks/:taskId/undo', async (req, res) => {
             const eventId = req.params.eventId;
             const taskId = req.params.taskId;
 
-            try {
-                const result = await tasksCollection.findOneAndUpdate(
-                    { "event.id": eventId, id: taskId },
-                    { $set: { done: false } },
-                    { returnDocument: 'after' }
-                );
+            const task = await undoMarkTaskAsDone(eventId, taskId);
 
-                if (result && result.value) {
-                    res.status(200).json(result.value);
-                } else {
-                    res.status(404).json({ error: 'Task not found' });
-                }
-            } catch (error) {
-                console.error('Error undoing mark task as done:', error);
-                res.status(500).json({ error: 'Failed to undo mark task as done' });
+            if (task) {
+                res.status(200).json(task);
+            } else {
+                res.status(404).json({ error: 'Task not found' });
             }
         });
 
         // Function to delete a task
         const deleteTask = async (eventId, taskId) => {
             try {
-                const result = await tasksCollection.deleteOne({ eventId, taskId });
+                const result = await tasksCollection.deleteOne({ event: eventId, id: taskId });
 
                 return result.deletedCount > 0;
             } catch (error) {

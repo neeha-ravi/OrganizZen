@@ -35,7 +35,7 @@ function Calendar({ filter, setFilter }) {
             } catch (error) {
                 console.error('Error fetching events:', error);
             }
-        };        
+        };
     
         fetchEvents();
     }, [selectedEvent]); // Add selectedEvent as a dependency
