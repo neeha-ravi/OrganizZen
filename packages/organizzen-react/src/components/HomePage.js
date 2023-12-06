@@ -10,7 +10,9 @@ function HomePage() {
 
     return (
         <div>
-            <LogoutButton/>
+            <h1 className={styles.Header}>💜</h1>
+            <h1 className={styles.Header}>OrganizZen</h1>
+            <LogoutButton />
             <div className={styles.CalendarTaskContainer}>
                 <div className={styles.CalendarDashboard}>
                     <Calendar filter={filter} setFilter={setFilter} />
@@ -21,7 +23,8 @@ function HomePage() {
                 </div>
             </div>
         </div>
-    )
+    );
+    
 }
 
 export default HomePage
