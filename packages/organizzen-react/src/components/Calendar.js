@@ -167,10 +167,6 @@ function Calendar({ filter, setFilter }) {
                             🗑️
                         </button>
                     </div>
-                    <div>
-                        <EventDetailsButton event={event} />
-                        {/* Other event information */}
-                    </div>
                 </div>
             ))}
         </div>
