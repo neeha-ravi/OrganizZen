@@ -61,3 +61,14 @@
     background-color: rgb(241, 236, 245);
     color: black;
 }
+
+.welcomemessage {
+    top: 0;
+}
+
+.welcomemessage h1 {
+    color: white;
+    justify-content: center;
+    text-align: center;
+    font-size: 50px;;
+}

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import ViewDetails from './ViewDetails'
 import './TaskTable.css'
 
 function TaskTable({ filter }) {
@@ -8,7 +7,11 @@ function TaskTable({ filter }) {
     const [showCompleted, setShowCompleted] = useState(
         localStorage.getItem('showCompleted') === 'true' ? true : false
     )
-
+    const [taskDetailsPopup, setTaskDetailsPopupState] = useState(false)
+    const toggleTaskDetailsPopup = () => {
+        setTaskDetailsPopupState(!taskDetailsPopup)
+    }
+    
     useEffect(() => {
         fetch('http://localhost:8000/events/tasks')
             .then((response) => response.json())
@@ -210,7 +213,10 @@ function TaskTable({ filter }) {
                                         }}
                                     >
                                         <div className="StartText" />
-                                        <div className="TodoItem">
+                                        <div
+                                            className="TodoItem"
+                                            onClick={toggleTaskDetailsPopup}
+                                        >
                                             <label>{task.name}</label>
                                         </div>
                                         <div className="DeleteButtonContainer">
@@ -226,9 +232,35 @@ function TaskTable({ filter }) {
                                                 🗑️
                                             </button>
                                         </div>
-                                        <div>
-                                            <ViewDetails task={task} />
-                                        </div>
+
+                                        {taskDetailsPopup && (
+                                            <div>
+                                                <div className="detailsView">
+                                                    <button
+                                                        id="popupClose"
+                                                        onClick={
+                                                            toggleTaskDetailsPopup
+                                                        }
+                                                    >
+                                                        X
+                                                    </button>
+                                                    <h1>{task.name}</h1>
+                                                    <h2>{task.description}</h2>
+                                                    <hr />
+                                                    {task.link !== '' ? (
+                                                        <h3>
+                                                            Link:{' '}
+                                                            <a href={task.link}>
+                                                                {task.link}
+                                                            </a>
+                                                        </h3>
+                                                    ) : null}
+                                                    <h3>
+                                                        Deadline: {task.date}
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        )}
 
                                         <div className="CompletedButtonContainer">
                                             <button
@@ -274,8 +306,8 @@ function TaskTable({ filter }) {
                     className="completedtoggle"
                 >
                     {showCompleted
-                        ? 'Show Incomplete Tasks'
-                        : 'Show Completed Tasks'}
+                        ? <b>Show Incomplete Tasks</b>
+                        : <b>Show Completed Tasks</b>}
                 </button>
             </div>
             <div className="ToDoListContainer">{renderTasks()}</div>

@@ -3,7 +3,7 @@ import './NewEvent.css'
 
 function NewEvent(props) {
     const [event, setEvent] = useState({
-        //_id: '',
+        id: '',
         name: '',
         description: '',
         link: '',
@@ -30,7 +30,7 @@ function NewEvent(props) {
 
         props.handleSubmit(event)
         setEvent({
-            //_id: '',
+            id: '',
             name: '',
             description: '',
             link: '',

@@ -31,17 +31,6 @@ function EventDetailsButton({ event }) {
                         {event.startDate !== event.endDate && (
                             <h2>{event.endDate}</h2>
                         )}
-
-                        {event.tasks && event.tasks.length > 0 && (
-                            <>
-                                <h2>Tasks:</h2>
-                                <ul>
-                                    {event.tasks.map((task) => (
-                                        <h3 key={task.id}>{task.name}</h3>
-                                    ))}
-                                </ul>
-                            </>
-                        )}
                     </div>
                 </div>
             )}
