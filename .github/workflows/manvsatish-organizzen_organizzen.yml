@@ -12,7 +12,7 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: ‘20.10.8’
+          node-version: '20.x'  # Replace ‘20.x’ with '20'
       - name: npm install, build, and test
         run: |
           npm install
@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: ‘Production’
+      name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     steps:
       - name: Download artifact from build job
@@ -38,11 +38,11 @@ jobs:
           name: node-app
       - name: Unzip artifact for deployment
         run: unzip release.zip
-      - name: ‘Deploy to Azure Web App’
+      - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ‘OrganizZen’
-          slot-name: ‘Production’
+          app-name: 'OrganizZen'
+          slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7BEEBD562073488A8676ED498E98ECEC }}
           package: .
