@@ -5,7 +5,7 @@ function TaskTable({ filter }) {
     const [tasks, setTasks] = useState([]);
     const [completedTasks, setCompletedTasks] = useState([]);
     const [showCompleted, setShowCompleted] = useState(
-        localStorage.getItem('showCompleted') === 'true' ? true : false
+      localStorage.getItem('showCompleted') === 'true'
     );
     const [taskDetailsPopups, setTaskDetailsPopups] = useState({});
     const [selectedTaskDetails, setSelectedTaskDetails] = useState(null);
@@ -40,7 +40,7 @@ function TaskTable({ filter }) {
                 setTasks([...allTasks]);
             })
             .catch((error) => console.log(error))
-    }, [tasks])
+    }, [])
 
     useEffect(() => {
         localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
@@ -80,7 +80,7 @@ function TaskTable({ filter }) {
               })
               .catch((error) => console.log(error));
       }
-    }, [tasks, filter]);
+    }, [filter]);
   
     const groupTasksByDate = () => {
         const groupedTasks = {};
@@ -186,7 +186,7 @@ function TaskTable({ filter }) {
         const taskDates = Object.keys(groupedTasks);
         const sortedDates = taskDates.sort((a, b) => new Date(a) - new Date(b));
         const currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() - 2);
+        currentDate.setDate(currentDate.getDate());
 
         if (tasks.length === 0) {
             return (
@@ -199,11 +199,11 @@ function TaskTable({ filter }) {
         return sortedDates
             .map((date, index) => {
                 const tasksForDate = groupedTasks[date];
-                const filteredTasks = tasksForDate.filter(
+                const dateFilteredTasks  = tasksForDate.filter(
                     (task) => new Date(task.date) >= currentDate
                 );
 
-                if (filteredTasks.length === 0) {
+                if (dateFilteredTasks .length === 0) {
                     return null;
                 }
 
@@ -224,7 +224,7 @@ function TaskTable({ filter }) {
                             </b>
                         </div>
 
-                        {filteredTasks.map((task) => {
+                        {dateFilteredTasks .map((task) => {
                             const isCompleted = completedTasks.some(
                                 (completedTask) => completedTask.id === task.id
                             );
@@ -329,6 +329,7 @@ function TaskTable({ filter }) {
     };
 
     return (
+
         <div className="TaskTableContainer">
             <div className="ButtonContainer">
                 <button
