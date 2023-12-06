@@ -21,35 +21,48 @@ function TaskTable({ filter }) {
                 setTasks([...allTasks])
             })
             .catch((error) => console.log(error))
-    }, [])
+    }, [tasks])
 
     useEffect(() => {
         localStorage.setItem('completedTasks', JSON.stringify(completedTasks))
     }, [completedTasks])
 
     useEffect(() => {
-        if (filter.size > 0) {
-            Promise.all(
-                [...filter].map((eventId) =>
-                    fetch(`http://localhost:8000/events/${eventId}/tasks`)
-                )
-            )
-                .then((responses) =>
-                    Promise.all(responses.map((response) => response.json()))
-                )
-                .then((data) => {
-                    const filteredTasks = data.flat()
-                    setTasks(filteredTasks)
-                })
-                .catch((error) => console.log(error))
-        } else {
-            fetch('http://localhost:8000/events/tasks')
-                .then((response) => response.json())
-                .then((data) => setTasks(data))
-                .catch((error) => console.log(error))
-        }
-    }, [filter])
-
+      if (filter.size > 0) {
+          Promise.all(
+              [...filter].map((eventId) =>
+                  fetch(`http://localhost:8000/events/${eventId}/tasks`)
+              )
+          )
+              .then((responses) =>
+                  Promise.all(responses.map((response) => response.json()))
+              )
+              .then((data) => {
+                  const filteredTasks = data.flat();
+                  const updatedCompletedTasks = filteredTasks.filter(
+                      (task) => task.done
+                  );
+  
+                  setTasks(filteredTasks);
+                  setCompletedTasks(updatedCompletedTasks);
+              })
+              .catch((error) => console.log(error));
+      } else {
+          fetch('http://localhost:8000/events/tasks')
+              .then((response) => response.json())
+              .then((data) => {
+                  const allTasks = data;
+                  const initialCompletedTasks = allTasks.filter(
+                      (task) => task.done
+                  );
+  
+                  setTasks(allTasks);
+                  setCompletedTasks(initialCompletedTasks);
+              })
+              .catch((error) => console.log(error));
+      }
+    }, [tasks, filter]);
+  
     const groupTasksByDate = () => {
         const groupedTasks = {}
         tasks.forEach((task) => {

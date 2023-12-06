@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './Calendar.css'
+import EventDetailsButton from './EventDetailsButton.js';
 
 function Calendar({ filter, setFilter }) {
+    const [tasks, setTasks] = useState([]);
     const [events, setEvents] = useState([])
     const [selectedEvent, setSelectedEvent] = useState(null)
 
@@ -40,7 +42,7 @@ function Calendar({ filter, setFilter }) {
         }
 
         fetchEvents()
-    }, [selectedEvent]) // Add selectedEvent as a dependency
+    }, [tasks, events, selectedEvent]) // Add selectedEvent as a dependency
 
     useEffect(() => {
         // Handle the case when a new event is added
@@ -82,19 +84,88 @@ function Calendar({ filter, setFilter }) {
         }
     }
 
+    function handleDelete(eventId) {
+        const confirmDelete = window.confirm('Are you sure you want to delete this event?');
+      
+        if (!confirmDelete) {
+            return;
+        }
+      
+        // Delete the event
+        fetch(`http://localhost:8000/events/${eventId}`, {
+            method: 'DELETE',
+        })
+            .then(async (response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to delete event');
+                }
+    
+                // Assuming tasks state is managed separately
+                try {
+                    // Delete associated tasks
+                    const tasksResponse = await fetch(`http://localhost:8000/events/${eventId}/tasks`, {
+                        method: 'DELETE',
+                    });
+    
+                    if (!tasksResponse.ok) {
+                        throw new Error('Failed to delete tasks');
+                    }
+    
+                    // Update state after successful deletion
+                    setEvents((prevEvents) =>
+                        prevEvents.filter((event) => event.id !== eventId)
+                    );
+    
+                    // Clear selected event if it was the one deleted
+                    if (selectedEvent && selectedEvent.id === eventId) {
+                        setSelectedEvent(null);
+                    }
+    
+                    // Assuming tasks state is managed separately
+                    setTasks((prevTasks) =>
+                        prevTasks.filter((task) => task.event !== eventId)
+                    );
+    
+                    console.log('Event and associated tasks deleted successfully!');
+                } catch (error) {
+                    console.error('Error deleting associated tasks:', error);
+                }
+            })
+            .catch((error) => {
+                console.error('Error deleting event:', error);
+            });
+    }    
+    
     return (
         <div className="EventScrollContainer">
             {events.map((event) => (
-                <div
-                    className={`EventContainer ${
+                <div className = "EventContainer">
+                    <div
+                    className={`EventBox ${
                         selectedEvent === event.id ? 'SelectedEvent' : ''
                     } ${filter.has(event.id) ? 'ShadedEvent' : ''}`}
-                    key={event.id}
+                    key={event.id}  // Make sure event.id is unique
                     onClick={() => handleEventClick(event.id)}
                 >
-                    <div className="EventBox">
-                        <h3>{event.name}</h3>
-                        <p>{formatDate(event.startDate, event.endDate)}</p>
+                            <h3>{event.name}</h3>
+                            <p>{formatDate(event.startDate, event.endDate)}</p>
+
+                    </div>
+                    <div key={event.id}>
+                                <EventDetailsButton event={event} />
+                                {/* Other event information */}
+                    </div>
+                    <div className="DeleteButtonContainer">
+                        <button
+                            onClick={() =>
+                                handleDelete(
+                                    event.id
+                                )
+                            }
+                            className="DeleteButton"
+                        >
+                            🗑️
+                        </button>
                     </div>
                 </div>
             ))}

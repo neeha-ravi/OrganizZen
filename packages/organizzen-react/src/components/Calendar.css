@@ -18,26 +18,28 @@
     background-color: #ffffff6c;
     border-radius: 10px;
     overflow: hidden;
+    flex-wrap: wrap;
 }
 
 .EventContainer {
-    width: 550px;
     height: 162.5px;
     justify-content: center;
     align-items: center;
     display: flex;
+    
 }
 
 .EventBox {
     font-family: 'Be Vietnam Pro', sans-serif;
     background-color: rgba(121, 121, 200, 0.425);
-    width: 490px;
+    width: 80%;
     height: 130px;
     border-radius: 12px;
     justify-content: center;
     align-items: center;
     display: flex;
     flex-direction: column;
+    margin-left: 40px;
 }
 
 .EventBox h3 {
@@ -70,6 +72,26 @@
     background-color: rgb(129, 121, 171);
 }
 
+.DeleteButton {
+    font-size: 90%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 90%;
+    margin: 5px;
+    height: 5px;
+    width: 2px;
+    border-radius: 10px;
+    padding: 15px 35px;
+    border: none;
+}
+
+.DeleteButton:hover {
+    background-color: #000000;
+    color: white;
+}
 @keyframes fadeInOut {
     0% {
         opacity: 0;
