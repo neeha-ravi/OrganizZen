@@ -12,7 +12,6 @@ function TaskTable({ filter }) {
     // const [selectedTaskDetails, setSelectedTaskDetails] = useState(null)
     // const [selectTaskDetails, setSelectTaskDetails] = useState(null)
 
-
     // Function to set the details popup state for a specific task
     const setTaskDetailsPopup = (taskId, isOpen) => {
         setTaskDetailsPopups((prevDetailsPopups) => ({
@@ -73,7 +72,9 @@ function TaskTable({ filter }) {
             // Fetch tasks for each eventId in the filter
             Promise.all(
                 [...filter].map((eventId) =>
-                    fetch(`http://organizzen.azurewebsites.net/events/${eventId}/tasks`)
+                    fetch(
+                        `http://organizzen.azurewebsites.net/events/${eventId}/tasks`
+                    )
                 )
             )
                 .then((responses) =>
@@ -119,9 +120,12 @@ function TaskTable({ filter }) {
             return
         }
 
-        fetch(`http://organizzen.azurewebsites.net/events/${eventId}/tasks/${taskId}`, {
-            method: 'DELETE',
-        })
+        fetch(
+            `http://organizzen.azurewebsites.net/events/${eventId}/tasks/${taskId}`,
+            {
+                method: 'DELETE',
+            }
+        )
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Failed to delete task')

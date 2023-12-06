@@ -37,13 +37,16 @@ function NewTask(props) {
             return
         }
 
-        fetch(`http://organizzen.azurewebsites.net/events/${selectedEvent}/tasks`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(task),
-        })
+        fetch(
+            `http://organizzen.azurewebsites.net/events/${selectedEvent}/tasks`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(task),
+            }
+        )
             .then((response) => response.json())
             .then((data) => {
                 console.log('Task added successfully:', data)

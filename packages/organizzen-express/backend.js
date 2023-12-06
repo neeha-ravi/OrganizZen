@@ -3,7 +3,7 @@ import cors from 'cors'
 import { connectToMongoDB } from './database.js'
 
 const app = express()
-const backendLink = "http://organizzen.azurewebsites.net"
+const backendLink = 'http://organizzen.azurewebsites.net'
 
 app.use(
     cors({
@@ -453,10 +453,8 @@ connectToMongoDB()
             }
         })
 
-        app.listen(port, () => {
-            console.log(
-                `Example app listening at ${backendLink}/users`
-            )
+        app.listen(() => {
+            console.log(`Example app listening at ${backendLink}/users`)
         })
     })
     .catch((error) => {

@@ -27,7 +27,9 @@ function Calendar({ filter, setFilter }) {
         // Fetch events from the backend
         const fetchEvents = async () => {
             try {
-                const response = await fetch('http://organizzen.azurewebsites.net/events')
+                const response = await fetch(
+                    'http://organizzen.azurewebsites.net/events'
+                )
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`)
                 }
