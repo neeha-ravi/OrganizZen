@@ -1,18 +1,23 @@
-.popupButton {
-    width: 10px;
-    background-color: #ffffff;
-    color: black;
+.popup {
+    background-color: white;
+    color: rgb(129, 121, 171);
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Be Vietnam Pro', sans-serif;
-    font-size: 90%;
-    margin: 25px;
-    height: 31px;
+    width: 3px;
+    line-height: 10px;
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+    margin: 5px;
+    font-size: 20px;
+    right: 0;
+
 }
 
-.popupButton:hover {
-    background-color: #000000;
+.popup:hover {
+    background-color: rgb(129, 121, 171);
     color: white;
 }
 
@@ -24,11 +29,11 @@
     line-height: 1.4;
     color: black;
     background: rgba(255, 255, 255, 0.832);
-    padding: 50px 75px;
     border-radius: 40px;
-    width: 400px;
-    height: 300px;
+    width: 600px;
     text-align: center;
+    flex-direction: column;
+    z-index: 1;
 }
 
 .popupForm {
@@ -43,6 +48,7 @@
     padding: 10px;
     border-radius: 5px;
     width: 50px;
-    left: 80%;
+    left: 85%; /* Adjust as needed */
     top: 15px;
+    z-index: 11;
 }

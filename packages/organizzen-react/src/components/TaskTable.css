@@ -14,57 +14,33 @@
     text-align: center;
 }
 
-.completedtoggle {
-    font-family: 'Be Vietnam Pro', sans-serif;
-    color: black;
-    font-size: 90%;
-    width: 200px;
-    height: 27px !important;
-    background-color: #ffffff;
-    justify-content: flex-start;
-    align-items: center;
-    display: flex;
-    padding: 10px;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    position: fixed;
-    top: 4%;
-    right: 7%;
-}
-
-.TaskTableContainer {
-    position: relative; /* Ensure relative positioning for children */
-    display: flex;
-}
-
 .ToDoListContainer {
     height: 650px;
     width: 100%;
-    margin-top: 40px;
-    flex-grow: 1;
 }
 
 .TaskContainer {
     display: flex;
-    justify-content: space-between;
-    align-items: center; /* Center vertically */
+    align-items: center;
     height: 31px;
     width: 100%;
     background-color: #ffffff;
     border-radius: 8px;
     margin-top: 20px;
-    /* overflow: hidden; */
-    margin-bottom: 20px;
+    overflow: hidden;
 }
 
-.TodoItem:hover {
+.TaskContainer:hover {
     filter: brightness(0.8);
 }
 
 .StartText {
     height: 31px;
     width: 15px;
+}
+
+.TodoItem {
+    margin-left: 1px;
 }
 
 .NoTasksContainer {
