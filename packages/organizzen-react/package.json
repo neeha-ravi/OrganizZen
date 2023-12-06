@@ -15,7 +15,7 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "test": "jest --passWithNoTests",
+        "test": "react-scripts test --passWithNoTests",
         "eject": "react-scripts eject",
         "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
         "lint": "npx eslint . && npx prettier --check ."
