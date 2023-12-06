@@ -83,27 +83,60 @@ function Calendar({ filter, setFilter }) {
         }
     }
 
+    function handleDelete(eventId) {
+        const confirmDelete = window.confirm(
+            'Are you sure you want to delete this event?'
+        )
+
+        if (!confirmDelete) {
+            return
+        }
+
+        fetch(`http://localhost:8000/events/${eventId}`, {
+            method: 'DELETE',
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to delete event')
+                }
+
+            })
+            .then(() => console.log('Event deleted successfully!'))
+            .catch((error) => {
+                console.error('Error deleting event:', error)
+            })
+    }
+
     return (
         <div className="EventScrollContainer">
             {events.map((event) => (
                 <div className = "EventContainer">
-                <div
-                    className={`EventBox ${
-                        selectedEvent === event.id ? 'SelectedEvent' : ''
-                    } ${filter.has(event.id) ? 'ShadedEvent' : ''}`}
-                    key={event.id}
-                    onClick={() => handleEventClick(event.id)}
-                >
-                        <h3>{event.name}</h3>
-                        <p>{formatDate(event.startDate, event.endDate)}</p>
+                    <div
+                        className={`EventBox ${
+                            selectedEvent === event.id ? 'SelectedEvent' : ''
+                        } ${filter.has(event.id) ? 'ShadedEvent' : ''}`}
+                        key={event.id}
+                        onClick={() => handleEventClick(event.id)}
+                    >
+                            <h3>{event.name}</h3>
+                            <p>{formatDate(event.startDate, event.endDate)}</p>
 
-                    <div>
-                    
-            </div>
-            </div>
-            <div key={event.id}>
-                        <EventDetailsButton event={event} />
-                        {/* Other event information */}
+                    </div>
+                    <div key={event.id}>
+                                <EventDetailsButton event={event} />
+                                {/* Other event information */}
+                    </div>
+                    <div className="DeleteButtonContainer">
+                        <button
+                            onClick={() =>
+                                handleDelete(
+                                    event.id
+                                )
+                            }
+                            className="DeleteButton"
+                        >
+                            🗑️
+                        </button>
                     </div>
                 </div>
             ))}
