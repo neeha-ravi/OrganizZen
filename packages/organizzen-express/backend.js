@@ -3,7 +3,7 @@ import cors from 'cors'
 import { connectToMongoDB } from './database.js'
 
 const app = express()
-const backendLink = 'http://organizzen.azurewebsites.net'
+const post = 8000
 
 app.use(
     cors({
@@ -453,9 +453,9 @@ connectToMongoDB()
             }
         })
 
-        app.listen(() => {
-            console.log(`Example app listening at ${backendLink}/users`)
-        })
+        app.listen(process.env.PORT || port, () => {
+            console.log("REST API is listening.");
+        });
     })
     .catch((error) => {
         console.error('Error connecting to MongoDB', error)

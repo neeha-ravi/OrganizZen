@@ -89,11 +89,9 @@ connectToMongoDB()
             }
         })
 
-        app.listen(port, () => {
-            console.log(
-                `Example app listening at http://localhost:${port}/users`
-            )
-        })
+        app.listen(process.env.PORT || port, () => {
+            console.log("REST API is listening.");
+        });
     })
     .catch((error) => {
         console.error('Error connecting to MongoDB', error)
