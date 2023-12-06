@@ -1,7 +1,7 @@
 {
     "name": "organizzen",
     "workspaces": [
-        "/github/workspace/packages/*"
+        "packages/*"
     ],
     "version": "1.0.0",
     "description": "OrganizZen App - 307",
