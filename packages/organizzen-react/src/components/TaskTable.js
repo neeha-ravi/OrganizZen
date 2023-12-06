@@ -26,7 +26,7 @@ function TaskTable({ filter }) {
     }
 
     useEffect(() => {
-        fetch('http://localhost:8000/events/tasks')
+        fetch('http://organizzen.azurewebsites.net/events/tasks')
             .then((response) => response.json())
             .then((data) => {
                 const allTasks = data
@@ -47,7 +47,7 @@ function TaskTable({ filter }) {
         const fetchTasks = async () => {
             try {
                 const response = await fetch(
-                    'http://localhost:8000/events/tasks'
+                    'http://organizzen.azurewebsites.net/events/tasks'
                 )
                 if (!response.ok) {
                     throw new Error('Failed to fetch tasks')
@@ -73,7 +73,7 @@ function TaskTable({ filter }) {
             // Fetch tasks for each eventId in the filter
             Promise.all(
                 [...filter].map((eventId) =>
-                    fetch(`http://localhost:8000/events/${eventId}/tasks`)
+                    fetch(`http://organizzen.azurewebsites.net/events/${eventId}/tasks`)
                 )
             )
                 .then((responses) =>
@@ -90,7 +90,7 @@ function TaskTable({ filter }) {
                 )
         } else {
             // If no events are selected, fetch all tasks
-            fetch('http://localhost:8000/events/tasks')
+            fetch('http://organizzen.azurewebsites.net/events/tasks')
                 .then((response) => response.json())
                 .then((data) => setTasks(data))
                 .catch((error) =>
@@ -119,7 +119,7 @@ function TaskTable({ filter }) {
             return
         }
 
-        fetch(`http://localhost:8000/events/${eventId}/tasks/${taskId}`, {
+        fetch(`http://organizzen.azurewebsites.net/events/${eventId}/tasks/${taskId}`, {
             method: 'DELETE',
         })
             .then((response) => {
@@ -151,7 +151,7 @@ function TaskTable({ filter }) {
         const endpoint = isCompleted ? 'undo' : 'mark-as-done'
 
         fetch(
-            `http://localhost:8000/events/${eventId}/tasks/${taskId}/${endpoint}`,
+            `http://organizzen.azurewebsites.net/events/${eventId}/tasks/${taskId}/${endpoint}`,
             {
                 method: 'PUT',
             }

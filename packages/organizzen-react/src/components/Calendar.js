@@ -27,7 +27,7 @@ function Calendar({ filter, setFilter }) {
         // Fetch events from the backend
         const fetchEvents = async () => {
             try {
-                const response = await fetch('http://localhost:8000/events')
+                const response = await fetch('http://organizzen.azurewebsites.net/events')
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`)
                 }
@@ -94,7 +94,7 @@ function Calendar({ filter, setFilter }) {
         }
 
         // Delete the event
-        fetch(`http://localhost:8000/events/${eventId}`, {
+        fetch(`http://organizzen.azurewebsites.net/events/${eventId}`, {
             method: 'DELETE',
         })
             .then(async (response) => {
@@ -106,7 +106,7 @@ function Calendar({ filter, setFilter }) {
                 try {
                     // Delete associated tasks
                     const tasksResponse = await fetch(
-                        `http://localhost:8000/events/${eventId}/tasks`,
+                        `http://organizzen.azurewebsites.net/events/${eventId}/tasks`,
                         {
                             method: 'DELETE',
                         }
