@@ -59,11 +59,12 @@ connectToMongoDB()
         const generateUniqueId = (usedIds) => {
             let id;
             do {
-                id = Math.floor(Math.random() * 1000000).toString();
+              id = Math.floor(Math.random() * 1000000).toString();
             } while (usedIds.has(id));
             usedIds.add(id);
+            console.log('Generated ID:', id); // Add this line for debugging
             return id;
-        };        
+          }             
 
         // Endpoint to get all tasks for all events
         app.get('/events/tasks', async (req, res) => {
@@ -169,6 +170,7 @@ connectToMongoDB()
             }
 
             const uniqueId = generateUniqueId(usedEventIds);
+            console.log('Unique ID for event:', uniqueId); // Add this line for debugging
             e.id = uniqueId;
             e.tasks = [];
 
