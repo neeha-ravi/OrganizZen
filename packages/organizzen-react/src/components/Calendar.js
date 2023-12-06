@@ -34,7 +34,6 @@ function Calendar({ filter, setFilter }) {
                 const sortedEvents = data.sort(
                     (a, b) => new Date(a.startDate) - new Date(b.startDate)
                 )
-                console.log('Fetched events:', sortedEvents)
                 setEvents(sortedEvents)
             } catch (error) {
                 console.error('Error fetching events:', error)
@@ -42,7 +41,7 @@ function Calendar({ filter, setFilter }) {
         }
 
         fetchEvents()
-    }, [tasks, events, selectedEvent]) // Add selectedEvent as a dependency
+    }, [events, selectedEvent]) // Add selectedEvent as a dependency
 
     useEffect(() => {
         // Handle the case when a new event is added
@@ -138,30 +137,24 @@ function Calendar({ filter, setFilter }) {
     
     return (
         <div className="EventScrollContainer">
-            {events.map((event) => (
-                <div className = "EventContainer">
+            {events.map((event, index) => (
+                <div className="EventContainer" key={event.id || index}>
                     <div
-                    className={`EventBox ${
-                        selectedEvent === event.id ? 'SelectedEvent' : ''
-                    } ${filter.has(event.id) ? 'ShadedEvent' : ''}`}
-                    key={event.id}  // Make sure event.id is unique
-                    onClick={() => handleEventClick(event.id)}
-                >
-                            <h3>{event.name}</h3>
-                            <p>{formatDate(event.startDate, event.endDate)}</p>
-
+                        className={`EventBox ${
+                            selectedEvent === event.id ? 'SelectedEvent' : ''
+                        } ${filter.has(event.id) ? 'ShadedEvent' : ''}`}
+                        onClick={() => handleEventClick(event.id)}
+                    >
+                        <h3>{event.name}</h3>
+                        <p>{formatDate(event.startDate, event.endDate)}</p>
                     </div>
                     <div key={event.id}>
-                                <EventDetailsButton event={event} />
-                                {/* Other event information */}
+                        <EventDetailsButton event={event} />
+                        {/* Other event information */}
                     </div>
                     <div className="DeleteButtonContainer">
                         <button
-                            onClick={() =>
-                                handleDelete(
-                                    event.id
-                                )
-                            }
+                            onClick={() => handleDelete(event.id)}
                             className="DeleteButton"
                         >
                             🗑️

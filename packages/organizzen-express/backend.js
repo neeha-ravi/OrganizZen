@@ -174,7 +174,6 @@ connectToMongoDB()
                 .split('T')[0]
 
             const currentDate = new Date()
-            currentDate.setDate(currentDate.getDate() - 2)
             const eventStartDate = new Date(e.startDate).getTime()
 
             if (eventStartDate < currentDate.getTime()) {
@@ -224,7 +223,6 @@ connectToMongoDB()
             if (event) {
                 // Check if the task date is within the event's date range
                 const currentDate = new Date()
-                currentDate.setDate(currentDate.getDate() - 2)
                 const taskDateTime = new Date(taskDate).getTime()
                 const eventEndDate = new Date(event.endDate).getTime()
 
