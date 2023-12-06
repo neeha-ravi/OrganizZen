@@ -13,10 +13,11 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
+        "test": "echo \"Error: no test specified\"",
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "test": "react-scripts test",
         "eject": "react-scripts eject",
+        "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
         "lint": "npx eslint . && npx prettier --check ."
     },
     "eslintConfig": {

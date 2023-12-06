@@ -16,35 +16,37 @@ function NewTask(props) {
 
     function submitForm(event) {
         event.preventDefault()
-        const currentDate = new Date();
+        const currentDate = new Date()
 
         if (selectedDate === '') {
             setInvalidInput(3)
             return
-        } else if (
-            selectedDate > selectedEventData.endDate
-        ) {
-            if (selectedEventData.oneDayOnly == false) {
+        } else if (selectedDate > selectedEventData.endDate) {
+            if (selectedEventData.oneDayOnly === false) {
                 setInvalidInput(1)
             }
             return
-        } else if (selectedDate < currentDate || selectedDate > selectedEventData.endDate)
-        {
+        } else if (
+            selectedDate < currentDate ||
+            selectedDate > selectedEventData.endDate
+        ) {
             setInvalidInput(1)
             return
-        }
-        else if (inputName === '') {
+        } else if (inputName === '') {
             setInvalidInput(2)
             return
         }
 
-        fetch(`http://localhost:8000/events/${selectedEvent}/tasks`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(task),
-        })
+        fetch(
+            `https://organizzen.azurewebsites.net/events/${selectedEvent}/tasks`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(task),
+            }
+        )
             .then((response) => response.json())
             .then((data) => {
                 console.log('Task added successfully:', data)
@@ -104,7 +106,7 @@ function NewTask(props) {
     const [eventOptions, setEventOptions] = useState([])
 
     useEffect(() => {
-        fetch('http://localhost:8000/events')
+        fetch('https://organizzen.azurewebsites.net/events')
             .then((response) => response.json())
             .then((data) => {
                 const eventsList = data || []

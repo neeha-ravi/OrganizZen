@@ -1,6 +1,5 @@
 import express from 'express'
 import cors from 'cors'
-import { MongoClient } from 'mongodb'
 import { connectToMongoDB } from './database.js'
 
 const app = express()
@@ -68,7 +67,8 @@ connectToMongoDB()
                 const result = await usersCollection.insertOne(user)
                 return result.ops[0]
             } catch (error) {
-                // return { error: 'Failed to add user' }
+                console.error('Error adding user:', error.message);
+                return { error: 'Failed to add user' }; // Uncommented this line
             }
         }
 
@@ -89,11 +89,9 @@ connectToMongoDB()
             }
         })
 
-        app.listen(port, () => {
-            console.log(
-                `Example app listening at http://localhost:${port}/users`
-            )
-        })
+        app.listen(process.env.PORT || port, () => {
+            console.log("REST API is listening.");
+        });
     })
     .catch((error) => {
         console.error('Error connecting to MongoDB', error)
