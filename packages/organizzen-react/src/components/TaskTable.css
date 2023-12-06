@@ -54,7 +54,6 @@
     background-color: #ffffff;
     border-radius: 8px;
     margin-top: 20px;
-    /* overflow: hidden; */
     margin-bottom: 20px;
 }
 
@@ -87,6 +86,7 @@
     justify-content: center;
     align-items: center;
     display: flex;
+    font-weight: bold;
 }
 
 .CompletedButton {
@@ -103,6 +103,7 @@
     border-radius: 10px;
     padding: 15px 35px;
     border: none;
+    font-weight: bold;
 }
 
 .CompletedButton:hover {
