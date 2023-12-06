@@ -278,7 +278,7 @@ function TaskTable({ filter, onToggleShowCompleted }) {
                                                             toggleTaskDetailsPopup(task.id)
                                                         }
                                                     >
-                                                        X
+                                                      X
                                                     </button>
                                                     <h1>{task.name}</h1>
                                                     <h2>{task.description}</h2>

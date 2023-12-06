@@ -124,13 +124,14 @@
     font-family: 'Be Vietnam Pro', sans-serif;
     font-size: 90%;
     height: 31px !important;
-    width: 2px;
+    width: 50px;
+    margin-right: 5px;
     border-radius: 10px;
     border: none;
 }
 
 .DeleteButton:hover {
-    background-color: #000000;
+    background-color: rgb(104, 94, 151);
     color: white;
 }
 
@@ -147,11 +148,4 @@
     width: 400px;
     height: 300px;
     text-align: center;
-}
-
-.Header {
-    font-family: 'Be Vietnam Pro', sans-serif;
-    text-align: right; /* Center the text */
-    margin-bottom: 50px;
-    background-color: red;
 }
