@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import ViewDetails from './ViewDetails'
 import './TaskTable.css'
 
 function TaskTable({ filter }) {
@@ -8,6 +7,10 @@ function TaskTable({ filter }) {
     const [showCompleted, setShowCompleted] = useState(
         localStorage.getItem('showCompleted') === 'true' ? true : false
     )
+    const [taskDetailsPopup, setTaskDetailsPopupState] = useState(false)
+    const toggleTaskDetailsPopup = () => {
+        setTaskDetailsPopupState(!taskDetailsPopup)
+    }
 
     useEffect(() => {
         // Fetch all tasks initially
@@ -66,74 +69,77 @@ function TaskTable({ filter }) {
         })
         return groupedTasks
     }
-    
+
     function handleDelete(taskId, eventId) {
-      const confirmDelete = window.confirm('Are you sure you want to delete this task?');
-  
-      if (!confirmDelete) {
-          return;
-      }
-  
-      // Make a DELETE request to remove the task
-      fetch(
-          `http://localhost:8000/events/${eventId}/tasks/${taskId}`,
-          {
-              method: 'DELETE',
-          }
-      )
-          .then((response) => {
-              if (!response.ok) {
-                  throw new Error('Failed to delete task');
-              }
-  
-              // Update the local state to remove the deleted task
-              setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
-  
-              // If the task is completed, update completedTasks as well
-              setCompletedTasks((prevCompletedTasks) =>
-                  prevCompletedTasks.filter((completedTask) => completedTask.id !== taskId)
-              );
-          })
-          .catch((error) => {
-              console.error('Error deleting task:', error);
-          });
-  }
-  
+        const confirmDelete = window.confirm(
+            'Are you sure you want to delete this task?'
+        )
 
+        if (!confirmDelete) {
+            return
+        }
 
-  function fetchTasks(eventId) {
-    if (!eventId) {
-        console.error('No event ID provided.')
-        return
+        // Make a DELETE request to remove the task
+        fetch(`http://localhost:8000/events/${eventId}/tasks/${taskId}`, {
+            method: 'DELETE',
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to delete task')
+                }
+
+                // Update the local state to remove the deleted task
+                setTasks((prevTasks) =>
+                    prevTasks.filter((task) => task.id !== taskId)
+                )
+
+                // If the task is completed, update completedTasks as well
+                setCompletedTasks((prevCompletedTasks) =>
+                    prevCompletedTasks.filter(
+                        (completedTask) => completedTask.id !== taskId
+                    )
+                )
+            })
+            .catch((error) => {
+                console.error('Error deleting task:', error)
+            })
     }
 
-    // Make a GET request to fetch tasks for the specified event
-    fetch(`http://localhost:8000/events/${eventId}/tasks`)
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch tasks')
-            }
-            return response.json()
-        })
-        .then((tasks) => {
-            // Process the fetched tasks, update state, or perform other actions
-            console.log('Fetched tasks for event', eventId, ':', tasks)
+    // eslint-disable-next-line no-unused-vars
+    function fetchTasks(eventId) {
+        if (!eventId) {
+            console.error('No event ID provided.')
+            return
+        }
 
-            // Use the current state to update tasks, preventing potential race conditions
-            setTasks((prevTasks) => {
-                // Create a new array with the updated tasks
-                const updatedTasks = prevTasks.map((task) =>
-                    task.eventId === eventId ? tasks.find((t) => t.id === task.id) || task : task
-                );
+        // Make a GET request to fetch tasks for the specified event
+        fetch(`http://localhost:8000/events/${eventId}/tasks`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch tasks')
+                }
+                return response.json()
+            })
+            .then((tasks) => {
+                // Process the fetched tasks, update state, or perform other actions
+                console.log('Fetched tasks for event', eventId, ':', tasks)
 
-                return updatedTasks;
-            });
-        })
-        .catch((error) => {
-            console.error('Error fetching tasks:', error)
-        });
-}
+                // Use the current state to update tasks, preventing potential race conditions
+                setTasks((prevTasks) => {
+                    // Create a new array with the updated tasks
+                    const updatedTasks = prevTasks.map((task) =>
+                        task.eventId === eventId
+                            ? tasks.find((t) => t.id === task.id) || task
+                            : task
+                    )
 
+                    return updatedTasks
+                })
+            })
+            .catch((error) => {
+                console.error('Error fetching tasks:', error)
+            })
+    }
 
     function handleDone(taskId, eventId) {
         const isCompleted = completedTasks.some(
@@ -259,19 +265,55 @@ function TaskTable({ filter }) {
                                         }}
                                     >
                                         <div className="StartText" />
-                                        <div className="TodoItem">
+                                        <div
+                                            className="TodoItem"
+                                            onClick={toggleTaskDetailsPopup}
+                                        >
                                             <label>{task.name}</label>
                                         </div>
                                         <div className="DeleteButtonContainer">
-                                                <button
-                                                  onClick={() => handleDelete(task.id, task.eventId)}
-                                                    className="DeleteButton">🗑️
-                                                  </button>
+                                            <button
+                                                onClick={() =>
+                                                    handleDelete(
+                                                        task.id,
+                                                        task.eventId
+                                                    )
+                                                }
+                                                className="DeleteButton"
+                                            >
+                                                🗑️
+                                            </button>
                                         </div>
-                                        <div>
-                                            <ViewDetails task={task} />
-                                        </div>
-                                    
+
+                                        {taskDetailsPopup && (
+                                            <div>
+                                                <div className="detailsView">
+                                                    <button
+                                                        id="popupClose"
+                                                        onClick={
+                                                            toggleTaskDetailsPopup
+                                                        }
+                                                    >
+                                                        X
+                                                    </button>
+                                                    <h1>{task.name}</h1>
+                                                    <h2>{task.description}</h2>
+                                                    <hr />
+                                                    {task.link !== '' ? (
+                                                        <h3>
+                                                            Link:{' '}
+                                                            <a href={task.link}>
+                                                                {task.link}
+                                                            </a>
+                                                        </h3>
+                                                    ) : null}
+                                                    <h3>
+                                                        Deadline: {task.date}
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        )}
+
                                         <div className="CompletedButtonContainer">
                                             <button
                                                 onClick={() =>
@@ -285,7 +327,6 @@ function TaskTable({ filter }) {
                                                 {task.done ? 'UNDO' : 'DONE'}
                                             </button>
                                         </div>
-                                        
                                     </div>
                                 )
                             }
