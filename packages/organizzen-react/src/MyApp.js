@@ -63,7 +63,8 @@ const App = () => {
             <HomePage />
             <div className="newButtonContainer">
                 <div className="ButtonsContainer">
-                    <NewEvent handleSubmit={postEvent} />
+                    {/* Pass events as a prop to NewEvent component */}
+                    <NewEvent handleSubmit={postEvent} events={events} />
                     {/* Pass addTask function as a prop to NewTask component */}
                     <div className="ButtonDivider"></div>
                     <NewTask handleSubmit={postTask} events={events} />
@@ -72,7 +73,7 @@ const App = () => {
                 <div className="TaskWidth" />
             </div>
         </div>
-    )
+    );
 }
 
 export default App

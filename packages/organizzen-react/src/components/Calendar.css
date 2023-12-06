@@ -18,26 +18,28 @@
     background-color: #ffffff6c;
     border-radius: 10px;
     overflow: hidden;
+    flex-wrap: wrap;
 }
 
 .EventContainer {
-    width: 550px;
     height: 162.5px;
     justify-content: center;
     align-items: center;
     display: flex;
+    
 }
 
 .EventBox {
     font-family: 'Be Vietnam Pro', sans-serif;
     background-color: rgba(121, 121, 200, 0.425);
-    width: 490px;
+    width: 80%;
     height: 130px;
     border-radius: 12px;
     justify-content: center;
     align-items: center;
     display: flex;
     flex-direction: column;
+    margin-left: 40px;
 }
 
 .EventBox h3 {

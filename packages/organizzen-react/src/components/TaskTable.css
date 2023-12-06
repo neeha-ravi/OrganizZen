@@ -18,19 +18,19 @@
     font-family: 'Be Vietnam Pro', sans-serif;
     color: black;
     font-size: 90%;
-    width: 200px;
+    width: 240px;
     height: 27px !important;
     background-color: #ffffff;
-    justify-content: flex-start;
     align-items: center;
     display: flex;
-    padding: 10px;
     margin-bottom: 20px;
-    display: flex;
     justify-content: space-between;
     position: fixed;
     top: 4%;
     right: 7%;
+    border-radius: 10px;
+    padding: 15px 35px;
+    border: none;
 }
 
 .TaskTableContainer {
@@ -100,6 +100,9 @@
     font-size: 90%;
     margin: 25px;
     height: 31px;
+    border-radius: 10px;
+    padding: 15px 35px;
+    border: none;
 }
 
 .CompletedButton:hover {
@@ -123,4 +126,27 @@
     margin: 25px;
     height: 10px;
     width: 2px;
+    border-radius: 10px;
+    padding: 15px 35px;
+    border: none;
+}
+
+.DeleteButton:hover {
+    background-color: #000000;
+    color: white;
+}
+
+.detailsView {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    line-height: 1.4;
+    color: black;
+    background: rgba(255, 255, 255, 0.832);
+    padding: 50px 75px;
+    border-radius: 40px;
+    width: 400px;
+    height: 300px;
+    text-align: center;
 }
