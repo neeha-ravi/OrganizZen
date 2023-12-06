@@ -29,12 +29,13 @@ function Calendar({ filter, setFilter }) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 const data = await response.json();
-                console.log('Fetched events:', data);
-                setEvents(data); // Update to use the correct response structure
+                const sortedEvents = data.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+                console.log('Fetched events:', sortedEvents);
+                setEvents(sortedEvents);
             } catch (error) {
                 console.error('Error fetching events:', error);
             }
-        };
+        };        
     
         fetchEvents();
     }, [selectedEvent]); // Add selectedEvent as a dependency
