@@ -4,15 +4,13 @@ import './EventDetailsButton.css'
 function EventDetailsButton({ event }) {
     const [popup, popupState] = useState(false)
     const togglePopup = () => {
-        popupState((prevPopup) => !prevPopup);
-    };
+        popupState((prevPopup) => !prevPopup)
+    }
 
     return (
         <>
             <button className="popup" onClick={togglePopup}>
-            •
-            •
-            •
+                • • •
             </button>
 
             {popup && (
@@ -24,20 +22,26 @@ function EventDetailsButton({ event }) {
                         </button>
                         <h1>{event.name}</h1>
                         <h2>{event.description}</h2>
-                        <h2>{event.link}</h2>
+                        <hr />
+                        <h2>
+                            {' '}
+                            Link: <a href={event.link}>{event.link}</a>
+                        </h2>
                         <h2>{event.startDate}</h2>
-                        {event.startDate !== event.endDate && <h2>{event.endDate}</h2>}
+                        {event.startDate !== event.endDate && (
+                            <h2>{event.endDate}</h2>
+                        )}
 
                         {event.tasks && event.tasks.length > 0 && (
-            <>
-              <h2>Tasks:</h2>
-              <ul>
-                {event.tasks.map((task) => (
-                  <h3 key={task.id}>{task.name}</h3>
-                ))}
-              </ul>
-            </>
-          )}
+                            <>
+                                <h2>Tasks:</h2>
+                                <ul>
+                                    {event.tasks.map((task) => (
+                                        <h3 key={task.id}>{task.name}</h3>
+                                    ))}
+                                </ul>
+                            </>
+                        )}
                     </div>
                 </div>
             )}
