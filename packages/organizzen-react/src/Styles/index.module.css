@@ -4,7 +4,7 @@ body {
     font-family: 'Be Vietnam Pro', sans-serif;
     display: flow-root;
     margin: 100px;
-    min-height: 70vh !important;
+    min-height: 90vh !important;
 }
 
 .CalendarTaskContainer {

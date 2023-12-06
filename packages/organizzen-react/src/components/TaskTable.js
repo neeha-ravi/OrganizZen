@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import ViewDetails from './ViewDetails'
 import './TaskTable.css'
 
 function TaskTable({ filter }) {
@@ -7,13 +8,8 @@ function TaskTable({ filter }) {
     const [showCompleted, setShowCompleted] = useState(
         localStorage.getItem('showCompleted') === 'true' ? true : false
     )
-    const [taskDetailsPopup, setTaskDetailsPopupState] = useState(false)
-    const toggleTaskDetailsPopup = () => {
-        setTaskDetailsPopupState(!taskDetailsPopup)
-    }
 
     useEffect(() => {
-        // Fetch all tasks initially
         fetch('http://localhost:8000/events/tasks')
             .then((response) => response.json())
             .then((data) => {
@@ -22,20 +18,17 @@ function TaskTable({ filter }) {
                     (task) => task.done
                 )
                 setCompletedTasks(initialCompletedTasks)
-                setTasks(allTasks)
+                setTasks([...allTasks])
             })
             .catch((error) => console.log(error))
     }, [])
 
     useEffect(() => {
-        // Update localStorage whenever completedTasks state changes
         localStorage.setItem('completedTasks', JSON.stringify(completedTasks))
     }, [completedTasks])
 
     useEffect(() => {
-        // Check if there are events selected in the filter
         if (filter.size > 0) {
-            // Fetch tasks for each eventId in the filter
             Promise.all(
                 [...filter].map((eventId) =>
                     fetch(`http://localhost:8000/events/${eventId}/tasks`)
@@ -45,13 +38,11 @@ function TaskTable({ filter }) {
                     Promise.all(responses.map((response) => response.json()))
                 )
                 .then((data) => {
-                    // Flatten the array of arrays into a single array of tasks
                     const filteredTasks = data.flat()
                     setTasks(filteredTasks)
                 })
                 .catch((error) => console.log(error))
         } else {
-            // If no events are selected, fetch all tasks
             fetch('http://localhost:8000/events/tasks')
                 .then((response) => response.json())
                 .then((data) => setTasks(data))
@@ -79,7 +70,6 @@ function TaskTable({ filter }) {
             return
         }
 
-        // Make a DELETE request to remove the task
         fetch(`http://localhost:8000/events/${eventId}/tasks/${taskId}`, {
             method: 'DELETE',
         })
@@ -88,69 +78,31 @@ function TaskTable({ filter }) {
                     throw new Error('Failed to delete task')
                 }
 
-                // Update the local state to remove the deleted task
                 setTasks((prevTasks) =>
                     prevTasks.filter((task) => task.id !== taskId)
                 )
-
-                // If the task is completed, update completedTasks as well
                 setCompletedTasks((prevCompletedTasks) =>
                     prevCompletedTasks.filter(
                         (completedTask) => completedTask.id !== taskId
                     )
                 )
             })
+            .then(() => console.log('Task deleted successfully!'))
             .catch((error) => {
                 console.error('Error deleting task:', error)
             })
     }
 
-    // eslint-disable-next-line no-unused-vars
-    function fetchTasks(eventId) {
-        if (!eventId) {
-            console.error('No event ID provided.')
-            return
-        }
-
-        // Make a GET request to fetch tasks for the specified event
-        fetch(`http://localhost:8000/events/${eventId}/tasks`)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch tasks')
-                }
-                return response.json()
-            })
-            .then((tasks) => {
-                // Process the fetched tasks, update state, or perform other actions
-                console.log('Fetched tasks for event', eventId, ':', tasks)
-
-                // Use the current state to update tasks, preventing potential race conditions
-                setTasks((prevTasks) => {
-                    // Create a new array with the updated tasks
-                    const updatedTasks = prevTasks.map((task) =>
-                        task.eventId === eventId
-                            ? tasks.find((t) => t.id === task.id) || task
-                            : task
-                    )
-
-                    return updatedTasks
-                })
-            })
-            .catch((error) => {
-                console.error('Error fetching tasks:', error)
-            })
-    }
-
     function handleDone(taskId, eventId) {
+        console.log('EventId:', eventId, 'TaskId:', taskId)
         const isCompleted = completedTasks.some(
             (completedTask) => completedTask.id === taskId
         )
 
-        // Make a PUT request to update the task as done or undone
+        const endpoint = isCompleted ? 'undo' : 'mark-as-done'
+
         fetch(
-            `http://localhost:8000/events/${eventId}/tasks/${taskId}/${
-                isCompleted ? 'undo' : 'mark-as-done'
-            }`,
+            `http://localhost:8000/events/${eventId}/tasks/${taskId}/${endpoint}`,
             {
                 method: 'PUT',
             }
@@ -164,13 +116,11 @@ function TaskTable({ filter }) {
                     )
                 }
 
-                // Update the local state with the modified tasks
                 const updatedTasks = tasks.map((task) =>
                     task.id === taskId ? { ...task, done: !task.done } : task
                 )
                 setTasks(updatedTasks)
 
-                // Move the task between incomplete and completed tasks based on its current state
                 if (isCompleted) {
                     setCompletedTasks((prevCompletedTasks) =>
                         prevCompletedTasks.filter(
@@ -198,17 +148,13 @@ function TaskTable({ filter }) {
     }
 
     const renderTasks = () => {
-        // eslint-disable-next-line no-unused-vars
         const filteredTasks = showCompleted ? completedTasks : tasks
         const groupedTasks = groupTasksByDate()
         const taskDates = Object.keys(groupedTasks)
-
         const sortedDates = taskDates.sort((a, b) => new Date(a) - new Date(b))
-
         const currentDate = new Date()
-        currentDate.setDate(currentDate.getDate() - 2) //sets current date as 2 days ago because it doesn't read anything today or tomorrow
+        currentDate.setDate(currentDate.getDate() - 2)
 
-        // Check if there are no tasks at all
         if (tasks.length === 0) {
             return (
                 <div className="NoTasksContainer">
@@ -220,7 +166,6 @@ function TaskTable({ filter }) {
         return sortedDates
             .map((date, index) => {
                 const tasksForDate = groupedTasks[date]
-
                 const filteredTasks = tasksForDate.filter(
                     (task) => new Date(task.date) >= currentDate
                 )
@@ -265,10 +210,7 @@ function TaskTable({ filter }) {
                                         }}
                                     >
                                         <div className="StartText" />
-                                        <div
-                                            className="TodoItem"
-                                            onClick={toggleTaskDetailsPopup}
-                                        >
+                                        <div className="TodoItem">
                                             <label>{task.name}</label>
                                         </div>
                                         <div className="DeleteButtonContainer">
@@ -276,7 +218,7 @@ function TaskTable({ filter }) {
                                                 onClick={() =>
                                                     handleDelete(
                                                         task.id,
-                                                        task.eventId
+                                                        task.event
                                                     )
                                                 }
                                                 className="DeleteButton"
@@ -284,47 +226,21 @@ function TaskTable({ filter }) {
                                                 🗑️
                                             </button>
                                         </div>
-
-                                        {taskDetailsPopup && (
-                                            <div>
-                                                <div className="detailsView">
-                                                    <button
-                                                        id="popupClose"
-                                                        onClick={
-                                                            toggleTaskDetailsPopup
-                                                        }
-                                                    >
-                                                        X
-                                                    </button>
-                                                    <h1>{task.name}</h1>
-                                                    <h2>{task.description}</h2>
-                                                    <hr />
-                                                    {task.link !== '' ? (
-                                                        <h3>
-                                                            Link:{' '}
-                                                            <a href={task.link}>
-                                                                {task.link}
-                                                            </a>
-                                                        </h3>
-                                                    ) : null}
-                                                    <h3>
-                                                        Deadline: {task.date}
-                                                    </h3>
-                                                </div>
-                                            </div>
-                                        )}
+                                        <div>
+                                            <ViewDetails task={task} />
+                                        </div>
 
                                         <div className="CompletedButtonContainer">
                                             <button
                                                 onClick={() =>
                                                     handleDone(
                                                         task.id,
-                                                        task.eventId
+                                                        task.event
                                                     )
                                                 }
                                                 className="CompletedButton"
                                             >
-                                                {task.done ? 'UNDO' : 'DONE'}
+                                                {isCompleted ? 'UNDO' : 'DONE'}
                                             </button>
                                         </div>
                                     </div>
