@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './Calendar.css'
-import EventDetailsButton from './EventDetailsButton';
+import EventDetailsButton from './EventDetailsButton'
 
 function Calendar({ filter, setFilter }) {
     const [events, setEvents] = useState([])
@@ -86,22 +86,17 @@ function Calendar({ filter, setFilter }) {
     return (
         <div className="EventScrollContainer">
             {events.map((event) => (
-                <div className = "EventContainer">
-                <div
-                    className={`EventBox ${
-                        selectedEvent === event.id ? 'SelectedEvent' : ''
-                    } ${filter.has(event.id) ? 'ShadedEvent' : ''}`}
-                    key={event.id}
-                    onClick={() => handleEventClick(event.id)}
-                >
+                <div className="EventContainer" key={event.id}>
+                    <div
+                        className={`EventBox ${
+                            selectedEvent === event.id ? 'SelectedEvent' : ''
+                        } ${filter.has(event.id) ? 'ShadedEvent' : ''}`}
+                        onClick={() => handleEventClick(event.id)}
+                    >
                         <h3>{event.name}</h3>
                         <p>{formatDate(event.startDate, event.endDate)}</p>
-
+                    </div>
                     <div>
-                    
-            </div>
-            </div>
-            <div key={event.id}>
                         <EventDetailsButton event={event} />
                         {/* Other event information */}
                     </div>
