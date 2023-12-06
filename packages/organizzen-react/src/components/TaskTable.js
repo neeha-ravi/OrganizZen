@@ -25,7 +25,7 @@ function TaskTable({ filter }) {
     }
 
     useEffect(() => {
-        fetch('http://organizzen.azurewebsites.net/events/tasks')
+        fetch('https://organizzen.azurewebsites.net/events/tasks')
             .then((response) => response.json())
             .then((data) => {
                 const allTasks = data
@@ -46,7 +46,7 @@ function TaskTable({ filter }) {
         const fetchTasks = async () => {
             try {
                 const response = await fetch(
-                    'http://organizzen.azurewebsites.net/events/tasks'
+                    'https://organizzen.azurewebsites.net/events/tasks'
                 )
                 if (!response.ok) {
                     throw new Error('Failed to fetch tasks')
@@ -73,7 +73,7 @@ function TaskTable({ filter }) {
             Promise.all(
                 [...filter].map((eventId) =>
                     fetch(
-                        `http://organizzen.azurewebsites.net/events/${eventId}/tasks`
+                        `https://organizzen.azurewebsites.net/events/${eventId}/tasks`
                     )
                 )
             )
@@ -91,7 +91,7 @@ function TaskTable({ filter }) {
                 )
         } else {
             // If no events are selected, fetch all tasks
-            fetch('http://organizzen.azurewebsites.net/events/tasks')
+            fetch('https://organizzen.azurewebsites.net/events/tasks')
                 .then((response) => response.json())
                 .then((data) => setTasks(data))
                 .catch((error) =>
@@ -121,7 +121,7 @@ function TaskTable({ filter }) {
         }
 
         fetch(
-            `http://organizzen.azurewebsites.net/events/${eventId}/tasks/${taskId}`,
+            `https://organizzen.azurewebsites.net/events/${eventId}/tasks/${taskId}`,
             {
                 method: 'DELETE',
             }
@@ -155,7 +155,7 @@ function TaskTable({ filter }) {
         const endpoint = isCompleted ? 'undo' : 'mark-as-done'
 
         fetch(
-            `http://organizzen.azurewebsites.net/events/${eventId}/tasks/${taskId}/${endpoint}`,
+            `https://organizzen.azurewebsites.net/events/${eventId}/tasks/${taskId}/${endpoint}`,
             {
                 method: 'PUT',
             }

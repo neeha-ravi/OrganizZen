@@ -3,11 +3,11 @@ import cors from 'cors'
 import { connectToMongoDB } from './database.js'
 
 const app = express()
-const post = 8000
+const port = 8000
 
 app.use(
     cors({
-        origin: 'http://organizzen.azurewebsites.net',
+        origin: 'https://lively-mud-0344e681e.4.azurestaticapps.net',
     })
 )
 
@@ -455,6 +455,7 @@ connectToMongoDB()
 
         app.listen(process.env.PORT || port, () => {
             console.log("REST API is listening.");
+            console.log(process.env.PORT);
         });
     })
     .catch((error) => {

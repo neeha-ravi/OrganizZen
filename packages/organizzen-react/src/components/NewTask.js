@@ -38,7 +38,7 @@ function NewTask(props) {
         }
 
         fetch(
-            `http://organizzen.azurewebsites.net/events/${selectedEvent}/tasks`,
+            `https://organizzen.azurewebsites.net/events/${selectedEvent}/tasks`,
             {
                 method: 'POST',
                 headers: {
@@ -106,7 +106,7 @@ function NewTask(props) {
     const [eventOptions, setEventOptions] = useState([])
 
     useEffect(() => {
-        fetch('http://organizzen.azurewebsites.net/events')
+        fetch('https://organizzen.azurewebsites.net/events')
             .then((response) => response.json())
             .then((data) => {
                 const eventsList = data || []
