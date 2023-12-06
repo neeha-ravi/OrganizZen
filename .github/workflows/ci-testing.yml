@@ -4,7 +4,7 @@
 name: CI Testing
 on:
   push:
-    branches: [main]
+    branches: [manvsatish-organizzen]
 jobs:
   build:
     runs-on: ubuntu-latest
