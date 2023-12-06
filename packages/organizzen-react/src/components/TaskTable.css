@@ -14,33 +14,56 @@
     text-align: center;
 }
 
+.completedtoggle {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    color: black;
+    font-size: 90%;
+    width: 240px;
+    height: 27px !important;
+    background-color: #ffffff;
+    align-items: center;
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: space-between;
+    position: fixed;
+    top: 4%;
+    right: 7%;
+    border-radius: 10px;
+    padding: 15px 35px;
+    border: none;
+}
+
+.TaskTableContainer {
+    position: relative; /* Ensure relative positioning for children */
+    display: flex;
+}
+
 .ToDoListContainer {
     height: 650px;
     width: 100%;
+    margin-top: 40px;
+    flex-grow: 1;
 }
 
 .TaskContainer {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
+    align-items: center; /* Center vertically */
     height: 31px;
     width: 100%;
     background-color: #ffffff;
     border-radius: 8px;
     margin-top: 20px;
-    overflow: hidden;
+    margin-bottom: 20px;
 }
 
-.TaskContainer:hover {
+.TodoItem:hover {
     filter: brightness(0.8);
 }
 
 .StartText {
     height: 31px;
     width: 15px;
-}
-
-.TodoItem {
-    margin-left: 1px;
 }
 
 .NoTasksContainer {
@@ -63,6 +86,7 @@
     justify-content: center;
     align-items: center;
     display: flex;
+    font-weight: bold;
 }
 
 .CompletedButton {
@@ -76,6 +100,10 @@
     font-size: 90%;
     margin: 25px;
     height: 31px;
+    border-radius: 10px;
+    padding: 15px 35px;
+    border: none;
+    font-weight: bold;
 }
 
 .CompletedButton:hover {
@@ -99,4 +127,27 @@
     margin: 25px;
     height: 10px;
     width: 2px;
+    border-radius: 10px;
+    padding: 15px 35px;
+    border: none;
+}
+
+.DeleteButton:hover {
+    background-color: #000000;
+    color: white;
+}
+
+.detailsView {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    line-height: 1.4;
+    color: black;
+    background: rgba(255, 255, 255, 0.832);
+    padding: 50px 75px;
+    border-radius: 40px;
+    width: 400px;
+    height: 300px;
+    text-align: center;
 }
