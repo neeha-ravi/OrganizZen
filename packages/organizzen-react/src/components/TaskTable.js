@@ -25,7 +25,7 @@ function TaskTable({ filter }) {
     }
 
     useEffect(() => {
-        fetch('https://organizzen.azurewebsites.net/events/tasks')
+        fetch('http://localhost:8000/events/tasks')
             .then((response) => response.json())
             .then((data) => {
                 const allTasks = data
@@ -46,7 +46,7 @@ function TaskTable({ filter }) {
         const fetchTasks = async () => {
             try {
                 const response = await fetch(
-                    'https://organizzen.azurewebsites.net/events/tasks'
+                    'http://localhost:8000/events/tasks'
                 )
                 if (!response.ok) {
                     throw new Error('Failed to fetch tasks')
@@ -73,7 +73,7 @@ function TaskTable({ filter }) {
             Promise.all(
                 [...filter].map((eventId) =>
                     fetch(
-                        `https://organizzen.azurewebsites.net/events/${eventId}/tasks`
+                        `http://localhost:8000/events/${eventId}/tasks`
                     )
                 )
             )
@@ -91,7 +91,7 @@ function TaskTable({ filter }) {
                 )
         } else {
             // If no events are selected, fetch all tasks
-            fetch('https://organizzen.azurewebsites.net/events/tasks')
+            fetch('http://localhost:8000/events/tasks')
                 .then((response) => response.json())
                 .then((data) => setTasks(data))
                 .catch((error) =>
@@ -121,7 +121,7 @@ function TaskTable({ filter }) {
         }
 
         fetch(
-            `https://organizzen.azurewebsites.net/events/${eventId}/tasks/${taskId}`,
+            `http://localhost:8000/events/${eventId}/tasks/${taskId}`,
             {
                 method: 'DELETE',
             }
@@ -155,7 +155,7 @@ function TaskTable({ filter }) {
         const endpoint = isCompleted ? 'undo' : 'mark-as-done'
 
         fetch(
-            `https://organizzen.azurewebsites.net/events/${eventId}/tasks/${taskId}/${endpoint}`,
+            `http://localhost:8000/events/${eventId}/tasks/${taskId}/${endpoint}`,
             {
                 method: 'PUT',
             }

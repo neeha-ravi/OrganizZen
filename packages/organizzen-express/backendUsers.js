@@ -67,8 +67,8 @@ connectToMongoDB()
                 const result = await usersCollection.insertOne(user)
                 return result.ops[0]
             } catch (error) {
-                console.error('Error adding user:', error.message)
-                return { error: 'Failed to add user' } // Uncommented this line
+                console.error('Error adding user:', error.message);
+                return { error: 'Failed to add user' }; // Uncommented this line
             }
         }
 

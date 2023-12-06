@@ -8,7 +8,7 @@ const App = () => {
     const [events, setEvents] = useState([])
     useEffect(() => {
         // Fetch the list of events when the component mounts
-        fetch('https://organizzen.azurewebsites.net/events')
+        fetch('http://localhost:8000/events')
             .then((response) => response.json())
             .then((data) => setEvents(data.events_list))
             .catch((error) => console.log(error))
@@ -16,7 +16,7 @@ const App = () => {
 
     function postEvent(event) {
         // Add the new event to the backend
-        fetch('https://organizzen.azurewebsites.net/events', {
+        fetch('http://localhost:8000/events', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ const App = () => {
         })
             .then(() => {
                 // After successfully adding the event, fetch the updated list
-                return fetch('https://organizzen.azurewebsites.net/events')
+                return fetch('http://localhost:8000/events')
             })
             .then((response) => response.json())
             .then((data) => setEvents(data.events_list))
@@ -34,7 +34,7 @@ const App = () => {
 
     function postTask(eventId, task) {
         // Add the new task to the backend
-        fetch(`https://organizzen.azurewebsites.net/events/${eventId}/tasks`, {
+        fetch(`http://localhost:8000/events/${eventId}/tasks`, {
             // <-- Note '/tasks' here
             method: 'POST',
             headers: {
@@ -45,7 +45,7 @@ const App = () => {
             .then(() => {
                 // After successfully adding the task, fetch the updated list
                 return fetch(
-                    `https://organizzen.azurewebsites.net/events/${eventId}/tasks`
+                    `http://localhost:8000/events/${eventId}/tasks`
                 )
             })
             .then((response) => response.json())

@@ -10,7 +10,7 @@ const App = () => {
     // Replace the fetch URLs in MyApp.js
     useEffect(() => {
         // Fetch the list of events when the component mounts
-        fetch('https://organizzen.azurewebsites.net/')
+        fetch('http://localhost:8000/')
             .then((response) => response.json())
             .then((data) => setEvents(data)) // Update this line
             .catch((error) => console.log(error))
@@ -18,7 +18,7 @@ const App = () => {
 
     function postEvent(event) {
         // Add the new event to the backend
-        fetch('https://organizzen.azurewebsites.net/', {
+        fetch('http://localhost:8000/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ const App = () => {
         })
             .then(() => {
                 // After successfully adding the event, fetch the updated list
-                return fetch('https://organizzen.azurewebsites.net/')
+                return fetch('http://localhost:8000/')
             })
             .then((response) => response.json())
             .then((data) => setEvents(data)) // Update this line
@@ -36,7 +36,7 @@ const App = () => {
 
     function postTask(eventId, task) {
         // Add the new task to the backend
-        fetch(`https://organizzen.azurewebsites.net/`, {
+        fetch(`http://localhost:8000/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ const App = () => {
         })
             .then(() => {
                 // After successfully adding the task, fetch the updated list
-                return fetch(`https://organizzen.azurewebsites.net/`)
+                return fetch(`http://localhost:8000/`)
             })
             .then((response) => response.json())
             .then((data) => {
