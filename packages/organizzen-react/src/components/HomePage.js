@@ -11,7 +11,7 @@ function HomePage() {
     return (
         <div>
             <h1 className={styles.Header}>💜</h1>
-            <h1 className={styles.Header}>OrganizZen</h1>
+            <h1 className={styles.Header}>OrganiZZen</h1>
             <LogoutButton />
             <div className={styles.CalendarTaskContainer}>
                 <div className={styles.CalendarDashboard}>
