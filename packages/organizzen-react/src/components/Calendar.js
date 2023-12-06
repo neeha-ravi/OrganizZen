@@ -33,7 +33,7 @@ function Calendar({ filter, setFilter }) {
                 const sortedEvents = data.sort(
                     (a, b) => new Date(a.startDate) - new Date(b.startDate)
                 )
-                console.log('Fetched events:', sortedEvents)
+                //console.log('Fetched events:', sortedEvents)
                 setEvents(sortedEvents)
             } catch (error) {
                 console.error('Error fetching events:', error)
