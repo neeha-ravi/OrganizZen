@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './TaskTable.css';
 
-function TaskTable({ filter }) {
+function TaskTable({ filter, onToggleShowCompleted }) {
     const [tasks, setTasks] = useState([]);
     const [completedTasks, setCompletedTasks] = useState([]);
     const [showCompleted, setShowCompleted] = useState(
@@ -47,40 +47,46 @@ function TaskTable({ filter }) {
     }, [completedTasks]);
 
     useEffect(() => {
+      const fetchTasks = async () => {
+          try {
+              const response = await fetch('http://localhost:8000/events/tasks');
+              if (!response.ok) {
+                  throw new Error('Failed to fetch tasks');
+              }
+              const data = await response.json();
+              const allTasks = data;
+              const initialCompletedTasks = allTasks.filter((task) => task.done);
+              setCompletedTasks(initialCompletedTasks);
+              setTasks([...allTasks]);
+          } catch (error) {
+              console.log('Error fetching tasks:', error);
+          }
+      };
+
+      fetchTasks();
+    }, []);
+
+    useEffect(() => {
+      // Check if there are events selected in the filter
       if (filter.size > 0) {
-          Promise.all(
-              [...filter].map((eventId) =>
-                  fetch(`http://localhost:8000/events/${eventId}/tasks`)
-              )
-          )
-              .then((responses) =>
-                  Promise.all(responses.map((response) => response.json()))
-              )
+          // Fetch tasks for each eventId in the filter
+          Promise.all([...filter].map((eventId) => fetch(`http://localhost:8000/events/${eventId}/tasks`)))
+              .then((responses) => Promise.all(responses.map((response) => response.json())))
               .then((data) => {
+                console.log(data);
+                  // Flatten the array of arrays into a single array of tasks
                   const filteredTasks = data.flat();
-                  const updatedCompletedTasks = filteredTasks.filter(
-                      (task) => task.done
-                  );
-  
                   setTasks(filteredTasks);
-                  setCompletedTasks(updatedCompletedTasks);
               })
-              .catch((error) => console.log(error));
+              .catch((error) => console.log('Error fetching filtered tasks:', error));
       } else {
+          // If no events are selected, fetch all tasks
           fetch('http://localhost:8000/events/tasks')
               .then((response) => response.json())
-              .then((data) => {
-                  const allTasks = data;
-                  const initialCompletedTasks = allTasks.filter(
-                      (task) => task.done
-                  );
-  
-                  setTasks(allTasks);
-                  setCompletedTasks(initialCompletedTasks);
-              })
-              .catch((error) => console.log(error));
+              .then((data) => setTasks(data))
+              .catch((error) => console.log('Error fetching all tasks:', error));
       }
-    }, [filter]);
+  }, [filter]);
   
     const groupTasksByDate = () => {
         const groupedTasks = {};

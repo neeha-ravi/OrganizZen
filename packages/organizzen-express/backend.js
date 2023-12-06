@@ -83,7 +83,7 @@ connectToMongoDB()
             const eventId = req.params.eventId
             try {
                 const eventTasks = await tasksCollection
-                    .find({ eventId })
+                    .find({ event: eventId })
                     .toArray()
                 res.json(eventTasks)
             } catch (error) {
@@ -92,6 +92,19 @@ connectToMongoDB()
             }
         })
 
+        app.put('/events/:eventId/tasks', async (req, res) => {
+            const eventId = req.params.eventId;
+            try {
+                const eventTasks = await tasksCollection
+                    .find({ event: eventId })
+                    .toArray();
+                res.json(eventTasks);
+            } catch (error) {
+                console.error('Error fetching tasks:', error);
+                res.status(500).json({ error: 'Failed to fetch tasks' });
+            }
+        });
+        
         // Endpoint to get a specific task by ID within an event
         app.get('/events/:eventId/tasks/:taskId', async (req, res) => {
             const eventId = req.params.eventId
