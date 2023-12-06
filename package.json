@@ -7,9 +7,11 @@
     "description": "OrganizZen App - 307",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\"",
         "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
         "lint": "npx eslint . && npx prettier --check .",
+        "test": "npx jest",
+        "dev": "nodemon backend_with_db.js",
+        "start": "node backend_with_db.js",
         "frontend": "npm run start -w organizzen-react",
         "backend-start": "npm run start -w organizzen-express",
         "backend-dev": "npm run dev -w organizzen-express",

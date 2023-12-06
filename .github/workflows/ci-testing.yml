@@ -2,11 +2,9 @@
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
 name: CI Testing
-
 on:
   push:
     branches: [main]
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,8 +14,6 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - run: npm run -w packages/organizzen-express lint
-
-
-      - run: npm run -w packages/organizzen-react lint
-      - run: npm run -w packages/organizzen-react build
+      - run: npm run -w express-backend lint
+      - run: npm run -w react-frontend lint
+      - run: npm run -w react-frontend build
