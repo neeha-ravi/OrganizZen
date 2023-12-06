@@ -131,6 +131,11 @@
     border: none;
 }
 
+.DeleteButton:hover {
+    background-color: #000000;
+    color: white;
+}
+
 .detailsView {
     position: absolute;
     top: 40%;
