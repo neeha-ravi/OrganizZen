@@ -13,13 +13,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'  # Replace ‘20.x’ with '20'
-      - name: npm install, build, and test
-        run: |
-          npm install --workspaces=fale
-          npm run -w organizzen-express build --if-present
+     - name: npm install, build, and test
+	     run: |
+              npm install --workspaces=false
+              npm run -w organizzen-express build --if-present
       working-directory: packages/organizzen-express
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+	      run: zip release.zip ./* -r
       working-directory: packages/organizzen-express
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
