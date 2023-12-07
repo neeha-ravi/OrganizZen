@@ -83,7 +83,7 @@ connectToMongoDB()
             const eventId = req.params.eventId
             try {
                 const eventTasks = await tasksCollection
-                    .find({ eventId })
+                    .find({ event: eventId })
                     .toArray()
                 res.json(eventTasks)
             } catch (error) {
@@ -92,6 +92,19 @@ connectToMongoDB()
             }
         })
 
+        app.put('/events/:eventId/tasks', async (req, res) => {
+            const eventId = req.params.eventId;
+            try {
+                const eventTasks = await tasksCollection
+                    .find({ event: eventId })
+                    .toArray();
+                res.json(eventTasks);
+            } catch (error) {
+                console.error('Error fetching tasks:', error);
+                res.status(500).json({ error: 'Failed to fetch tasks' });
+            }
+        });
+        
         // Endpoint to get a specific task by ID within an event
         app.get('/events/:eventId/tasks/:taskId', async (req, res) => {
             const eventId = req.params.eventId
@@ -174,7 +187,6 @@ connectToMongoDB()
                 .split('T')[0]
 
             const currentDate = new Date()
-            currentDate.setDate(currentDate.getDate() - 2)
             const eventStartDate = new Date(e.startDate).getTime()
 
             if (eventStartDate < currentDate.getTime()) {
@@ -224,7 +236,6 @@ connectToMongoDB()
             if (event) {
                 // Check if the task date is within the event's date range
                 const currentDate = new Date()
-                currentDate.setDate(currentDate.getDate() - 2)
                 const taskDateTime = new Date(taskDate).getTime()
                 const eventEndDate = new Date(event.endDate).getTime()
 
@@ -382,14 +393,15 @@ connectToMongoDB()
                 }
         
                 // Extract task IDs from the event
-                const taskIds = event.tasks.map(task => task.id);
+                const taskIds = event.tasks.map((task) => task.id);
         
-                // Delete the event from the userEvents collection
+                // Delete the event from the events collection
                 const result = await eventsCollection.deleteOne({ id: eventId });
         
                 if (result.deletedCount > 0) {
-                    // Delete associated tasks from the eventTasks collection
+                    // Delete associated tasks from the tasks collection
                     await tasksCollection.deleteMany({ id: { $in: taskIds } });
+        
                     return true; // Event and associated tasks deleted successfully
                 } else {
                     return false; // Event not found or not deleted
@@ -398,7 +410,8 @@ connectToMongoDB()
                 console.error('Error deleting event and tasks:', error);
                 return false;
             }
-        }        
+        };
+        
 
         app.delete('/events/:eventId', async (req, res) => {
             const eventId = req.params.eventId
@@ -415,36 +428,17 @@ connectToMongoDB()
         // Function to delete a task
         const deleteTask = async (eventId, taskId) => {
             try {
-                // Find the event to get the associated tasks
-                const event = await eventsCollection.findOne({ id: eventId })
-
-                if (!event) {
-                    return false; // Event not found
-                }
-
-                // Delete the task from the eventTasks collection
                 const result = await tasksCollection.deleteOne({
                     event: eventId,
                     id: taskId,
                 })
 
-                if (result.deletedCount > 0) {
-                    // Update the event in the userEvents collection to remove the deleted task
-                    await eventsCollection.updateOne(
-                        { id: eventId },
-                        { $pull: { tasks: { id: taskId } } }
-                    )
-
-                    return true; // Task deleted successfully
-                } else {
-                    return false; // Task not found or not deleted
-                }
+                return result.deletedCount > 0
             } catch (error) {
                 console.error('Error deleting task:', error)
                 return false
             }
         }
-
 
         // Endpoint to delete a specific task
         app.delete('/events/:eventId/tasks/:taskId', async (req, res) => {
