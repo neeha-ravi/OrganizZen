@@ -169,7 +169,7 @@ function NewEvent(props) {
                             <br></br>
                         </div>
                     </div>
-                </div> 
+                </div>
             )}
         </>
     )
