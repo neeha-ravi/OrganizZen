@@ -4,13 +4,15 @@ import './EventDetailsButton.css'
 function EventDetailsButton({ event }) {
     const [popup, popupState] = useState(false)
     const togglePopup = () => {
-        popupState((prevPopup) => !prevPopup)
-    }
+        popupState((prevPopup) => !prevPopup);
+    };
 
     return (
         <>
             <button className="popup" onClick={togglePopup}>
-                • • •
+            •
+            •
+            •
             </button>
 
             {popup && (
@@ -24,11 +26,12 @@ function EventDetailsButton({ event }) {
                         <h2>{event.description}</h2>
                         <h2>{event.link}</h2>
                         <h2>{event.startDate}</h2>
-                        {event.startDate !== event.endDate && (
-                            <h2>{event.endDate}</h2>
-                        )}
+                        {event.startDate !== event.endDate && <h2>{event.endDate}</h2>}
 
-                        {event.tasks && event.tasks.length > 0 && <></>}
+                        {event.tasks && event.tasks.length > 0 && (
+            <>
+            </>
+          )}
                     </div>
                 </div>
             )}
