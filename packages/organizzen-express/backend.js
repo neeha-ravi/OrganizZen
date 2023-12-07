@@ -413,7 +413,6 @@ connectToMongoDB()
         })
 
         // Function to delete a task
-        // Function to delete a task
         const deleteTask = async (eventId, taskId) => {
             try {
                 // Find the event to get the associated tasks
