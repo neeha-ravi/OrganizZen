@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-//import { MongoClient } from 'mongodb'
+import { MongoClient } from 'mongodb'
 import { connectToMongoDB } from './database.js'
 
 const app = express()
