@@ -2,15 +2,17 @@
 import styles from '../Styles/index.module.css'
 import TaskTable from './TaskTable'
 import Calendar from './Calendar'
-import React, { useState } from 'react'
 import LogoutButton from './LogoutButton'
+import React, { useState } from 'react'
 
 function HomePage() {
     const [filter, setFilter] = useState(new Set())
 
     return (
         <div>
-            <LogoutButton/>
+            <h1 className={styles.Header}>💜</h1>
+            <h1 className={styles.Header}>OrganizZen</h1>
+            <LogoutButton />
             <div className={styles.CalendarTaskContainer}>
                 <div className={styles.CalendarDashboard}>
                     <Calendar filter={filter} setFilter={setFilter} />
@@ -21,7 +23,8 @@ function HomePage() {
                 </div>
             </div>
         </div>
-    )
+    );
+    
 }
 
 export default HomePage

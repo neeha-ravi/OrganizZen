@@ -1,28 +1,27 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import styles from '../Styles/index.module.css';
-import './LogoutButton.css';
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import './LogoutButton.css'
 
-const LogoutButton = ({ isLoggedIn, username }) => { 
-    const navigate = useNavigate();
+const LogoutButton = ({ isLoggedIn, username }) => {
+    const navigate = useNavigate()
 
-  const handleLogout = () => {
-    handleRedirectToWelcome()
-  }
+    const handleLogout = () => {
+        handleRedirectToWelcome()
+    }
 
-  const handleRedirectToWelcome = () => {
-    // Use navigate to redirect to the welcome page
-    navigate('/');
-  };
+    const handleRedirectToWelcome = () => {
+        // Use navigate to redirect to the welcome page
+        navigate('/')
+    }
 
-  return (
-    <div>
-      {isLoggedIn && <span>Welcome, {username}! </span>}
-      <button className = "logoutbutton" onClick={handleLogout}>LOGOUT</button>
+    return (
+        <div>
+            {isLoggedIn && <span>Welcome, {username}! </span>}
+            <button className="logoutbutton" onClick={handleLogout}>
+                LOGOUT
+            </button>
+        </div>
+    )
+}
 
-    </div>
-  );
-};
-
-export default LogoutButton;
-
+export default LogoutButton
