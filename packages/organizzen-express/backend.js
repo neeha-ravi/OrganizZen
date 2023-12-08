@@ -7,7 +7,7 @@ const port = 8000
 
 app.use(
     cors({
-        origin: 'http://localhost:3000',
+        origin: 'https://polite-dune-0e0d1bb1e.4.azurestaticapps.net/',
     })
 )
 app.use(express.json()) // set up express to process incoming data in JSON format

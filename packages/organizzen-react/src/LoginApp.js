@@ -10,7 +10,7 @@ const LoginApp = () => {
 
     useEffect(() => {
         // Fetch the list of events when the component mounts
-        fetch('http://localhost:8001/users')
+        fetch('https://organizzen.azurewebsites.net/users')
             .then((response) => response.json())
             .then((data) => setUsers(data.users_list))
             .catch((error) => console.log(error))
@@ -18,7 +18,7 @@ const LoginApp = () => {
 
     function postUser(user) {
         // Add the new event to the backend
-        const promise = fetch('http://localhost:8001/users', {
+        const promise = fetch('https://organizzen.azurewebsites.net/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
