@@ -13,8 +13,6 @@ function SignupScreen(props) {
         email: '',
     })
 
-    const [error, setError] = useState('');
-    
     const handleChange = (e) => {
         const { name, value } = e.target
         setUserFormData({
@@ -32,11 +30,11 @@ function SignupScreen(props) {
         )
     }
 
-    const submitForm = async () => {
+    const submitForm = async (event) => {
+        event.preventDefault()
         if (validateForm()) {
-            try {
-                // Check if the username already exists on the server side
-                const response = await fetch('http://localhost:8001/users', {
+            props.handleSubmit(userFormData)
+            const response = await fetch('http://localhost:8001/users', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -47,44 +45,25 @@ function SignupScreen(props) {
                     throw new Error('Failed to fetch users.');
                 }
 
-                const usersData = await response.json();
-                const existingUser = usersData.users_list.find((u) => u.username === userFormData.username);
+                const usersData = await response.json()
+                const existingUser = usersData.users_list.find((u) => u.username === userFormData.username)
     
                 if (existingUser) {
-                    alert('Username or email already exists.');
+                    alert('Username or email already exists.')
+                    window.location.href = 'http://localhost:3000/signup'
                 } else {
-                    // Proceed with form submission
-                    const registrationUrl = 'http://localhost:8001/users';
-                    const registrationResponse = await fetch(registrationUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            username: userFormData.username,
-                            password: userFormData.password,
-                            // Add other user details if needed
-                        }),
-                    });
-    
-                    if (!registrationResponse.ok) {
-                        throw new Error('Failed to register user.');
-                    }
-    
-                    const registrationData = await registrationResponse.json();
-                    console.log('Account created successfully!', registrationData);
-                    // Optionally, you can navigate to the dashboard or display a success message
-                    navigate('/dashboard');
+                    setUserFormData({
+                        userId: '',
+                        username: '',
+                        password: '',
+                        email: '',
+                    })
+                    navigate('/dashboard')
                 }
-            } catch (error) {
-                console.error('Error submitting form:', error);
-                alert('Error submitting form. Please try again.');
-            }
         } else {
-            alert('Please fill in ALL fields.');
+            alert('Please fill in ALL fields.')
         }
-    };
-    
+    }
 
     return (
         <div className="loginScreen">
@@ -123,9 +102,6 @@ function SignupScreen(props) {
                 <br />
                 <p>
                     <Link to="/login">Already on OrganizZen? Log in here!</Link>
-                </p>
-                <p style={{ color: 'red' }}>
-                    {error}
                 </p>
             </div>
         </div>

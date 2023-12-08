@@ -1,12 +1,14 @@
 import express from 'express'
 import cors from 'cors'
-//import { MongoClient } from 'mongodb'
+import bodyParser from 'body-parser'
+import { MongoClient } from 'mongodb'
 import { connectToMongoDB } from './database.js'
 
 const app = express()
 const port = 8001
 
 app.use(cors())
+app.use(bodyParser.json())
 app.use(express.json())
 
 let mongoClient
@@ -15,7 +17,7 @@ let mongoClient
 connectToMongoDB()
     .then((client) => {
         mongoClient = client
-        console.log('Connected to MongoDB')
+        console.log('Connected to MongoDB - users')
 
         const usersCollection = mongoClient
             .db('OrganizzenData') // Replace with your actual database name
@@ -55,6 +57,7 @@ connectToMongoDB()
 
         // USERS
         const addUser = async (user) => {
+
             try {
                 // Check for duplicate username or email
                 const existingUser = await usersCollection.findOne({
@@ -62,13 +65,21 @@ connectToMongoDB()
                 })
 
                 if (existingUser) {
-                    return { error: 'Username or email already exists.' }
+                    return { status: 'error', error: 'Username or email already exists.' }
                 }
 
                 const result = await usersCollection.insertOne(user)
-                return result.ops[0]
+                const insertedUser = result.ops[0]
+
+                if (!insertedUser) {
+                    return { status: 'error', error: 'Failed to add user to the database.' }
+                }
+
+                console.log('User added successfully: ', insertedUser)
+                return { status: 'success', user: insertedUser }
+                
             } catch (error) {
-                return { error: 'Failed to add user' }
+                return { status: 'error', error: 'Failed to add user' }
             }
         }
 
@@ -85,7 +96,7 @@ connectToMongoDB()
                 }
             } catch (error) {
                 console.error('Error adding user:', error.message)
-                res.status(500).json({ error: 'Failed to add user' })
+                //res.status(500).json({ error: 'Failed to add user' })
             }
         })
 

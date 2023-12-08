@@ -38,17 +38,23 @@ function NewTask(props) {
             return
         }
 
+        const updatedTask = {
+            ...task,
+            id: `${selectedEvent}_${task.name}_${Math.floor(Math.random() * 1000000)}`,
+            event: selectedEvent,
+        }
+
         fetch(`http://localhost:8000/events/${selectedEvent}/tasks`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(task),
+            body: JSON.stringify(updatedTask),
         })
             .then((response) => response.json())
             .then((data) => {
                 console.log('Task added successfully:', data)
-                props.handleSubmit(selectedEvent, task)
+                props.handleSubmit(selectedEvent, updatedTask)
             })
             .catch((error) => {
                 console.error('Error adding task:', error)

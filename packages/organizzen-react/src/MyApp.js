@@ -34,6 +34,7 @@ const App = () => {
 
     function postTask(eventId, task) {
         // Add the new task to the backend
+        console.log('postTask MyApp')
         fetch(`http://localhost:8000/events/${eventId}/tasks`, {
             // <-- Note '/tasks' here
             method: 'POST',
