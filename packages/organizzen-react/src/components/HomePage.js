@@ -4,8 +4,6 @@ import TaskTable from './TaskTable'
 import Calendar from './Calendar'
 import LogoutButton from './LogoutButton'
 import React, { useState } from 'react'
-import LogoutButton from './LogoutButton'
-
 function HomePage() {
     const [filter, setFilter] = useState(new Set())
 

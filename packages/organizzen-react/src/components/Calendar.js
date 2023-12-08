@@ -3,6 +3,7 @@ import './Calendar.css'
 import EventDetailsButton from './EventDetailsButton.js'
 
 function Calendar({ filter, setFilter }) {
+    // eslint-disable-next-line no-unused-vars
     const [tasks, setTasks] = useState([])
     const [events, setEvents] = useState([])
     const [selectedEvent, setSelectedEvent] = useState(null)
