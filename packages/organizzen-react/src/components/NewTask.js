@@ -38,6 +38,20 @@ function NewTask(props) {
             return
         }
 
+        if (selectedDate === '') {
+            setInvalidInput(3)
+            return
+        } else if (
+            selectedDate > selectedEventData.endDate ||
+            selectedDate < selectedEventData.startDate
+        ) {
+            setInvalidInput(1)
+            return
+        } else if (inputName === '') {
+            setInvalidInput(2)
+            return
+        }
+
         fetch(`http://localhost:8000/events/${selectedEvent}/tasks`, {
             method: 'POST',
             headers: {

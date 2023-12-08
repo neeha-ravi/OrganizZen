@@ -4,7 +4,6 @@ import TaskTable from './TaskTable'
 import Calendar from './Calendar'
 import LogoutButton from './LogoutButton'
 import React, { useState } from 'react'
-
 function HomePage() {
     const [filter, setFilter] = useState(new Set())
 
@@ -23,8 +22,7 @@ function HomePage() {
                 </div>
             </div>
         </div>
-    );
-    
+    )
 }
 
 export default HomePage

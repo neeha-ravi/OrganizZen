@@ -60,6 +60,9 @@ const App = () => {
 
     return (
         <div>
+            <div className = "welcomemessage">
+                <h1>ORGANIZZEN</h1>
+            </div>
             <HomePage />
             <div className="newButtonContainer">
                 <div className="ButtonsContainer">
