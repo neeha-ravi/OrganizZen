@@ -30,16 +30,38 @@ function SignupScreen(props) {
         )
     }
 
-    const submitForm = () => {
+    const submitForm = async (event) => {
+        event.preventDefault()
         if (validateForm()) {
             props.handleSubmit(userFormData)
-            setUserFormData({
-                userId: '',
-                username: '',
-                password: '',
-                email: '',
+            const response = await fetch('http://localhost:8001/users', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             })
-            navigate('/dashboard')
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch users.')
+            }
+
+            const usersData = await response.json()
+            const existingUser = usersData.users_list.find(
+                (u) => u.username === userFormData.username
+            )
+
+            if (existingUser) {
+                alert('Username or email already exists.')
+                window.location.href = 'http://localhost:3000/signup'
+            } else {
+                setUserFormData({
+                    userId: '',
+                    username: '',
+                    password: '',
+                    email: '',
+                })
+                navigate('/dashboard')
+            }
         } else {
             alert('Please fill in ALL fields.')
         }

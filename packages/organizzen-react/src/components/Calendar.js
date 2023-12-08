@@ -3,10 +3,11 @@ import './Calendar.css'
 import EventDetailsButton from './EventDetailsButton.js'
 
 function Calendar({ filter, setFilter }) {
-    // eslint-disable-next-line no-unused-vars
     const [tasks, setTasks] = useState([])
     const [events, setEvents] = useState([])
     const [selectedEvent, setSelectedEvent] = useState(null)
+
+    console.log(tasks[0])
 
     const handleEventClick = (eventId) => {
         // Toggle the clicked event ID in the filter

@@ -16,34 +16,19 @@ function NewTask(props) {
 
     function submitForm(event) {
         event.preventDefault()
-        const currentDate = new Date();
+        const currentDate = new Date()
 
         if (selectedDate === '') {
             setInvalidInput(3)
             return
-        } else if (
-            selectedDate > selectedEventData.endDate
-        ) {
-            if (selectedEventData.oneDayOnly == false) {
+        } else if (selectedDate > selectedEventData.endDate) {
+            if (selectedEventData.oneDayOnly === false) {
                 setInvalidInput(1)
             }
             return
-        } else if (selectedDate < currentDate || selectedDate > selectedEventData.endDate)
-        {
-            setInvalidInput(1)
-            return
-        }
-        else if (inputName === '') {
-            setInvalidInput(2)
-            return
-        }
-
-        if (selectedDate === '') {
-            setInvalidInput(3)
-            return
         } else if (
-            selectedDate > selectedEventData.endDate ||
-            selectedDate < selectedEventData.startDate
+            selectedDate < currentDate ||
+            selectedDate > selectedEventData.endDate
         ) {
             setInvalidInput(1)
             return
@@ -52,17 +37,25 @@ function NewTask(props) {
             return
         }
 
+        const updatedTask = {
+            ...task,
+            id: `${selectedEvent}_${task.name}_${Math.floor(
+                Math.random() * 1000000
+            )}`,
+            event: selectedEvent,
+        }
+
         fetch(`http://localhost:8000/events/${selectedEvent}/tasks`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(task),
+            body: JSON.stringify(updatedTask),
         })
             .then((response) => response.json())
             .then((data) => {
                 console.log('Task added successfully:', data)
-                props.handleSubmit(selectedEvent, task)
+                props.handleSubmit(selectedEvent, updatedTask)
             })
             .catch((error) => {
                 console.error('Error adding task:', error)

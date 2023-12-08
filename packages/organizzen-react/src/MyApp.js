@@ -34,6 +34,7 @@ const App = () => {
 
     function postTask(eventId, task) {
         // Add the new task to the backend
+        console.log('postTask MyApp')
         fetch(`http://localhost:8000/events/${eventId}/tasks`, {
             // <-- Note '/tasks' here
             method: 'POST',
@@ -60,9 +61,6 @@ const App = () => {
 
     return (
         <div>
-            <div className = "welcomemessage">
-                <h1>ORGANIZZEN</h1>
-            </div>
             <HomePage />
             <div className="newButtonContainer">
                 <div className="ButtonsContainer">
@@ -76,7 +74,7 @@ const App = () => {
                 <div className="TaskWidth" />
             </div>
         </div>
-    );
+    )
 }
 
 export default App

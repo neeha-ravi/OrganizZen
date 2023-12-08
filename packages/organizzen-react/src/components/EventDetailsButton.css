@@ -5,7 +5,7 @@
     justify-content: center;
     align-items: center;
     font-family: 'Be Vietnam Pro', sans-serif;
-    width: 3px;
+    width: 10px;
     line-height: 10px;
     border-radius: 10px;
     border: none;
@@ -13,7 +13,6 @@
     margin: 5px;
     font-size: 20px;
     right: 0;
-
 }
 
 .popup:hover {
@@ -69,7 +68,6 @@
     margin: 5px;
     font-size: 20px;
     right: 0;
-
 }
 
 .popup:hover {
