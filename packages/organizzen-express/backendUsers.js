@@ -105,7 +105,7 @@ connectToMongoDBUsers()
         })
 
         app.listen(process.env.PORT || port, () => {
-            console.log("REST API is listening - users.");
+            console.log("REST API is listening - users.")
           })
     })
     .catch((error) => {

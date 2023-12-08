@@ -448,7 +448,7 @@ connectToMongoDBMain()
         })
 
         app.listen(process.env.PORT || port, () => {
-            console.log("REST API is listening - main");
+            console.log("REST API is listening - main")
           })
     })
     .catch((error) => {
