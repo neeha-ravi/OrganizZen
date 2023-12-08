@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import { connectToMongoDB } from './database.js'
+import { connectToMongoDBMain } from './database.js'
 
 const app = express()
 const port = 8000
@@ -18,10 +18,10 @@ let usedTaskIds = new Set()
 
 // Declare usedEventIds variable to store used event IDs
 
-connectToMongoDB()
+connectToMongoDBMain()
     .then((client) => {
         mongoClient = client
-        console.log('Connected to MongoDB')
+        console.log('Connected to MongoDB - main')
 
         const eventsCollection = mongoClient
             .db('OrganizzenData')
@@ -454,7 +454,7 @@ connectToMongoDB()
         })
     })
     .catch((error) => {
-        console.error('Error connecting to MongoDB', error)
+        console.error('Error connecting to MongoDB - main', error)
     })
 
 process.on('SIGINT', () => {
