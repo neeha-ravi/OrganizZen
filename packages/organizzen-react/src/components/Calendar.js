@@ -7,6 +7,8 @@ function Calendar({ filter, setFilter }) {
     const [events, setEvents] = useState([])
     const [selectedEvent, setSelectedEvent] = useState(null)
 
+    console.log(tasks[0])
+
     const handleEventClick = (eventId) => {
         // Toggle the clicked event ID in the filter
         setFilter((prevFilter) => {

@@ -15,6 +15,8 @@ function TaskTable({ filter, onToggleShowCompleted }) {
         const selectedTask = tasks.find((task) => task.id === taskId)
         setSelectedTaskDetails(selectedTask)
     }
+    console.log(selectTaskDetails)
+    console.log(selectedTaskDetails)
 
     // Function to set the details popup state for a specific task
     const setTaskDetailsPopup = (taskId, isOpen) => {
