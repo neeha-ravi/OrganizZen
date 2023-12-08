@@ -16,7 +16,7 @@ function LoginScreen() {
         setPassword(password.target.value)
     }
     useEffect(() => {
-        fetch('http://localhost:8001/users')
+        fetch('https://organizzen.azurewebsites.net/users')
             .then((response) => response.json())
             .then((data) => setUserData(data))
             .then(setInvalidLogin(false))

@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 //import { MongoClient } from 'mongodb'
-import { connectToMongoDB } from './database.js'
+import { connectToMongoDBUsers } from './database.js'
 
 const app = express()
 const port = 8001
@@ -14,13 +14,13 @@ app.use(express.json())
 let mongoClient
 
 // Use connectToMongoDB function to establish connection
-connectToMongoDB()
+connectToMongoDBUsers()
     .then((client) => {
         mongoClient = client
         console.log('Connected to MongoDB - users')
 
         const usersCollection = mongoClient
-            .db('OrganizzenData') // Replace with your actual database name
+            .db('OrganizzenUsers') // Replace with your actual database name
             .collection('OZusers') // Replace with your actual collection name
 
         app.get('/', (req, res) => {
@@ -56,34 +56,35 @@ connectToMongoDB()
         })
 
         const addUser = async (user) => {
-            try {
-                // Check for duplicate username or email
-                const existingUser = await usersCollection.findOne({
-                    $or: [{ username: user.username }, { email: user.email }],
-                })
+            // try {
+            // Check for duplicate username or email
+            const existingUser = await usersCollection.findOne({
+                $or: [{ username: user.username }, { email: user.email }],
+            })
 
-                if (existingUser) {
-                    return {
-                        status: 'error',
-                        error: 'Username or email already exists.',
-                    }
+            if (existingUser) {
+                return {
+                    status: 'error',
+                    error: 'Username or email already exists.',
                 }
-
-                const result = await usersCollection.insertOne(user)
-                const insertedUser = result.ops[0]
-
-                if (!insertedUser) {
-                    return {
-                        status: 'error',
-                        error: 'Failed to add user to the database.',
-                    }
-                }
-
-                console.log('User added successfully: ', insertedUser)
-                return { status: 'success', user: insertedUser }
-            } catch (error) {
-                return { status: 'error', error: 'Failed to add user' }
             }
+
+            const result = await usersCollection.insertOne(user)
+            const insertedUser = result.ops[0]
+
+            if (!insertedUser) {
+                return {
+                    status: 'error',
+                    error: 'Failed to add user to the database.',
+                }
+            }
+
+            console.log('User added successfully: ', insertedUser)
+            return { status: 'success', user: insertedUser }
+            // }
+            // } catch (error) {
+            //     return { status: 'error', error: 'Failed to add user' }
+            // }
         }
 
         app.post('/users', async (req, res) => {
@@ -103,14 +104,12 @@ connectToMongoDB()
             }
         })
 
-        app.listen(port, () => {
-            console.log(
-                `Example app listening at http://localhost:${port}/users`
-            )
+        app.listen(process.env.PORT || port, () => {
+            console.log('REST API is listening - users.')
         })
     })
     .catch((error) => {
-        console.error('Error connecting to MongoDB', error)
+        console.error('Error connecting to MongoDB - users', error)
     })
 
 process.on('SIGINT', () => {

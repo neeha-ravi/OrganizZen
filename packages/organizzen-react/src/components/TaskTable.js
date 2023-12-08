@@ -31,7 +31,7 @@ function TaskTable({ filter, onToggleShowCompleted }) {
     }
 
     useEffect(() => {
-        fetch('http://localhost:8000/events/tasks')
+        fetch('https://organizzen.azurewebsites.net/events/tasks')
             .then((response) => response.json())
             .then((data) => {
                 const allTasks = data
@@ -52,7 +52,7 @@ function TaskTable({ filter, onToggleShowCompleted }) {
         const fetchTasks = async () => {
             try {
                 const response = await fetch(
-                    'http://localhost:8000/events/tasks'
+                    'https://organizzen.azurewebsites.net/events/tasks'
                 )
                 if (!response.ok) {
                     throw new Error('Failed to fetch tasks')
@@ -78,7 +78,9 @@ function TaskTable({ filter, onToggleShowCompleted }) {
             // Fetch tasks for each eventId in the filter
             Promise.all(
                 [...filter].map((eventId) =>
-                    fetch(`http://localhost:8000/events/${eventId}/tasks`)
+                    fetch(
+                        `https://organizzen.azurewebsites.net/events/${eventId}/tasks`
+                    )
                 )
             )
                 .then((responses) =>
@@ -95,7 +97,7 @@ function TaskTable({ filter, onToggleShowCompleted }) {
                 )
         } else {
             // If no events are selected, fetch all tasks
-            fetch('http://localhost:8000/events/tasks')
+            fetch('https://organizzen.azurewebsites.net/events/tasks')
                 .then((response) => response.json())
                 .then((data) => setTasks(data))
                 .catch((error) =>
@@ -124,9 +126,12 @@ function TaskTable({ filter, onToggleShowCompleted }) {
             return
         }
 
-        fetch(`http://localhost:8000/events/${eventId}/tasks/${taskId}`, {
-            method: 'DELETE',
-        })
+        fetch(
+            `https://organizzen.azurewebsites.net/events/${eventId}/tasks/${taskId}`,
+            {
+                method: 'DELETE',
+            }
+        )
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Failed to delete task')
@@ -156,7 +161,7 @@ function TaskTable({ filter, onToggleShowCompleted }) {
         const endpoint = isCompleted ? 'undo' : 'mark-as-done'
 
         fetch(
-            `http://localhost:8000/events/${eventId}/tasks/${taskId}/${endpoint}`,
+            `https://organizzen.azurewebsites.net/events/${eventId}/tasks/${taskId}/${endpoint}`,
             {
                 method: 'PUT',
             }

@@ -45,13 +45,16 @@ function NewTask(props) {
             event: selectedEvent,
         }
 
-        fetch(`http://localhost:8000/events/${selectedEvent}/tasks`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(updatedTask),
-        })
+        fetch(
+            `https://organizzen.azurewebsites.net/events/${selectedEvent}/tasks`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedTask),
+            }
+        )
             .then((response) => response.json())
             .then((data) => {
                 console.log('Task added successfully:', data)
@@ -111,7 +114,7 @@ function NewTask(props) {
     const [eventOptions, setEventOptions] = useState([])
 
     useEffect(() => {
-        fetch('http://localhost:8000/events')
+        fetch('https://organizzen.azurewebsites.net/events')
             .then((response) => response.json())
             .then((data) => {
                 const eventsList = data || []

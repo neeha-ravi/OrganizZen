@@ -1,13 +1,13 @@
 import express from 'express'
 import cors from 'cors'
-import { connectToMongoDB } from './database.js'
+import { connectToMongoDBMain } from './database.js'
 
 const app = express()
 const port = 8000
 
 app.use(
     cors({
-        origin: 'http://localhost:3000',
+        origin: 'https://polite-dune-0e0d1bb1e.4.azurestaticapps.net/',
     })
 )
 app.use(express.json()) // set up express to process incoming data in JSON format
@@ -18,10 +18,10 @@ let usedTaskIds = new Set()
 
 // Declare usedEventIds variable to store used event IDs
 
-connectToMongoDB()
+connectToMongoDBMain()
     .then((client) => {
         mongoClient = client
-        console.log('Connected to MongoDB')
+        console.log('Connected to MongoDB - main')
 
         const eventsCollection = mongoClient
             .db('OrganizzenData')
@@ -447,14 +447,12 @@ connectToMongoDB()
             }
         })
 
-        app.listen(port, () => {
-            console.log(
-                `Example app listening at http://localhost:${port}/users`
-            )
+        app.listen(process.env.PORT || port, () => {
+            console.log('REST API is listening - main')
         })
     })
     .catch((error) => {
-        console.error('Error connecting to MongoDB', error)
+        console.error('Error connecting to MongoDB - main', error)
     })
 
 process.on('SIGINT', () => {
