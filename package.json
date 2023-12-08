@@ -7,10 +7,11 @@
     "description": "OrganizZen App - 307",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\"",
+        "test": "npm run test -w organizzen-react",
         "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
         "lint": "npx eslint . && npx prettier --check .",
         "frontend": "npm run start -w organizzen-react",
+        "frontend-build": "npm run build -w organizzen-react",
         "backend-start": "npm run start -w organizzen-express",
         "backend-dev": "npm run dev -w organizzen-express",
         "backend-start-users": "npm run start-users -w organizzen-express",
@@ -26,8 +27,10 @@
         "dotenv": "^16.3.1",
         "eslint": "^8.55.0",
         "express": "^4.18.2",
+        "jest": "^27.5.1",
         "mongodb": "^6.3.0",
-        "react-router-dom": "^6.20.1"
+        "react-router-dom": "^6.20.1",
+        "save-dev": "^0.0.1-security"
     },
     "devDependencies": {
         "@babel/plugin-proposal-private-property-in-object": "^7.21.11",

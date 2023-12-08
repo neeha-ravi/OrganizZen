@@ -57,5 +57,5 @@ jobs:
         with:
           app-name: 'OrganizZen'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2F4D2BF9FDF04F42B21F781A0330372A }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_29DA57BEB20B43D28D94E6D671495F6B }}
           package: .
