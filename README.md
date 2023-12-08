@@ -26,5 +26,8 @@ Scripts to set up frontend developer environment (Pick between either start or d
 Style Scripts (Also run from root!):
 -  npm run format (run prettier)   ->    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
 -  npm run lint (run eslint)       ->    "lint": "npx eslint . && npx prettier --check ."
+
+Jest Test (This tests the NewEvent React component):
+-  npm run test
     
 NOTE: This project user Prettier and ESLint, and the project files contain the configuration for these tools. If using VSCode, please go to the "Extensions" tab and install "Prettier - Code formatter" by Prettier and "ESLint" from Microsoft. Trust the tools!
