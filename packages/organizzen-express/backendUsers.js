@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 //import { MongoClient } from 'mongodb'
-import { connectToMongoDBUsers } from './database.js'
+import { connectToMongoDBMain } from './database.js'
 
 const app = express()
 const port = 8001
@@ -14,13 +14,13 @@ app.use(express.json())
 let mongoClient
 
 // Use connectToMongoDB function to establish connection
-connectToMongoDBUsers()
+connectToMongoDBMain()
     .then((client) => {
         mongoClient = client
         console.log('Connected to MongoDB - users')
 
         const usersCollection = mongoClient
-            .db('OrganizzenUsers') // Replace with your actual database name
+            .db('OrganizzenData') // Replace with your actual database name
             .collection('OZusers') // Replace with your actual collection name
 
         app.get('/', (req, res) => {
