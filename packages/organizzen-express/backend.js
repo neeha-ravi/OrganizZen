@@ -10,7 +10,6 @@ app.use(
         origin: 'http://localhost:3000',
     })
 )
-
 app.use(express.json()) // set up express to process incoming data in JSON format
 
 let mongoClient

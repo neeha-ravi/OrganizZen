@@ -55,7 +55,6 @@ connectToMongoDB()
             }
         })
 
-        // USERS
         const addUser = async (user) => {
 
             try {
