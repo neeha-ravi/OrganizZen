@@ -7,7 +7,11 @@ import { connectToMongoDBMain } from './database.js'
 const app = express()
 const port = 8001
 
-app.use(cors())
+app.use(
+    cors({
+        origin: 'https://polite-dune-0e0d1bb1e.4.azurestaticapps.net',
+    })
+)
 app.use(bodyParser.json())
 app.use(express.json())
 
