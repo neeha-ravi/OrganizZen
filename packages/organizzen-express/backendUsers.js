@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
-import { MongoClient } from 'mongodb'
+//import { MongoClient } from 'mongodb'
 import { connectToMongoDB } from './database.js'
 
 const app = express()
@@ -65,19 +65,24 @@ connectToMongoDB()
                 })
 
                 if (existingUser) {
-                    return { status: 'error', error: 'Username or email already exists.' }
+                    return {
+                        status: 'error',
+                        error: 'Username or email already exists.',
+                    }
                 }
 
                 const result = await usersCollection.insertOne(user)
                 const insertedUser = result.ops[0]
 
                 if (!insertedUser) {
-                    return { status: 'error', error: 'Failed to add user to the database.' }
+                    return {
+                        status: 'error',
+                        error: 'Failed to add user to the database.',
+                    }
                 }
 
                 console.log('User added successfully: ', insertedUser)
                 return { status: 'success', user: insertedUser }
-                
             } catch (error) {
                 return { status: 'error', error: 'Failed to add user' }
             }
