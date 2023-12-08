@@ -34,12 +34,15 @@ function SignupScreen(props) {
         event.preventDefault()
         if (validateForm()) {
             props.handleSubmit(userFormData)
-            const response = await fetch('https://organizzen.azurewebsites.net/users', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
+            const response = await fetch(
+                'https://organizzen.azurewebsites.net/users',
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            )
 
             if (!response.ok) {
                 throw new Error('Failed to fetch users.')
@@ -52,7 +55,8 @@ function SignupScreen(props) {
 
             if (existingUser) {
                 alert('Username or email already exists.')
-                window.location.href = 'https://polite-dune-0e0d1bb1e.4.azurestaticapps.net/signup'
+                window.location.href =
+                    'https://polite-dune-0e0d1bb1e.4.azurestaticapps.net/signup'
             } else {
                 setUserFormData({
                     userId: '',

@@ -45,7 +45,9 @@ const App = () => {
         })
             .then(() => {
                 // After successfully adding the task, fetch the updated list
-                return fetch(`https://organizzen.azurewebsites.net/events/${eventId}/tasks`)
+                return fetch(
+                    `https://organizzen.azurewebsites.net/events/${eventId}/tasks`
+                )
             })
             .then((response) => response.json())
             .then((data) => {

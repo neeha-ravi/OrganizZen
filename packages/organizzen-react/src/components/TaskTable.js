@@ -78,7 +78,9 @@ function TaskTable({ filter, onToggleShowCompleted }) {
             // Fetch tasks for each eventId in the filter
             Promise.all(
                 [...filter].map((eventId) =>
-                    fetch(`https://organizzen.azurewebsites.net/events/${eventId}/tasks`)
+                    fetch(
+                        `https://organizzen.azurewebsites.net/events/${eventId}/tasks`
+                    )
                 )
             )
                 .then((responses) =>
@@ -124,9 +126,12 @@ function TaskTable({ filter, onToggleShowCompleted }) {
             return
         }
 
-        fetch(`https://organizzen.azurewebsites.net/events/${eventId}/tasks/${taskId}`, {
-            method: 'DELETE',
-        })
+        fetch(
+            `https://organizzen.azurewebsites.net/events/${eventId}/tasks/${taskId}`,
+            {
+                method: 'DELETE',
+            }
+        )
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Failed to delete task')
