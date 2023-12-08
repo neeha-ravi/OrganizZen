@@ -123,16 +123,15 @@
     align-items: center;
     font-family: 'Be Vietnam Pro', sans-serif;
     font-size: 90%;
-    margin: 25px;
-    height: 10px;
-    width: 2px;
+    height: 31px !important;
+    width: 50px;
+    margin-right: 5px;
     border-radius: 10px;
-    padding: 15px 35px;
     border: none;
 }
 
 .DeleteButton:hover {
-    background-color: #000000;
+    background-color: rgb(104, 94, 151);
     color: white;
 }
 

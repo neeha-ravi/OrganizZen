@@ -22,15 +22,13 @@ function EventDetailsButton({ event }) {
                         </button>
                         <h1>{event.name}</h1>
                         <h2>{event.description}</h2>
-                        <hr />
-                        <h2>
-                            {' '}
-                            Link: <a href={event.link}>{event.link}</a>
-                        </h2>
+                        <h2>{event.link}</h2>
                         <h2>{event.startDate}</h2>
                         {event.startDate !== event.endDate && (
                             <h2>{event.endDate}</h2>
                         )}
+
+                        {event.tasks && event.tasks.length > 0 && <></>}
                     </div>
                 </div>
             )}

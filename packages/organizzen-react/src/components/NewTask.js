@@ -16,6 +16,27 @@ function NewTask(props) {
 
     function submitForm(event) {
         event.preventDefault()
+        const currentDate = new Date();
+
+        if (selectedDate === '') {
+            setInvalidInput(3)
+            return
+        } else if (
+            selectedDate > selectedEventData.endDate
+        ) {
+            if (selectedEventData.oneDayOnly == false) {
+                setInvalidInput(1)
+            }
+            return
+        } else if (selectedDate < currentDate || selectedDate > selectedEventData.endDate)
+        {
+            setInvalidInput(1)
+            return
+        }
+        else if (inputName === '') {
+            setInvalidInput(2)
+            return
+        }
 
         if (selectedDate === '') {
             setInvalidInput(3)

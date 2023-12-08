@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './Calendar.css'
-import EventDetailsButton from './EventDetailsButton'
+import EventDetailsButton from './EventDetailsButton.js'
 
 function Calendar({ filter, setFilter }) {
+    const [tasks, setTasks] = useState([])
     const [events, setEvents] = useState([])
     const [selectedEvent, setSelectedEvent] = useState(null)
 
@@ -33,7 +34,6 @@ function Calendar({ filter, setFilter }) {
                 const sortedEvents = data.sort(
                     (a, b) => new Date(a.startDate) - new Date(b.startDate)
                 )
-                //console.log('Fetched events:', sortedEvents)
                 setEvents(sortedEvents)
             } catch (error) {
                 console.error('Error fetching events:', error)
@@ -41,14 +41,14 @@ function Calendar({ filter, setFilter }) {
         }
 
         fetchEvents()
-    }, [selectedEvent]) // Add selectedEvent as a dependency
+    }, [events, selectedEvent]) // Add selectedEvent as a dependency
 
     useEffect(() => {
         // Handle the case when a new event is added
         if (selectedEvent) {
             setSelectedEvent(null) // Reset selectedEvent to trigger a re-fetch
         }
-    }, [selectedEvent])
+    }, [events, selectedEvent])
 
     const formatDate = (startDateString, endDateString) => {
         try {
@@ -83,10 +83,69 @@ function Calendar({ filter, setFilter }) {
         }
     }
 
+    function handleDelete(eventId) {
+        const confirmDelete = window.confirm(
+            'Are you sure you want to delete this event?'
+        )
+
+        if (!confirmDelete) {
+            return
+        }
+
+        // Delete the event
+        fetch(`http://localhost:8000/events/${eventId}`, {
+            method: 'DELETE',
+        })
+            .then(async (response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to delete event')
+                }
+
+                // Assuming tasks state is managed separately
+                try {
+                    // Delete associated tasks
+                    const tasksResponse = await fetch(
+                        `http://localhost:8000/events/${eventId}/tasks`,
+                        {
+                            method: 'DELETE',
+                        }
+                    )
+
+                    if (!tasksResponse.ok) {
+                        throw new Error('Failed to delete tasks')
+                    }
+
+                    // Update state after successful deletion
+                    setEvents((prevEvents) =>
+                        prevEvents.filter((event) => event.id !== eventId)
+                    )
+
+                    // Clear selected event if it was the one deleted
+                    if (selectedEvent && selectedEvent.id === eventId) {
+                        setSelectedEvent(null)
+                    }
+
+                    // Assuming tasks state is managed separately
+                    setTasks((prevTasks) =>
+                        prevTasks.filter((task) => task.event !== eventId)
+                    )
+
+                    console.log(
+                        'Event and associated tasks deleted successfully!'
+                    )
+                } catch (error) {
+                    console.error('Error deleting associated tasks:', error)
+                }
+            })
+            .catch((error) => {
+                console.error('Error deleting event:', error)
+            })
+    }
+
     return (
         <div className="EventScrollContainer">
-            {events.map((event) => (
-                <div className="EventContainer" key={event.id}>
+            {events.map((event, index) => (
+                <div className="EventContainer" key={event.id || index}>
                     <div
                         className={`EventBox ${
                             selectedEvent === event.id ? 'SelectedEvent' : ''
@@ -96,9 +155,17 @@ function Calendar({ filter, setFilter }) {
                         <h3>{event.name}</h3>
                         <p>{formatDate(event.startDate, event.endDate)}</p>
                     </div>
-                    <div>
+                    <div key={event.id}>
                         <EventDetailsButton event={event} />
                         {/* Other event information */}
+                    </div>
+                    <div className="DeleteButtonContainer">
+                        <button
+                            onClick={() => handleDelete(event.id)}
+                            className="DeleteButton"
+                        >
+                            🗑️
+                        </button>
                     </div>
                 </div>
             ))}

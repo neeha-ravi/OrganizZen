@@ -2,6 +2,7 @@
 import styles from '../Styles/index.module.css'
 import TaskTable from './TaskTable'
 import Calendar from './Calendar'
+import LogoutButton from './LogoutButton'
 import React, { useState } from 'react'
 import LogoutButton from './LogoutButton'
 
@@ -10,7 +11,9 @@ function HomePage() {
 
     return (
         <div>
-            <LogoutButton/>
+            <h1 className={styles.Header}>💜</h1>
+            <h1 className={styles.Header}>OrganizZen</h1>
+            <LogoutButton />
             <div className={styles.CalendarTaskContainer}>
                 <div className={styles.CalendarDashboard}>
                     <Calendar filter={filter} setFilter={setFilter} />

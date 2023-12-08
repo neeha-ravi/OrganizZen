@@ -1,15 +1,31 @@
 import React, { useState, useEffect } from 'react'
 import './TaskTable.css'
 
-function TaskTable({ filter }) {
+function TaskTable({ filter, onToggleShowCompleted }) {
     const [tasks, setTasks] = useState([])
     const [completedTasks, setCompletedTasks] = useState([])
     const [showCompleted, setShowCompleted] = useState(
-        localStorage.getItem('showCompleted') === 'true' ? true : false
+        localStorage.getItem('showCompleted') === 'true'
     )
-    const [taskDetailsPopup, setTaskDetailsPopupState] = useState(false)
-    const toggleTaskDetailsPopup = () => {
-        setTaskDetailsPopupState(!taskDetailsPopup)
+    const [taskDetailsPopups, setTaskDetailsPopups] = useState({})
+    const [selectedTaskDetails, setSelectedTaskDetails] = useState(null)
+
+    // Function to set the selected task's details
+    const selectTaskDetails = (taskId) => {
+        const selectedTask = tasks.find((task) => task.id === taskId)
+        setSelectedTaskDetails(selectedTask)
+    }
+
+    // Function to set the details popup state for a specific task
+    const setTaskDetailsPopup = (taskId, isOpen) => {
+        setTaskDetailsPopups((prevDetailsPopups) => ({
+            ...prevDetailsPopups,
+            [taskId]: isOpen,
+        }))
+    }
+
+    const toggleTaskDetailsPopup = (taskId) => {
+        setTaskDetailsPopup(taskId, !taskDetailsPopups[taskId])
     }
 
     useEffect(() => {
@@ -31,7 +47,33 @@ function TaskTable({ filter }) {
     }, [completedTasks])
 
     useEffect(() => {
+        const fetchTasks = async () => {
+            try {
+                const response = await fetch(
+                    'http://localhost:8000/events/tasks'
+                )
+                if (!response.ok) {
+                    throw new Error('Failed to fetch tasks')
+                }
+                const data = await response.json()
+                const allTasks = data
+                const initialCompletedTasks = allTasks.filter(
+                    (task) => task.done
+                )
+                setCompletedTasks(initialCompletedTasks)
+                setTasks([...allTasks])
+            } catch (error) {
+                console.log('Error fetching tasks:', error)
+            }
+        }
+
+        fetchTasks()
+    }, [])
+
+    useEffect(() => {
+        // Check if there are events selected in the filter
         if (filter.size > 0) {
+            // Fetch tasks for each eventId in the filter
             Promise.all(
                 [...filter].map((eventId) =>
                     fetch(`http://localhost:8000/events/${eventId}/tasks`)
@@ -41,15 +83,22 @@ function TaskTable({ filter }) {
                     Promise.all(responses.map((response) => response.json()))
                 )
                 .then((data) => {
+                    console.log(data)
+                    // Flatten the array of arrays into a single array of tasks
                     const filteredTasks = data.flat()
                     setTasks(filteredTasks)
                 })
-                .catch((error) => console.log(error))
+                .catch((error) =>
+                    console.log('Error fetching filtered tasks:', error)
+                )
         } else {
+            // If no events are selected, fetch all tasks
             fetch('http://localhost:8000/events/tasks')
                 .then((response) => response.json())
                 .then((data) => setTasks(data))
-                .catch((error) => console.log(error))
+                .catch((error) =>
+                    console.log('Error fetching all tasks:', error)
+                )
         }
     }, [filter])
 
@@ -157,7 +206,7 @@ function TaskTable({ filter }) {
         const taskDates = Object.keys(groupedTasks)
         const sortedDates = taskDates.sort((a, b) => new Date(a) - new Date(b))
         const currentDate = new Date()
-        currentDate.setDate(currentDate.getDate() - 2)
+        currentDate.setDate(currentDate.getDate())
 
         if (tasks.length === 0) {
             return (
@@ -170,11 +219,11 @@ function TaskTable({ filter }) {
         return sortedDates
             .map((date, index) => {
                 const tasksForDate = groupedTasks[date]
-                const filteredTasks = tasksForDate.filter(
+                const dateFilteredTasks = tasksForDate.filter(
                     (task) => new Date(task.date) >= currentDate
                 )
 
-                if (filteredTasks.length === 0) {
+                if (dateFilteredTasks.length === 0) {
                     return null
                 }
 
@@ -195,7 +244,7 @@ function TaskTable({ filter }) {
                             </b>
                         </div>
 
-                        {filteredTasks.map((task) => {
+                        {dateFilteredTasks.map((task) => {
                             const isCompleted = completedTasks.some(
                                 (completedTask) => completedTask.id === task.id
                             )
@@ -216,7 +265,9 @@ function TaskTable({ filter }) {
                                         <div className="StartText" />
                                         <div
                                             className="TodoItem"
-                                            onClick={toggleTaskDetailsPopup}
+                                            onClick={() =>
+                                                toggleTaskDetailsPopup(task.id)
+                                            }
                                         >
                                             <label>{task.name}</label>
                                         </div>
@@ -234,13 +285,15 @@ function TaskTable({ filter }) {
                                             </button>
                                         </div>
 
-                                        {taskDetailsPopup && (
+                                        {taskDetailsPopups[task.id] && (
                                             <div>
                                                 <div className="detailsView">
                                                     <button
                                                         id="popupClose"
-                                                        onClick={
-                                                            toggleTaskDetailsPopup
+                                                        onClick={() =>
+                                                            toggleTaskDetailsPopup(
+                                                                task.id
+                                                            )
                                                         }
                                                     >
                                                         X
