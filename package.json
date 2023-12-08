@@ -14,7 +14,8 @@
         "backend-start": "npm run start -w organizzen-express",
         "backend-dev": "npm run dev -w organizzen-express",
         "backend-start-users": "npm run start-users -w organizzen-express",
-        "backend-dev-users": "npm run dev-users -w organizzen-express"
+        "backend-dev-users": "npm run dev-users -w organizzen-express",
+        "backend:both": "concurrently \"npm run backend-dev\" \"npm run backend-dev-users\""
     },
     "author": "",
     "license": "ISC",
@@ -30,6 +31,7 @@
     },
     "devDependencies": {
         "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+        "concurrently": "^8.2.2",
         "eslint-config-prettier": "^9.0.0",
         "eslint-plugin-prettier": "^5.0.1",
         "eslint-plugin-react": "^7.33.2",
