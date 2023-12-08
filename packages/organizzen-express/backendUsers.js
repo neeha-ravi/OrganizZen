@@ -56,7 +56,6 @@ connectToMongoDB()
         })
 
         const addUser = async (user) => {
-
             try {
                 // Check for duplicate username or email
                 const existingUser = await usersCollection.findOne({

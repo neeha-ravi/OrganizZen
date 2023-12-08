@@ -388,7 +388,7 @@ connectToMongoDB()
                 if (!event) {
                     return false // Event not found
                 }
-        
+
                 // Extract task IDs from the event
                 const taskIds = event.tasks.map((task) => task.id)
                 // Delete the event from the events collection
