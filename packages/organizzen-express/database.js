@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 //const users_mongoURI = process.env.MONGODB_URI_USERS
-const main_mongoURI = process.env.MONGODB_URI_MAIN
+const mongoURI = process.env.MONGODB_URI
 
 // const connectToMongoDBUsers = async () => {
 //     try {
@@ -19,9 +19,9 @@ const main_mongoURI = process.env.MONGODB_URI_MAIN
 //     }
 // }
 
-const connectToMongoDBMain = async () => {
+const connectToMongoDB = async () => {
     try {
-        const client = new MongoClient(main_mongoURI, {
+        const client = new MongoClient(mongoURI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })
@@ -32,4 +32,4 @@ const connectToMongoDBMain = async () => {
     }
 }
 
-export { connectToMongoDBMain }
+export { connectToMongoDB }
