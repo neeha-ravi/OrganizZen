@@ -8,9 +8,7 @@ const app = express()
 const port = 8001
 
 app.use(
-    cors({
-        origin: 'https://polite-dune-0e0d1bb1e.4.azurestaticapps.net',
-    })
+    cors()
 )
 app.use(bodyParser.json())
 app.use(express.json())
