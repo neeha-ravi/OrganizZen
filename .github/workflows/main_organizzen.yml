@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -30,7 +30,7 @@ jobs:
 
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
-        working-directory: packages/express-backend
+        working-directory: packages/organizzen-express
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
