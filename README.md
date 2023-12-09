@@ -8,6 +8,11 @@ See the Figma!
 
 [WIREFRAME] https://www.figma.com/file/YENWh5f5g0Fv2FgBzbFjee/Prototype?type=design&node-id=0-1&mode=design&t=uyaBs6wzBL4t2mry-0 
 
+Last updated: December 4, 2023
+
+# UML CLASS DIAGRAM
+[UML Class Diagram](docs/UML.md)
+
 # Contributing
 Style:
 - Tabs are the length of 4 spaces
@@ -22,6 +27,7 @@ Scripts to set up frontend developer environment (Pick between either start or d
 -  npm run backend-start-users       ->       starts backend for users
 -  npm run backend-dev               ->       starts backend for tasks/events (but using nodemon)
 -  npm run backend-dev-users         ->       starts backend for users (but using nodemon)
+-  npm run backend:both              ->       starts backend for users AND tasks/events using nodemon
 
 Style Scripts (Also run from root!):
 -  npm run format (run prettier)   ->    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"

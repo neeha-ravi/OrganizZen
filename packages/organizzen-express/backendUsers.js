@@ -2,21 +2,19 @@ import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 //import { MongoClient } from 'mongodb'
-import { connectToMongoDBMain } from './database.js'
+import { connectToMongoDB } from './database.js'
 
 const app = express()
 const port = 8001
 
-app.use(
-    cors()
-)
+app.use(cors())
 app.use(bodyParser.json())
 app.use(express.json())
 
 let mongoClient
 
 // Use connectToMongoDB function to establish connection
-connectToMongoDBMain()
+connectToMongoDB()
     .then((client) => {
         mongoClient = client
         console.log('Connected to MongoDB - users')
@@ -115,7 +113,7 @@ connectToMongoDBMain()
     })
 
 process.on('SIGINT', () => {
-    console.log('Closing MongoDB connection')
+    console.log('Closing MongoDB users connection')
     mongoClient.close()
     process.exit()
 })
