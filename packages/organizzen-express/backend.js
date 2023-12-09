@@ -5,11 +5,7 @@ import { connectToMongoDBMain } from './database.js'
 const app = express()
 const port = 8000
 
-app.use(
-    cors({
-        origin: 'https://polite-dune-0e0d1bb1e.4.azurestaticapps.net',
-    })
-)
+app.use(cors())
 app.use(express.json()) // set up express to process incoming data in JSON format
 
 let mongoClient
