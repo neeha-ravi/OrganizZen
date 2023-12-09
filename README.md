@@ -8,6 +8,9 @@ See the Figma!
 
 [WIREFRAME] https://www.figma.com/file/YENWh5f5g0Fv2FgBzbFjee/Prototype?type=design&node-id=0-1&mode=design&t=uyaBs6wzBL4t2mry-0 
 
+# UML CLASS DIAGRAM
+[UML Class Diagram](docs/UML.md)
+
 # Contributing
 Style:
 - Tabs are the length of 4 spaces
