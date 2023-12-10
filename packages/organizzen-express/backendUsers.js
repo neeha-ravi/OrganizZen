@@ -36,7 +36,7 @@ connectToMongoDB()
         // Retrieve users
         app.get('/users', async (req, res) => {
             try {
-                const users = await usersCollection.find().toArray()
+                const users = await usersCollection.find({}).toArray()
                 res.json({ users_list: users })
             } catch (error) {
                 console.error('Error fetching users:', error)
