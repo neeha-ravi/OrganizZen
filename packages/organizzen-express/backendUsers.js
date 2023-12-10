@@ -36,7 +36,7 @@ connectToMongoDB()
         // Retrieve users
         app.get('/users', async (req, res) => {
             try {
-                console.log("users backend reached")
+                console.log('users backend reached')
                 const users = await usersCollection.find({}).toArray()
                 res.json({ users })
             } catch (error) {
