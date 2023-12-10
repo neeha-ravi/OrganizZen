@@ -56,7 +56,7 @@ function SignupScreen(props) {
             if (existingUser) {
                 alert('Username or email already exists.')
                 window.location.href =
-                    'https://polite-dune-0e0d1bb1e.4.azurestaticapps.net/signup'
+                    'https://zealous-island-0927ddd1e.4.azurestaticapps.net/signup'
             } else {
                 setUserFormData({
                     userId: '',
