@@ -30,12 +30,13 @@ connectToMongoDB()
             .collection('OZusers') // Replace with your actual collection name
 
         app.get('/', (req, res) => {
-            res.send('This is the backendUser.js file!')
+            res.send('This is the backendUsers!')
         })
 
         // Retrieve users
         app.get('/users', async (req, res) => {
             try {
+                console.log("users backend reached")
                 const users = await usersCollection.find({}).toArray()
                 res.json({ users })
             } catch (error) {
