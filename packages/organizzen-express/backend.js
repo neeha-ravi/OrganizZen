@@ -33,7 +33,7 @@ connectToMongoDB()
             .collection('eventTasks')
 
         app.get('/', (req, res) => {
-            res.send('This is the backend.js file!') // sets the endpoint to accept http GET requests
+            res.send('This is the backend!') // sets the endpoint to accept http GET requests
         })
 
         const findEventById = async (eventId) => {
