@@ -19,6 +19,10 @@ Style:
 - Single statements should go onto the next line
 - Braces should go on the same line
 
+# Deployment
+[click here to go to Azure app](https://zealous-island-0927ddd1e.4.azurestaticapps.net/)
+
+# Local Setup
 Scripts to set up frontend developer environment (Run all of these scripts from the root directory!):
 -  npm run frontend                  ->       starts react app
 
